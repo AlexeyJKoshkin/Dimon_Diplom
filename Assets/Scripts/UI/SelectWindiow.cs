@@ -23,6 +23,7 @@ public class SelectWindiow : BaseWindow
     {
         var listResults = BDWrapper.GetAllInfoAbout(type);
         _itemsContloller.InitDataToList<BaseDataForSelectWindow>(listResults);
+        this.ShowWindow(null);
 
     }
 }

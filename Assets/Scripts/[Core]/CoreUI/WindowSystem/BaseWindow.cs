@@ -13,11 +13,12 @@ namespace GameKit.UI
 
         public virtual void HideWindow(Action callback)
         {
+            this.transform.localPosition = new Vector3(-1000, -1000,0);
         }
 
         public virtual void ShowWindow(Action callback)
         {
-            
+            this.transform.localPosition = Vector3.zero;
         }
 
         public abstract void RefreshView();
