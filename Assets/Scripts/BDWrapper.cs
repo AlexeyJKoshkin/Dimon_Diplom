@@ -15,7 +15,7 @@ public static class BDWrapper
                 {
                     Name = "Dima",
                     AvatarSprite = GameCore.LoadSprite("Sprite"),
-                    Info = "Blabala"
+                    Price = "Blabala"
                 });
                 break;
             case MenuItemType.Music:

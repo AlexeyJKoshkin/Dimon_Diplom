@@ -18,10 +18,14 @@ public class SelectWindowContainer : SEUIContainerItem, IContainerUI<BaseDataFor
     [SerializeField]
     private Text _nameText;
 
+    [SerializeField]
+    private Text _priceText;
+
     public override void RefreshView()
     {
         _AvatarImage.sprite = CurrentData.AvatarSprite;
         _nameText.text = CurrentData.Name;
+        _priceText.tag = CurrentData.Price;
 
     }
 

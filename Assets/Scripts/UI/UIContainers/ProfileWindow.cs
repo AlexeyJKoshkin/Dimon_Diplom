@@ -1,29 +1,45 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+using GameKit;
 using GameKit.UI;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class ProfileWindow : BaseWindow {
-
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
+public class ProfileWindow : BaseWindow, IDataBinding<BaseDataForProfileWindow>
+{
     public override Enum TypeWindow
     {
-        get { throw new NotImplementedException(); }
+        get { return WindowType.WindowInfo; }
     }
 
     public override WindowState State { get; set; }
+
+    [SerializeField]
+    private Image _fullSprite;
+
+    [SerializeField]
+    private Text _fio;
+
+    [SerializeField]
+    private Text _fullInfo;
+
+    [SerializeField]
+    private Text _contacts;
+
     public override void RefreshView()
     {
-        throw new NotImplementedException();
+        _fullSprite.sprite = CurrentData.Foto;
+        _fio.text = CurrentData.Name;
+        _fullInfo.text = CurrentData.FullInfo;
+        _contacts.text = CurrentData.Contatcts;
     }
+
+    public void UpdateDataView(BaseDataForProfileWindow newdata)
+    {
+        if (newdata != null)
+        {
+            CurrentData = newdata;
+        }
+    }
+
+    public BaseDataForProfileWindow CurrentData { get; private set; }
 }

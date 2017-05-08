@@ -143,6 +143,7 @@ MonoBehaviour:
   _prefabsWindow:
   - {fileID: 114918266353645424, guid: 31d1669a6c4877d4390344096d0c65ae, type: 2}
   - {fileID: 114220833838560404, guid: 966877c6a7d9cda499c06cdc2e5050f9, type: 2}
+  - {fileID: 114772590486670012, guid: d0dde38e1f7ea5a46a65316d609f5c9b, type: 2}
   _popUPWindow: []
   _allWindow: []
   _currentWindowType: 
@@ -367,7 +368,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1709813079}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: -765806418, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
