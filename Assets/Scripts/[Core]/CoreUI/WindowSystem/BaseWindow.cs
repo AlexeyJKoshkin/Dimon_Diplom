@@ -11,11 +11,11 @@ namespace GameKit.UI
         public abstract Enum TypeWindow { get; }
         public abstract WindowState State { get; set; }
 
-        public virtual void HideWindow(Action callback, bool immidiate = false)
+        public virtual void HideWindow(Action callback)
         {
         }
 
-        public virtual void ShowWindow(Action callback, bool immidiate = false)
+        public virtual void ShowWindow(Action callback)
         {
             
         }
@@ -85,12 +85,12 @@ namespace GameKit.UI
         }
 
         [ContextMenu("Hide")]
-        public override void HideWindow(Action callback, bool now = false)
+        public override void HideWindow(Action callback)
         {
             _callback = callback;
             //_callback += () => Debug.LogFormat("{0} {1} end {2}", this.TypeWindow, this.State, this.transform.position);
             if (AnimationHide.Sdelegate != null)
-                ((Action<T, bool, TweenCallback>)AnimationHide.Sdelegate).Invoke(this as T, now, FinishAnimation);
+                ((Action<T, bool, TweenCallback>)AnimationHide.Sdelegate).Invoke(this as T, true, FinishAnimation);
             else
             {
                 this.GetComponent<Canvas>().enabled = false;
@@ -100,12 +100,12 @@ namespace GameKit.UI
         }
 
         [ContextMenu("Show")]
-        public override void ShowWindow(Action callback, bool now = false)
+        public override void ShowWindow(Action callback)
         {
             _callback = callback;
             //_callback += () => Debug.LogFormat("{0} {1} end {2}", this.TypeWindow, this.State, this.transform.position);
             if (AnimationShow.Sdelegate != null)
-                ((Action<T, bool, TweenCallback>)AnimationShow.Sdelegate).Invoke(this as T, now, FinishAnimation);
+                ((Action<T, bool, TweenCallback>)AnimationShow.Sdelegate).Invoke(this as T, true, FinishAnimation);
             else
             {
                 this.GetComponent<Canvas>().enabled = true;

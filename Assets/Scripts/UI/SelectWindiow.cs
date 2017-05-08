@@ -1,7 +1,6 @@
 ﻿using System;
-using UnityEngine;
-using System.Collections;
 using GameKit.UI;
+using UnityEngine;
 
 public class SelectWindiow : BaseWindow
 {
@@ -12,9 +11,17 @@ public class SelectWindiow : BaseWindow
 
     public override WindowState State { get; set; }
 
-
+    [SerializeField]
+    private SelectItemsContloller _itemsContloller;
 
     public override void RefreshView()
     {
+    }
+
+    public void ShowType(MenuItemType type)
+    {
+        //var listResults = BDWrapper.GetAllInfoAbout(type);
+        //_itemsContloller.in
+
     }
 }

@@ -65,7 +65,7 @@ namespace GameKit.UI
 
             _allWindow.ForEach(w =>
             {
-                w.HideWindow(null, true);
+                w.HideWindow(null);
             });
             _onComplete += () => IsReady = true;
             base.PrepareUI(_onComplete);
