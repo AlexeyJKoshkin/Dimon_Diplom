@@ -23,6 +23,10 @@ public class SelectWindiow : BaseWindow
     {
         var listResults = BDWrapper.GetAllInfoAbout(type);
         _itemsContloller.InitDataToList<BaseDataForSelectWindow>(listResults);
+        if (listResults.Count == 0)
+        {
+            Debug.LogError("Никого нет");
+        }
         this.ShowWindow(null);
 
     }
