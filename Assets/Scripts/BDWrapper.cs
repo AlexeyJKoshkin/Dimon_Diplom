@@ -11,12 +11,17 @@ public static class BDWrapper
         switch (type)
         {
             case MenuItemType.Leading:
-                result.Add(new BaseDataForSelectWindow()
+                for (int i = 0; i < 15; i++)
                 {
-                    Name = "Dima",
-                    AvatarSprite = GameCore.LoadSprite("Sprite"),
-                    Price = "Blabala"
-                });
+                    result.Add(new BaseDataForSelectWindow()
+                    {
+                        Name = "Dima " +  i.ToString(),
+                        AvatarSprite = GameCore.LoadSprite("Sprite"),
+                        Price = "Blabala " + i.ToString()
+                    });
+                }
+                
+                
                 break;
             case MenuItemType.Music:
                 break;

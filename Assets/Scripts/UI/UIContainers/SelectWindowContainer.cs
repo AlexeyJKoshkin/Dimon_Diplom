@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using ShutEye.UI.Core;
 using UnityEngine.UI;
 
@@ -26,7 +25,6 @@ public class SelectWindowContainer : SEUIContainerItem, IContainerUI<BaseDataFor
         _AvatarImage.sprite = CurrentData.AvatarSprite;
         _nameText.text = CurrentData.Name;
         _priceText.text = CurrentData.Price;
-
     }
 
     public void UpdateDataView(BaseDataForSelectWindow newdata)
