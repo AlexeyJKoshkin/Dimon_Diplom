@@ -3,7 +3,9 @@ using ShutEye.Data;
 using ShutEye.Data.Provider;
 using System;
 using System.Collections.Generic;
+using ShutEye.Extensions;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace ShutEye.Core
 {
@@ -53,7 +55,7 @@ namespace ShutEye.Core
                 debugSystemsBehaviour.gameObject.AddComponent<DontDestroyOnLoad>();
             }
 #endif
-            MainMenuScript.LoadMainMenu();
+            SceneManager.LoadScene(STRH.DefaultNames.MainMenuScene); // грузим главное меню
         }
 
         #region Init

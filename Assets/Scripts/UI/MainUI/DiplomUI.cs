@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace GameKit.UI
 {
-    public class ShutEyeUIMain : SEComponentUI
+    public class DiplomUI : SEComponentUI
     {
         public bool IsReady { get; private set; }
 
