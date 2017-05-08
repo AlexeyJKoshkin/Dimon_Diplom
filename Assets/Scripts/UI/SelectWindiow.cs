@@ -1,5 +1,6 @@
 ﻿using System;
 using GameKit.UI;
+using ShutEye.UI.Core;
 using UnityEngine;
 
 public class SelectWindiow : BaseWindow
@@ -20,8 +21,8 @@ public class SelectWindiow : BaseWindow
 
     public void ShowType(MenuItemType type)
     {
-        //var listResults = BDWrapper.GetAllInfoAbout(type);
-        //_itemsContloller.in
+        var listResults = BDWrapper.GetAllInfoAbout(type);
+        _itemsContloller.InitDataToList<BaseDataForSelectWindow>(listResults);
 
     }
 }
