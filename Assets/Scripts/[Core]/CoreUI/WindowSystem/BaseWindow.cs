@@ -11,9 +11,14 @@ namespace GameKit.UI
         public abstract Enum TypeWindow { get; }
         public abstract WindowState State { get; set; }
 
-        public abstract void HideWindow(Action callback, bool immidiate = false);
+        public virtual void HideWindow(Action callback, bool immidiate = false)
+        {
+        }
 
-        public abstract void ShowWindow(Action callback, bool immidiate = false);
+        public virtual void ShowWindow(Action callback, bool immidiate = false)
+        {
+            
+        }
 
         public abstract void RefreshView();
 

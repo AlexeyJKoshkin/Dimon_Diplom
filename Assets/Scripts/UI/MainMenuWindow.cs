@@ -25,7 +25,6 @@ public class MainMenuWindow : BaseWindow
 
     private void ItemsContainerOnOnChange(MainMenuItemContainer mainMenuItemContainer, PointerEventData.InputButton inputButton)
     {
-        this.HideWindow(null,true);
         Debug.LogFormat("{0} Show", mainMenuItemContainer.CurrentData);
         switch (mainMenuItemContainer.CurrentData)
         {
@@ -39,13 +38,7 @@ public class MainMenuWindow : BaseWindow
         }
     }
 
-    public override void HideWindow(Action callback, bool immidiate = false)
-    {
-    }
-
-    public override void ShowWindow(Action callback, bool immidiate = false)
-    {
-    }
+   
 
     public override void RefreshView()
     {

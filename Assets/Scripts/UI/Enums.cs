@@ -11,6 +11,6 @@
 public enum WindowType
 {
     Menu,
-    WindowChoose,
+    SelectWindiow,
     WindowInfo
 }
