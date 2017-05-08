@@ -19,6 +19,7 @@ ExportedObj/
 *.svd
 
 Assets/3d/**/*.meta
+Assets/GameResourses/**/*.meta
 
 
 # Unity3D generated meta files
