@@ -25,7 +25,7 @@ public class SelectWindowContainer : SEUIContainerItem, IContainerUI<BaseDataFor
     {
         _AvatarImage.sprite = CurrentData.AvatarSprite;
         _nameText.text = CurrentData.Name;
-        _priceText.tag = CurrentData.Price;
+        _priceText.text = CurrentData.Price;
 
     }
 
