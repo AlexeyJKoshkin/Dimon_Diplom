@@ -14,6 +14,9 @@ public class ProfileWindow : BaseWindow, IDataBinding<BaseDataForProfileWindow>
     public override WindowState State { get; set; }
 
     [SerializeField]
+    private UnityEngine.UI.Button _mainMenuBtn;
+
+    [SerializeField]
     private Image _fullSprite;
 
     [SerializeField]
@@ -24,6 +27,12 @@ public class ProfileWindow : BaseWindow, IDataBinding<BaseDataForProfileWindow>
 
     [SerializeField]
     private Text _contacts;
+
+    protected override void PrepareUI(Action _onComplete)
+    {
+        _mainMenuBtn = _mainMenuBtn ?? GetComponentInChildren<UnityEngine.UI.Button>();
+        base.PrepareUI(_onComplete);
+    }
 
     public override void RefreshView()
     {

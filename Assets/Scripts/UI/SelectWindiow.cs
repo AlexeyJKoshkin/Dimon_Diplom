@@ -17,11 +17,16 @@ public class SelectWindiow : BaseWindow
     [SerializeField]
     private SelectItemsContloller _itemsContloller;
 
+    [SerializeField]
+    private UnityEngine.UI.Button _mainMenuBtn;
+
     private MenuItemType _currentViewType;
 
     protected override void PrepareUI(Action _onComplete)
     {
         _itemsContloller.OnChange += ItemsContlollerOnOnChange;
+        _mainMenuBtn = _mainMenuBtn ?? GetComponentInChildren<UnityEngine.UI.Button>();
+        _mainMenuBtn.onClick.AddListener(this.BackMainMenu);
         base.PrepareUI(_onComplete);
     }
     public override void RefreshView()
