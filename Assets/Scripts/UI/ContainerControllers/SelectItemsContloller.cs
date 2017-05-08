@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEditor;
 
-public class SelectItemsContloller : SEContainerWithViews<SelectWindowContainer>
+public class SelectItemsContloller : SEContainerWithViews<IContainerUI<BaseDataForSelectWindow>>
 {
     public override void RefreshView()
     {

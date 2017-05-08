@@ -1,6 +1,5 @@
 ﻿using System;
 using GameKit.UI;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -19,6 +18,7 @@ public class MainMenuWindow : BaseWindow
 
     protected override void PrepareUI(Action _onComplete)
     {
+        Debug.Log(_itemsContainer.Containers.Length);
         _itemsContainer.OnChange  += ItemsContainerOnOnChange;
         base.PrepareUI(_onComplete);
     }
@@ -26,16 +26,8 @@ public class MainMenuWindow : BaseWindow
     private void ItemsContainerOnOnChange(MainMenuItemContainer mainMenuItemContainer, PointerEventData.InputButton inputButton)
     {
         Debug.LogFormat("{0} Show", mainMenuItemContainer.CurrentData);
-        switch (mainMenuItemContainer.CurrentData)
-        {
-            case MenuItemType.Leading:
-            case MenuItemType.Music:
-            case MenuItemType.Fotographer:
-            case MenuItemType.Decorator:
-            case MenuItemType.Videograph:
-            case MenuItemType.ShowProgramm:
-                break;
-        }
+        UIInstance.Instance.GetWindow<SelectWindiow>().ShowType(mainMenuItemContainer.CurrentData);
+        this.HideWindow(null);
     }
 
    
