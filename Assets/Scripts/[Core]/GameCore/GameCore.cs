@@ -56,6 +56,11 @@ namespace ShutEye.Core
             }
 #endif
             SceneManager.LoadScene(STRH.DefaultNames.MainMenuScene); // грузим главное меню
+
+            Debug.Log(Resources.LoadAll("").Length);
+            Debug.Log(Resources.Load("Panel_Data"));
+            Debug.Log(Resources.Load<Sprite>("Resourses/Dj_Lime"));
+            Debug.Log(Resources.Load<Sprite>(@"Resourses\Dj_Lime"));
         }
 
         #region Init
