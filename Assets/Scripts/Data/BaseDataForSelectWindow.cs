@@ -7,5 +7,13 @@ using System.Collections;
 public class BaseDataForSelectWindow : DataObject
 {
     public Sprite AvatarSprite;
-    public string Info;
+    public string Price;
+}
+
+public class BaseDataForProfileWindow : DataObject
+{
+    public Sprite[] Porfolio;
+    public string FullInfo;
+    public Sprite Foto;
+    public string Contatcts;
 }

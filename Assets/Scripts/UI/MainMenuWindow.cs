@@ -29,8 +29,7 @@ public class MainMenuWindow : BaseWindow
         UIInstance.Instance.GetWindow<SelectWindiow>().ShowType(mainMenuItemContainer.CurrentData);
         this.HideWindow(null);
     }
-
-   
+  
 
     public override void RefreshView()
     {

@@ -11,8 +11,9 @@ public static class BDWrapper
         switch (type)
         {
             case MenuItemType.Leading:
-                result.Add(new BaseDataForSelectWindow()
+                for (int i = 0; i < 15; i++)
                 {
+<<<<<<< HEAD
                    Id= 1,
                     Name = "Дмитрий Кошкин",
                     AvatarSprite = GameCore.LoadSprite("Iconc\avatar_leading\Koshkin"),
@@ -32,6 +33,17 @@ public static class BDWrapper
                     AvatarSprite = GameCore.LoadSprite("Iconc\avatar_leading\Lobov"),
                     Info = "Blabala"
                 });
+=======
+                    result.Add(new BaseDataForSelectWindow()
+                    {
+                        Name = "Dima " +  i.ToString(),
+                        AvatarSprite = GameCore.LoadSprite("Sprite"),
+                        Price = "Blabala " + i.ToString()
+                    });
+                }
+                
+                
+>>>>>>> 974300ce87c2aef5e0229f0c5a8324d9d50f6dee
                 break;
             case MenuItemType.Music:
                 result.Add(new BaseDataForSelectWindow()

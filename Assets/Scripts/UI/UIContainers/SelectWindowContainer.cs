@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using ShutEye.UI.Core;
 using UnityEngine.UI;
 
@@ -18,11 +17,14 @@ public class SelectWindowContainer : SEUIContainerItem, IContainerUI<BaseDataFor
     [SerializeField]
     private Text _nameText;
 
+    [SerializeField]
+    private Text _priceText;
+
     public override void RefreshView()
     {
         _AvatarImage.sprite = CurrentData.AvatarSprite;
         _nameText.text = CurrentData.Name;
-
+        _priceText.text = CurrentData.Price;
     }
 
     public void UpdateDataView(BaseDataForSelectWindow newdata)
