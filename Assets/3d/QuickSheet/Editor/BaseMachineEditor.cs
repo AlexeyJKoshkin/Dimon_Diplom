@@ -200,10 +200,12 @@ namespace UnityQuickSheet
             //FIXME: replace ValueType to CellType and support Enum type.
             foreach (ColumnHeader header in machine.ColumnHeaderList)
             {
-                MemberFieldData member = new MemberFieldData();
-                member.Name = header.name;
-                member.type = header.type;
-                member.IsArrayType = header.isArray;
+                MemberFieldData member = new MemberFieldData
+                {
+                    Name = header.name,
+                    type = header.type,
+                    IsArrayType = header.isArray
+                };
 
                 fieldList.Add(member);
             }

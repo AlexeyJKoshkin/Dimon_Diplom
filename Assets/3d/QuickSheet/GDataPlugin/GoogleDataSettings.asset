@@ -22,6 +22,6 @@ MonoBehaviour:
     redirect_uris:
     - urn:ietf:wg:oauth:2.0:oob
     - http://localhost
-  _AccessCode: 
-  _RefreshToken: 
-  _AccessToken: 
+  _AccessCode: 4/m1y4rwPf-MdItnMExh8liuiUwpZYt8kAc5GP8ez0xbA
+  _RefreshToken: 1/B16Rd-4xGb6Gn104OGcN_kklKlHdlGOIneIqGlfKrcQ
+  _AccessToken: ya29.GltJBKo17w0pxcAUAYqhQzfrx6upKog0D-t_eioCclLTpQBzIyYqNXDrk_1EerYQb1w5sZ66LxfWDuB3u2gxrgPZzx_7jtGJ7amIlYOJUcwgAnaKfsMQwgKVVR3y

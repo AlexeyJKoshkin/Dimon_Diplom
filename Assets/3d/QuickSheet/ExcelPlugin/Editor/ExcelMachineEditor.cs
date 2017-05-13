@@ -202,7 +202,7 @@ namespace UnityQuickSheet
 
             if (!File.Exists(path))
             {
-                string msg = string.Format("File at {0} does not exist.",path);
+                string msg = string.Format("File at {0} does not exist.", path);
                 EditorUtility.DisplayDialog("Error", msg, "OK");
                 return;
             }
@@ -218,7 +218,7 @@ namespace UnityQuickSheet
             else
             {
                 // check the column header is valid
-                foreach(string column in titles)
+                foreach (string column in titles)
                 {
                     if (!IsValidHeader(column))
                     {
@@ -240,7 +240,7 @@ namespace UnityQuickSheet
                     .Where(e => headerDic.ContainsKey(e) == true)
                     .Select(t => new ColumnHeader { name = t, type = headerDic[t].type, isArray = headerDic[t].isArray, OrderNO = headerDic[t].OrderNO });
 
-                
+
                 // collect newly added or changed column headers
                 var changed = titleList.Select(t => GetColumnHeaderString(t))
                     .Where(e => headerDic.ContainsKey(e) == false)

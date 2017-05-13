@@ -22,22 +22,7 @@ using ShutEye.Core;
 
 namespace UnityQuickSheet
 {
-    /// <summary>
-    /// Resolve TlsException error.
-    /// </summary>
-    public class UnsafeSecurityPolicy
-    {
-        public static bool Validator(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors policyErrors)
-        {
-            //Debug.Log("Validation successful!");
-            return true;
-        }
-
-        public static void Instate()
-        {
-            ServicePointManager.ServerCertificateValidationCallback = Validator;
-        }
-    }
+  
 
     /// <summary>
     /// Editor script class for GoogleDataSettings scriptable object to hide password of google account.

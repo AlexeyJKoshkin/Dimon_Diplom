@@ -37,7 +37,7 @@ namespace ShutEye.Core
 
         [SerializeField]
         private List<DataBox> _allProviders;
-
+        
         // public static IEntityByCollider InteractiveObjects { get { return GameCore.Pools.game.ShutEyeLevel; } }
         public static GoogleDataSettings GoogleSettings
         {
@@ -60,19 +60,47 @@ namespace ShutEye.Core
         }
 
         private static GoogleDataSettings googleSettings;
-
-
         /// <summary>
         /// A singleton instance.
         /// </summary>
         [SerializeField]
         private GoogleDataSettings _googleSettings;
 
+        public static BaseRuntimeMachine GoogleMachine
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (Application.isPlaying)
+                {
+                    return machine;
+                }
+                else
+                {
+                    return machine;
+                }
+#else
+
+                return googleSettings;
+#endif
+            }
+        }
+
+        private static BaseRuntimeMachine machine;
+        /// <summary>
+        /// A singleton instance.
+        /// </summary>
+        [SerializeField]
+        private GoogleRuntimeMachine _machine;
+
+
         private void Awake()
         {
             var data = new LocalDataBoxStorage();
             _allProviders.ForEach(b => data.RegisterProvider(b));
+            googleSettings = _googleSettings;
             _data = data;
+            machine = _machine;
             var logger = FindObjectOfType<LoggerUI>();
             if (logger != null) logger.InitLogger();
             OnAllReady();
@@ -88,10 +116,7 @@ namespace ShutEye.Core
 #endif
             SceneManager.LoadScene(STRH.DefaultNames.MainMenuScene); // грузим главное меню
 
-            Debug.Log(Resources.LoadAll("").Length);
-            Debug.Log(Resources.Load("Panel_Data"));
-            Debug.Log(Resources.Load<Sprite>("Resourses/Dj_Lime"));
-            Debug.Log(Resources.Load<Sprite>(@"Resourses\Dj_Lime"));
+
         }
 
         #region Init

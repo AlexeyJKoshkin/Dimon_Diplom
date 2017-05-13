@@ -34,6 +34,42 @@ namespace UnityQuickSheet
     [CustomEditor(typeof(GoogleMachine))]
     public class GoogleMachineEditor : BaseMachineEditor
     {
+
+        /// <summary>
+        /// Create new account setting asset file if there is already one then select it.
+        /// </summary>
+        [MenuItem("Assets/Create/QuickSheet/Setting/GoogleData Setting")]
+        public static void CreateGoogleDataSetting()
+        {
+            AssemblyReflectionHelper.Create();
+        }
+
+        /// <summary>
+        /// A menu item which create a 'GoogleMachine' asset file.
+        /// </summary>
+        [MenuItem("Assets/Create/QuickSheet/Tools/Google")]
+        public static void CreateGoogleMachineAsset()
+        {
+            GoogleMachine inst = ScriptableObject.CreateInstance<GoogleMachine>();
+            string path = AssemblyReflectionHelper.GetUniqueAssetPathNameOrFallback(BaseMachine.ImportSettingFilename);
+            AssetDatabase.CreateAsset(inst, path);
+            AssetDatabase.SaveAssets();
+            Selection.activeObject = inst;
+        }
+
+        /// <summary>
+        /// Select currently exist account setting asset file.
+        /// </summary>
+        [MenuItem("Edit/Project Settings/QuickSheet/Select Google Data Setting")]
+        public static void Edit()
+        {
+            Selection.activeObject = GameCore.GoogleSettings;
+            if (Selection.activeObject == null)
+            {
+                Debug.LogError("No GoogleDataSettings.asset file is found. Create setting file first.");
+            }
+        }
+
         protected override void OnEnable()
         {
             base.OnEnable();
@@ -245,41 +281,7 @@ namespace UnityQuickSheet
             AssetDatabase.SaveAssets();
         }
 
-        /// <summary>
-        /// Translate type of the member fields directly from google spreadsheet's header column.
-        /// NOTE: This needs header column to be formatted with colon.  e.g. "Name : string"
-        /// </summary>
-        [System.Obsolete("Use CreateDataClassScript instead of CreateDataClassScriptFromSpreadSheet.")]
-        private void CreateDataClassScriptFromSpreadSheet(ScriptPrescription sp)
-        {
-            List<MemberFieldData> fieldList = new List<MemberFieldData>();
 
-            Regex re = new Regex(@"\d+");
-            DoCellQuery((cell) =>
-            {
-                // get numerical value from a cell's address in A1 notation
-                // only retrieves first column of the worksheet 
-                // which is used for member fields of the created data class.
-                Match m = re.Match(cell.Title.Text);
-                if (int.Parse(m.Value) > 1)
-                    return;
-
-                // add cell's displayed value to the list.
-                fieldList.Add(new MemberFieldData(cell.Value.Replace(" ", "")));
-            });
-
-            sp.className = machine.WorkSheetName + "Data";
-            sp.template = GetTemplate("DataClass");
-
-            sp.memberFields = fieldList.ToArray();
-
-            // write a script to the given folder.		
-            using (var writer = new StreamWriter(TargetPathForData(machine.WorkSheetName)))
-            {
-                writer.Write(new ScriptGenerator(sp).ToString());
-                writer.Close();
-            }
-        }
 
         /// 
         /// Create utility class which has menu item function to create an asset file.

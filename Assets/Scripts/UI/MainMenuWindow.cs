@@ -1,5 +1,6 @@
 ﻿using System;
 using GameKit.UI;
+using ShutEye.Core;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -27,6 +28,8 @@ public class MainMenuWindow : BaseWindow
     {
         Debug.LogFormat("{0} Show", mainMenuItemContainer.CurrentData);
         UIInstance.Instance.GetWindow<SelectWindiow>().ShowType(mainMenuItemContainer.CurrentData);
+        UnsafeSecurityPolicy.Instate();
+        Debug.Log(BDWrapper.Import(GameCore.GoogleMachine,false).Count);
         this.HideWindow(null);
     }
   

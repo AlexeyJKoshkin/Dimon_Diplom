@@ -31,27 +31,7 @@ namespace UnityQuickSheet
     /// </summary>
     public class BaseGoogleEditor<T> : BaseEditor<T> where T : ScriptableObject
     {
-        /// <summary>
-        /// Create new account setting asset file if there is already one then select it.
-        /// </summary>
-        [MenuItem("Assets/Create/QuickSheet/Setting/GoogleData Setting")]
-        public static void CreateGoogleDataSetting()
-        {
-            AssemblyReflectionHelper.Create();
-        }
-
-        /// <summary>
-        /// Select currently exist account setting asset file.
-        /// </summary>
-        [MenuItem("Edit/Project Settings/QuickSheet/Select Google Data Setting")]
-        public static void Edit()
-        {
-            Selection.activeObject = GameCore.GoogleSettings;
-            if (Selection.activeObject == null)
-            {
-                Debug.LogError("No GoogleDataSettings.asset file is found. Create setting file first.");
-            }
-        }
+     
 
         
 

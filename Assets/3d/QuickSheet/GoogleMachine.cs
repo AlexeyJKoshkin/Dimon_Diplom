@@ -6,7 +6,6 @@
 ///
 ///////////////////////////////////////////////////////////////////////////////
 using UnityEngine;
-using UnityEditor;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -16,7 +15,7 @@ namespace UnityQuickSheet
     /// <summary>
     /// A class for various setting to import google spreadsheet data and generated related script files.
     /// </summary>
-    internal class GoogleMachine : BaseMachine
+    public class GoogleMachine : BaseMachine
     {
         [SerializeField]
         public static string generatorAssetPath = "Assets/QuickSheet/GDataPlugin/Tool/";
@@ -39,17 +38,6 @@ namespace UnityQuickSheet
             TemplatePath = gDataTemplatePath;
         }
 
-        /// <summary>
-        /// A menu item which create a 'GoogleMachine' asset file.
-        /// </summary>
-        [MenuItem("Assets/Create/QuickSheet/Tools/Google")]
-        public static void CreateGoogleMachineAsset()
-        {
-            GoogleMachine inst = ScriptableObject.CreateInstance<GoogleMachine>();
-            string path = AssemblyReflectionHelper.GetUniqueAssetPathNameOrFallback(ImportSettingFilename);
-            AssetDatabase.CreateAsset(inst, path);
-            AssetDatabase.SaveAssets();
-            Selection.activeObject = inst;
-        }
+
     }
 }

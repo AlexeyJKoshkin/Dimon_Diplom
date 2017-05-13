@@ -7,7 +7,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 using System;
 using UnityEngine;
-using UnityEditor;
 using System.Linq;
 using System.IO;
 using System.Collections.Generic;
@@ -104,40 +103,6 @@ namespace UnityQuickSheet
         {
             name = "";
             type = CellType.Undefined;
-        }
-
-        [System.Obsolete("Use default constructor.")]
-        public MemberFieldData(string def)
-        {
-            string[] strSplit = def.Split (':');
-            if (strSplit.Length > 1)
-            {
-                string typedef = strSplit[1];
-
-                if (string.Compare(typedef, "integer") == 0)
-                    type = CellType.Int;
-                if (string.Compare(typedef, "long") == 0)
-                    type = CellType.Long;
-                else if (string.Compare(typedef,"string") == 0)
-                    type = CellType.String;
-                else if (string.Compare(typedef, "float") == 0)
-                    type = CellType.Float;
-                else if (string.Compare(typedef, "double") == 0)
-                    type = CellType.Double;
-                else if (string.Compare(typedef, "enum") == 0)
-                    type = CellType.Enum;
-                else if (string.Compare(typedef, "bool") == 0)
-                    type = CellType.Bool;
-                else
-                {
-                    type = CellType.Undefined;
-                    Debug.LogError ("Wrong cell type is defined: " + typedef);
-                }
-            }
-            else
-                type = CellType.Undefined;
-
-            name = strSplit [0];
         }
     }
 

@@ -23,10 +23,10 @@ namespace UnityQuickSheet
 
         // both are needed for popup editor control.
         public string[] SheetNames = { "" };
-        public int CurrentSheetIndex 
+        public int CurrentSheetIndex
         {
             get { return currentSelectedSheet; }
-            set { currentSelectedSheet = value;} 
+            set { currentSelectedSheet = value; }
         }
 
         [SerializeField]

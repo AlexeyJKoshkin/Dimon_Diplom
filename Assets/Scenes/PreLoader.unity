@@ -151,6 +151,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _allProviders: []
   _googleSettings: {fileID: 11400000, guid: fe5b4ba143358444c932c44eedc4a76f, type: 2}
+  _machine:
+    sheetName: GoogleData
+    workSheetName: Version
+    columnHeaderList: []
+    AccessCode: 4/m1y4rwPf-MdItnMExh8liuiUwpZYt8kAc5GP8ez0xbA
 --- !u!4 &72084896
 Transform:
   m_ObjectHideFlags: 0
