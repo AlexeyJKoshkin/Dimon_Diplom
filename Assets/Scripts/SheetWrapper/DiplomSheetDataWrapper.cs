@@ -29,13 +29,7 @@ public class DiplomSheetDataWrapper : MonoBehaviour
 
     private Dictionary<MenuItemType, List<BaseDataForSelectWindow>> _runtime_DB = new Dictionary<MenuItemType, List<BaseDataForSelectWindow>>();
 
-
-    public void GetFullDB()
-    {
-        StartCoroutine(GetDb());
-    }
-
-    private IEnumerator GetDb()
+    public IEnumerator GetDb()
     {
         _runtime_DB.Clear();
         foreach (MenuItemType t in Enum.GetValues(typeof(MenuItemType)))

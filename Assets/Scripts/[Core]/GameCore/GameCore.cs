@@ -2,6 +2,7 @@ using Entitas.VisualDebugging.Unity;
 using ShutEye.Data;
 using ShutEye.Data.Provider;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using ShutEye.Extensions;
 using UnityEngine;
@@ -66,8 +67,12 @@ namespace ShutEye.Core
         [SerializeField]
         private GoogleDataSettings _googleSettings;
 
+        public DiplomSheetDataWrapper MainBD {
+            get { return _wrapper; }
+        }
+
         [SerializeField]
-        public DiplomSheetDataWrapper _wrapper;
+        private DiplomSheetDataWrapper _wrapper;
 
         private void Awake()
         {
@@ -75,15 +80,13 @@ namespace ShutEye.Core
             _allProviders.ForEach(b => data.RegisterProvider(b));
             googleSettings = _googleSettings;
             _data = data;
-        
             var logger = FindObjectOfType<LoggerUI>();
             if (logger != null) logger.InitLogger();
             UnsafeSecurityPolicy.Instate();
-            _wrapper.GetFullDB();
             OnAllReady();
         }
 
-        private void Start()
+        private IEnumerator Start()
         {
 #if UNITY_EDITOR
             foreach (var debugSystemsBehaviour in FindObjectsOfType<DebugSystemsBehaviour>())
@@ -91,9 +94,8 @@ namespace ShutEye.Core
                 debugSystemsBehaviour.gameObject.AddComponent<DontDestroyOnLoad>();
             }
 #endif
+            yield return _wrapper.GetDb();
             SceneManager.LoadScene(STRH.DefaultNames.MainMenuScene); // грузим главное меню
-
-
         }
 
         #region Init

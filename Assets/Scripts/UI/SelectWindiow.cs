@@ -36,7 +36,7 @@ public class SelectWindiow : BaseWindow
 
     public void ShowType(MenuItemType type)
     {
-        var listResults = GameCore.Instance._wrapper.GetAllInfoAbout(type);
+        var listResults = GameCore.Instance.MainBD.GetAllInfoAbout(type);
         _currentViewType = type;
         _itemsContloller.InitDataToList<BaseDataForSelectWindow>(listResults);
         if (listResults.Count == 0)
