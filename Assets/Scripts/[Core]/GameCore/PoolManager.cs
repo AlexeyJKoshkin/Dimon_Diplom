@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -83,6 +84,31 @@ namespace ShutEye.Core
         }
 
         #region SpriteLoader
+
+        internal void LoadSprite(string avatarSprite, Action<Sprite> onLoadSprite)
+        {
+            if (_cashadSprites.ContainsKey(avatarSprite))
+            {
+                if (onLoadSprite != null)
+                    onLoadSprite.Invoke(_cashadSprites[avatarSprite]);
+            }
+            else
+            {
+                if(onLoadSprite!= null)
+                    StartCoroutine(LoadSpriteCoroutine(avatarSprite, onLoadSprite));
+            }
+        }
+
+        private IEnumerator LoadSpriteCoroutine(string url, Action<Sprite> Onfinish)
+        {
+            var www = new WWW(url);
+            yield return www;
+            var sprite = Sprite.Create(www.texture, new Rect(0, 0, www.texture.width, www.texture.height),
+                new Vector2(0, 0));
+            _cashadSprites.Add(url,sprite);
+            www.Dispose();
+            Onfinish.Invoke(sprite);
+        }
 
         public static Sprite LoadSprite(string path)
         {

@@ -24,24 +24,14 @@ public class SelectWindowContainer : SEUIContainerItem, IContainerUI<BaseDataFor
 
     public override void RefreshView()
     {
-        if (CurrentData.AvatarSprite == "No Photo")
-        {
-            _AvatarImage.sprite = GameCore.LoadSprite(CurrentData.AvatarSprite);
-        }
-        else
-        {
-            StartCoroutine(LoadPhoto(CurrentData.AvatarSprite));
-        }
+        GameCore.Instance.LoadSprite(CurrentData.AvatarSprite, OnLoadSprite);
         _nameText.text = CurrentData.Name;
         _priceText.text = CurrentData.Price;
     }
 
-    private IEnumerator LoadPhoto(string currentDataAvatarSprite)
+    public void OnLoadSprite(Sprite sprite)
     {
-        var www = new WWW(currentDataAvatarSprite);
-        yield return www;
-        _AvatarImage.sprite = Sprite.Create(www.texture, new Rect(0, 0, www.texture.width, www.texture.height), new Vector2(0, 0));
-        www.Dispose();
+        _AvatarImage.sprite = sprite;
     }
 
     public void UpdateDataView(BaseDataForSelectWindow newdata)

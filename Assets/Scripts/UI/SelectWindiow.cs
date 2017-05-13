@@ -1,5 +1,4 @@
 ﻿using System;
-using GameKit;
 using GameKit.UI;
 using ShutEye.Core;
 using ShutEye.UI.Core;
