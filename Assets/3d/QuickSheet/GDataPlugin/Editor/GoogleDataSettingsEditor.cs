@@ -18,6 +18,7 @@ using Newtonsoft.Json.Linq;
 using System.Net;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
+using ShutEye.Core;
 
 namespace UnityQuickSheet
 {
@@ -44,12 +45,12 @@ namespace UnityQuickSheet
     [CustomEditor(typeof(GoogleDataSettings))]
     public class GoogleDataSettingsEditor : Editor
     {
-        GoogleDataSettings setting;
+        GoogleDataSettings setting {
+            get { return target as GoogleDataSettings;}
+        }
 
         public void OnEnable()
         {
-            setting = target as GoogleDataSettings;
-
             // resolve TlsException error
             UnsafeSecurityPolicy.Instate();
         }
@@ -78,7 +79,7 @@ namespace UnityQuickSheet
 
             EditorGUILayout.Separator();
 
-            if (setting.CheckPath())
+            if (CheckPath())
             {
                 EditorGUILayout.Separator();
 
@@ -98,11 +99,11 @@ namespace UnityQuickSheet
                     {
                         setting.OAuth2Data.client_id = string.Empty;
                         setting.OAuth2Data.client_secret = string.Empty;
-                        GoogleDataSettings.Instance._AccessCode = string.Empty;
+                        GameCore.GoogleSettings._AccessCode = string.Empty;
 
                         // retrieves from google developer center.
-                        GoogleDataSettings.Instance._RefreshToken = string.Empty;
-                        GoogleDataSettings.Instance._AccessToken = string.Empty;
+                        GameCore.GoogleSettings._RefreshToken = string.Empty;
+                        GameCore.GoogleSettings._AccessToken = string.Empty;
                     }
                 }
                 if (GoogleDataSettings.useOAuth2JsonFile)
@@ -146,7 +147,7 @@ namespace UnityQuickSheet
                             foreach (JToken token in propertyValues)
                             {
                                 string val = token.ToString();
-                                GoogleDataSettings.Instance.OAuth2Data = JsonConvert.DeserializeObject<GoogleDataSettings.OAuth2JsonData>(val);
+                                GameCore.GoogleSettings.OAuth2Data = JsonConvert.DeserializeObject<GoogleDataSettings.OAuth2JsonData>(val);
                             }
 
                             setting.JsonFilePath = path;
@@ -182,15 +183,15 @@ namespace UnityQuickSheet
 
                 if (GUILayout.Button("Start Authentication"))
                 {
-                    GDataDB.Impl.GDataDBRequestFactory.InitAuthenticate();
+                    GDataDB.Impl.GDataDBRequestFactory.InitAuthenticate(GameCore.GoogleSettings);
                 }
 
-                GoogleDataSettings.Instance._AccessCode = EditorGUILayout.TextField("AccessCode", GoogleDataSettings.Instance._AccessCode);
+                GameCore.GoogleSettings._AccessCode = EditorGUILayout.TextField("AccessCode", GameCore.GoogleSettings._AccessCode);
                 if (GUILayout.Button("Finish Authentication"))
                 {
                     try
                     {
-                        GDataDB.Impl.GDataDBRequestFactory.FinishAuthenticate();
+                        GDataDB.Impl.GDataDBRequestFactory.FinishAuthenticate(GameCore.GoogleSettings);
                     }
                     catch (Exception e)
                     {
@@ -224,6 +225,16 @@ namespace UnityQuickSheet
             {
                 EditorUtility.SetDirty(setting);
             }
+        }
+        /// <summary>
+        /// Checks GoogleDataSetting.asset file exist at the specified path(AssetPath+AssetFileName).
+        /// </summary>
+        public static bool CheckPath()
+        {
+            string file = UnityEditor.AssetDatabase.GetAssetPath(UnityEditor.Selection.activeObject);
+            string assetFile = GoogleDataSettings.AssetPath + GoogleDataSettings.AssetFileName;
+
+            return (file == assetFile) ? true : false;
         }
     }
 }

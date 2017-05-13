@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using ShutEye.Extensions;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityQuickSheet;
 
 namespace ShutEye.Core
 {
@@ -36,6 +37,36 @@ namespace ShutEye.Core
 
         [SerializeField]
         private List<DataBox> _allProviders;
+
+        // public static IEntityByCollider InteractiveObjects { get { return GameCore.Pools.game.ShutEyeLevel; } }
+        public static GoogleDataSettings GoogleSettings
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (Application.isPlaying)
+                {
+                    return googleSettings;
+                }
+                else
+                {
+                    return googleSettings ?? (googleSettings = AssemblyReflectionHelper.Create());
+                }
+#else
+
+                return googleSettings;
+#endif
+            }
+        }
+
+        private static GoogleDataSettings googleSettings;
+
+
+        /// <summary>
+        /// A singleton instance.
+        /// </summary>
+        [SerializeField]
+        private GoogleDataSettings _googleSettings;
 
         private void Awake()
         {

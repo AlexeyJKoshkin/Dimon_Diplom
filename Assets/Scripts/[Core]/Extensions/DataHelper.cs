@@ -8,6 +8,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
+using UnityQuickSheet;
 
 public static partial class AssemblyReflectionHelper
 {
@@ -90,7 +91,11 @@ public static partial class AssemblyReflectionHelper
         return (from assembly in scriptAssemblies from type in assembly.GetTypes().Where(t => t.IsClass && typeof(T).IsAssignableFrom(t)) where IncludingAbstract || !type.IsAbstract select type).ToList();
     }
 
+
+
 #if UNITY_EDITOR
+
+  
 
     public static IDataEditorStorage LoadAllPrividers(IDataEditorStorage storage = null)
     {
@@ -110,6 +115,82 @@ public static partial class AssemblyReflectionHelper
                var path = UnityEditor.AssetDatabase.GUIDToAssetPath(guid);
                return (DataBox)UnityEditor.AssetDatabase.LoadAssetAtPath(path, typeof(DataBox));
            });
+    }
+
+    /// <summary>
+    /// Create .asset file for google spreadsheet setting if it does not exist.
+    /// </summary>
+    public static GoogleDataSettings Create()
+    {
+       
+        string filePath = GoogleDataSettings.AssetPath + GoogleDataSettings.AssetFileName;
+        var res = UnityEditor.AssetDatabase.LoadAssetAtPath<GoogleDataSettings>(filePath);
+
+        if (res == null)
+        {
+            res = ScriptableObject.CreateInstance<GoogleDataSettings>();
+
+            string path = GetUniqueAssetPathNameOrFallback(GoogleDataSettings.AssetFileName);
+            UnityEditor.AssetDatabase.CreateAsset(res, path);
+
+            GoogleDataSettings.AssetPath = Path.GetDirectoryName(path);
+            GoogleDataSettings.AssetPath += "/";
+
+            // saves file path of the created asset.
+            UnityEditor.EditorUtility.SetDirty(res);
+            UnityEditor.AssetDatabase.SaveAssets();
+        }
+        else
+        {
+            Debug.LogWarning("Already exist at " + filePath);
+        }
+
+        UnityEditor.Selection.activeObject = res;
+
+        return res;
+    }
+
+    public static T CreateAsset<T>() where T : ScriptableObject
+    {
+        T asset = ScriptableObject.CreateInstance<T>();
+
+        string path = UnityEditor.AssetDatabase.GetAssetPath(UnityEditor.Selection.activeObject);
+        if (path == "")
+        {
+            path = "Assets";
+        }
+        else if (Path.GetExtension(path) != "")
+        {
+            path = path.Replace(Path.GetFileName(UnityEditor.AssetDatabase.GetAssetPath(UnityEditor.Selection.activeObject)), "");
+        }
+
+        string assetPathAndName = UnityEditor.AssetDatabase.GenerateUniqueAssetPath(path + "/New " + typeof(T).ToString() + ".asset");
+
+        UnityEditor.AssetDatabase.CreateAsset(asset, assetPathAndName);
+
+        UnityEditor.AssetDatabase.SaveAssets();
+        UnityEditor.EditorUtility.FocusProjectWindow();
+        UnityEditor.Selection.activeObject = asset;
+
+        return asset;
+    }
+
+    public static string GetUniqueAssetPathNameOrFallback(string filename)
+    {
+        string path;
+        try
+        {
+            // Private implementation of a file naming function which puts the file at the selected path.
+            System.Type assetdatabase = typeof(UnityEditor.AssetDatabase);
+            path = (string)assetdatabase.GetMethod("GetUniquePathNameAtSelectedPath",
+                System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static).Invoke(assetdatabase, new object[] { filename });
+        }
+        catch
+        {
+            // Protection against implementation changes.
+            path = UnityEditor.AssetDatabase.GenerateUniqueAssetPath("Assets/" + filename);
+        }
+        return path;
     }
 
 #endif

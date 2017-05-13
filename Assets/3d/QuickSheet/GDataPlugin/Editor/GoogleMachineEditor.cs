@@ -24,6 +24,7 @@ using GDataDB.Linq;
 using GDataDB.Impl;
 using Google.GData.Client;
 using Google.GData.Spreadsheets;
+using ShutEye.Core;
 
 namespace UnityQuickSheet
 {
@@ -46,10 +47,10 @@ namespace UnityQuickSheet
                 machine.ReInitialize();
 
                 // Specify paths with one on the GoogleDataSettings.asset file.
-                if (string.IsNullOrEmpty(GoogleDataSettings.Instance.RuntimePath) == false)
-                    machine.RuntimeClassPath = GoogleDataSettings.Instance.RuntimePath;
-                if (string.IsNullOrEmpty(GoogleDataSettings.Instance.EditorPath) == false)
-                    machine.EditorClassPath = GoogleDataSettings.Instance.EditorPath;
+                if (string.IsNullOrEmpty(GameCore.GoogleSettings.RuntimePath) == false)
+                    machine.RuntimeClassPath = GameCore.GoogleSettings.RuntimePath;
+                if (string.IsNullOrEmpty(GameCore.GoogleSettings.EditorPath) == false)
+                    machine.EditorClassPath = GameCore.GoogleSettings.EditorPath;
             }
         }
 
@@ -60,7 +61,7 @@ namespace UnityQuickSheet
         {
             base.OnInspectorGUI();
 
-            if (GoogleDataSettings.Instance == null)
+            if (GameCore.GoogleSettings == null)
             {
                 GUILayout.BeginHorizontal();
                 GUILayout.Toggle(true, "", "CN EntryError", GUILayout.Width(20));
@@ -132,7 +133,7 @@ namespace UnityQuickSheet
             // force save changed type.
             if (GUI.changed)
             {
-                EditorUtility.SetDirty(GoogleDataSettings.Instance);
+                EditorUtility.SetDirty(GameCore.GoogleSettings);
                 EditorUtility.SetDirty(machine);
             }
         }
@@ -150,7 +151,7 @@ namespace UnityQuickSheet
         {
             // first we need to connect to the google-spreadsheet to get all the first row of the cells
             // which are used for the properties of data class.
-            var client = new DatabaseClient("", "");
+            var client = new DatabaseClient("", "", GameCore.GoogleSettings);
 
             if (string.IsNullOrEmpty(machine.SpreadSheetName))
                 return;

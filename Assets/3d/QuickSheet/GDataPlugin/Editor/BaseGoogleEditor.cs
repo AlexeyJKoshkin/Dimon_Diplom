@@ -22,6 +22,7 @@ using System.Security.Cryptography.X509Certificates;
 
 using Google.GData.Client;
 using Google.GData.Spreadsheets;
+using ShutEye.Core;
 
 namespace UnityQuickSheet
 {
@@ -30,6 +31,30 @@ namespace UnityQuickSheet
     /// </summary>
     public class BaseGoogleEditor<T> : BaseEditor<T> where T : ScriptableObject
     {
+        /// <summary>
+        /// Create new account setting asset file if there is already one then select it.
+        /// </summary>
+        [MenuItem("Assets/Create/QuickSheet/Setting/GoogleData Setting")]
+        public static void CreateGoogleDataSetting()
+        {
+            AssemblyReflectionHelper.Create();
+        }
+
+        /// <summary>
+        /// Select currently exist account setting asset file.
+        /// </summary>
+        [MenuItem("Edit/Project Settings/QuickSheet/Select Google Data Setting")]
+        public static void Edit()
+        {
+            Selection.activeObject = GameCore.GoogleSettings;
+            if (Selection.activeObject == null)
+            {
+                Debug.LogError("No GoogleDataSettings.asset file is found. Create setting file first.");
+            }
+        }
+
+        
+
         /// 
         /// Actively ignore security concerns to resolve TlsException error.
         /// 
@@ -48,7 +73,7 @@ namespace UnityQuickSheet
             // resolves TlsException error
             ServicePointManager.ServerCertificateValidationCallback = Validator;
 
-            GoogleDataSettings settings = GoogleDataSettings.Instance;
+            GoogleDataSettings settings = GameCore.GoogleSettings;
             if (settings != null)
             {
                 if (string.IsNullOrEmpty(settings.OAuth2Data.client_id) ||

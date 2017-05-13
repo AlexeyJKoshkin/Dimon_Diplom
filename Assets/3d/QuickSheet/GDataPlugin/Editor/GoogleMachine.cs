@@ -46,7 +46,7 @@ namespace UnityQuickSheet
         public static void CreateGoogleMachineAsset()
         {
             GoogleMachine inst = ScriptableObject.CreateInstance<GoogleMachine>();
-            string path = CustomAssetUtility.GetUniqueAssetPathNameOrFallback(ImportSettingFilename);
+            string path = AssemblyReflectionHelper.GetUniqueAssetPathNameOrFallback(ImportSettingFilename);
             AssetDatabase.CreateAsset(inst, path);
             AssetDatabase.SaveAssets();
             Selection.activeObject = inst;

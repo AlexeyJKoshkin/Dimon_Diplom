@@ -107,14 +107,14 @@ namespace UnityQuickSheet
         /// </summary>
         public static ExcelSettings Create()
         {
-            string filePath = CustomAssetUtility.GetUniqueAssetPathNameOrFallback(AssetFileName);
+            string filePath = AssemblyReflectionHelper.GetUniqueAssetPathNameOrFallback(AssetFileName);
             s_Instance = (ExcelSettings)AssetDatabase.LoadAssetAtPath(filePath, typeof(ExcelSettings));
 
             if (s_Instance == null)
             {
                 s_Instance = CreateInstance<ExcelSettings>();
 
-                string path = CustomAssetUtility.GetUniqueAssetPathNameOrFallback(AssetFileName);
+                string path = AssemblyReflectionHelper.GetUniqueAssetPathNameOrFallback(AssetFileName);
                 AssetDatabase.CreateAsset(s_Instance, path);
 
                 ExcelSettings.AssetPath = Path.GetDirectoryName(path);

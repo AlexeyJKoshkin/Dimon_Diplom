@@ -11,7 +11,7 @@ public partial class GoogleDataAssetUtility
     [MenuItem("Assets/Create/Google/$ClassName")]
     public static void $AssetFileCreateFuncName()
     {
-        $ClassName asset = CustomAssetUtility.CreateAsset<$ClassName>();
+        $ClassName asset = AssemblyReflectionHelper.CreateAsset<$ClassName>();
         asset.SheetName = "$SpreadSheetName";
         asset.WorksheetName = "$ClassName";
         EditorUtility.SetDirty(asset);        
