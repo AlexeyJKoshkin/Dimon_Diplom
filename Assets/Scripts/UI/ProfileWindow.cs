@@ -1,6 +1,7 @@
 ﻿using System;
 using GameKit;
 using GameKit.UI;
+using ShutEye.Core;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -36,10 +37,16 @@ public class ProfileWindow : BaseWindow, IDataBinding<BaseDataForProfileWindow>
 
     public override void RefreshView()
     {
-        _fullSprite.sprite = CurrentData.Foto;
+        GameCore.Instance.LoadSprite(CurrentData.Foto, OnLoadPhoto);
+        
         _fio.text = CurrentData.Name;
         _fullInfo.text = CurrentData.FullInfo;
         _contacts.text = CurrentData.Contatcts;
+    }
+
+    private void OnLoadPhoto(Sprite obj)
+    {
+        _fullSprite.sprite = obj;
     }
 
     public void UpdateDataView(BaseDataForProfileWindow newdata)

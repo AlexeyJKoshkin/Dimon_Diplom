@@ -1,0 +1,102 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3da6bf7457509244ada6e1d6082091f, type: 3}
+  m_Name: IconBtn
+  m_EditorClassIdentifier: 
+  Dirty: 0
+  AutoUpdate: 0
+  ForceSquare: 0
+  DefaultTrim: 1
+  DefaultPadSize: 1
+  Identifier: e5eb440189dfd5843bd3a4c09f7f2036
+  Width: 2048
+  Height: 2048
+  DefaultPadStyle: 0
+  Texture: {fileID: 2800000, guid: e5eb440189dfd5843bd3a4c09f7f2036, type: 3}
+  Sources:
+  - Flag: 0
+    Identifier: 21d7df0aafdd0e0459d7a67a8bab416b
+    Dirty: 0
+    Trim: 1
+    PadSize: 1
+    PadStyle: 0
+    UseCustomPivot: 0
+    CustomPivot: {x: 0.5, y: 0.5}
+    UseCustomBorder: 0
+    CustomBorder: {x: 0, y: 0, z: 0, w: 0}
+  - Flag: 0
+    Identifier: 59e98872115c9824dbd44aae23e26f30
+    Dirty: 0
+    Trim: 1
+    PadSize: 1
+    PadStyle: 0
+    UseCustomPivot: 0
+    CustomPivot: {x: 0.5, y: 0.5}
+    UseCustomBorder: 0
+    CustomBorder: {x: 0, y: 0, z: 0, w: 0}
+  - Flag: 0
+    Identifier: 40f339f68d9ea234ca671ba482e02aed
+    Dirty: 0
+    Trim: 1
+    PadSize: 1
+    PadStyle: 0
+    UseCustomPivot: 0
+    CustomPivot: {x: 0.5, y: 0.5}
+    UseCustomBorder: 0
+    CustomBorder: {x: 0, y: 0, z: 0, w: 0}
+  - Flag: 0
+    Identifier: 28d816ff46484df4b943505626156c55
+    Dirty: 0
+    Trim: 1
+    PadSize: 1
+    PadStyle: 0
+    UseCustomPivot: 0
+    CustomPivot: {x: 0.5, y: 0.5}
+    UseCustomBorder: 0
+    CustomBorder: {x: 0, y: 0, z: 0, w: 0}
+  - Flag: 0
+    Identifier: 642059de4bca8654e9f86273872fb28e
+    Dirty: 0
+    Trim: 1
+    PadSize: 1
+    PadStyle: 0
+    UseCustomPivot: 0
+    CustomPivot: {x: 0.5, y: 0.5}
+    UseCustomBorder: 0
+    CustomBorder: {x: 0, y: 0, z: 0, w: 0}
+  - Flag: 0
+    Identifier: 8dd47a1f7a83daa4d99b0fc29f7a6db0
+    Dirty: 0
+    Trim: 1
+    PadSize: 1
+    PadStyle: 0
+    UseCustomPivot: 0
+    CustomPivot: {x: 0.5, y: 0.5}
+    UseCustomBorder: 0
+    CustomBorder: {x: 0, y: 0, z: 0, w: 0}
+  - Flag: 0
+    Identifier: d7f4e30775015eb40901017f1856ae07
+    Dirty: 0
+    Trim: 1
+    PadSize: 1
+    PadStyle: 0
+    UseCustomPivot: 0
+    CustomPivot: {x: 0.5, y: 0.5}
+    UseCustomBorder: 0
+    CustomBorder: {x: 0, y: 0, z: 0, w: 0}
+  Sprites:
+  - {fileID: 21300004, guid: e5eb440189dfd5843bd3a4c09f7f2036, type: 3}
+  - {fileID: 21300002, guid: e5eb440189dfd5843bd3a4c09f7f2036, type: 3}
+  - {fileID: 21300010, guid: e5eb440189dfd5843bd3a4c09f7f2036, type: 3}
+  - {fileID: 21300012, guid: e5eb440189dfd5843bd3a4c09f7f2036, type: 3}
+  - {fileID: 21300000, guid: e5eb440189dfd5843bd3a4c09f7f2036, type: 3}
+  - {fileID: 21300006, guid: e5eb440189dfd5843bd3a4c09f7f2036, type: 3}
+  - {fileID: 21300008, guid: e5eb440189dfd5843bd3a4c09f7f2036, type: 3}

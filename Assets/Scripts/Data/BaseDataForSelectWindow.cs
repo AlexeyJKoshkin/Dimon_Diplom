@@ -12,8 +12,8 @@ public class BaseDataForSelectWindow : DataObject
 
 public class BaseDataForProfileWindow : DataObject
 {
-    public Sprite[] Porfolio;
+    public string[] Porfolio;
     public string FullInfo;
-    public Sprite Foto;
+    public string Foto;
     public string Contatcts;
 }

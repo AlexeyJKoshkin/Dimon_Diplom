@@ -11,25 +11,14 @@ namespace ShutEye.Core
 
         public const string SCENE_MAIN_SCREEN = "MainScene";
 
-        public static int CountEquipSlots
-        {
-            get { return Instance._countEquipSlots; }
-        }
-
-        public static float SpeedModificator
+        public static Sprite DefaultIcon
         {
             get
             {
-                return Instance._speedModeficator;
+                return Instance._defauiltIcon;
             }
         }
 
-        [SerializeField]
-        [Range(1f, 50f)]
-        private float _speedModeficator = 10;
-
-        [SerializeField]
-        [Range(1, 5)]
-        private int _countEquipSlots = 3;
+        [SerializeField] private Sprite _defauiltIcon;
     }
 }

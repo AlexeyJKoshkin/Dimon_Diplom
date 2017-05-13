@@ -103,11 +103,14 @@ namespace ShutEye.Core
         {
             var www = new WWW(url);
             yield return www;
-            var sprite = Sprite.Create(www.texture, new Rect(0, 0, www.texture.width, www.texture.height),
-                new Vector2(0, 0));
-            _cashadSprites.Add(url,sprite);
+            if (string.IsNullOrEmpty(www.error))
+            {
+                var sprite = Sprite.Create(www.texture, new Rect(0, 0, www.texture.width, www.texture.height),
+                    new Vector2(0, 0));
+                _cashadSprites.Add(url, sprite);
+                Onfinish.Invoke(sprite);
+            }
             www.Dispose();
-            Onfinish.Invoke(sprite);
         }
 
         public static Sprite LoadSprite(string path)

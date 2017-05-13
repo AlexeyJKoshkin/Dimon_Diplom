@@ -10,7 +10,7 @@ using UnityEngine.UI;
 /// </summary>
 public class SelectWindowContainer : SEUIContainerItem, IContainerUI<BaseDataForSelectWindow>
 {
-    /// <summary>
+ /// <summary>
     /// Аватарка
     /// </summary>
     [SerializeField]
@@ -24,6 +24,7 @@ public class SelectWindowContainer : SEUIContainerItem, IContainerUI<BaseDataFor
 
     public override void RefreshView()
     {
+        _AvatarImage.sprite = GameSettings.DefaultIcon;
         GameCore.Instance.LoadSprite(CurrentData.AvatarSprite, OnLoadSprite);
         _nameText.text = CurrentData.Name;
         _priceText.text = CurrentData.Price;
