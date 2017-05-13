@@ -1,5 +1,13 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
+
+[Serializable]
+public struct SaveDataStruct
+{
+    public MenuItemType Type;
+    public BaseDataForSelectWindow[] Data;
+}
 
 /// <summary>
 /// базовые данные под отображение
