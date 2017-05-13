@@ -11,153 +11,153 @@ using UnityQuickSheet;
 
 public static class BDWrapper
 {
-    public static IList<BaseDataForSelectWindow> GetAllInfoAbout(MenuItemType type)
+    static IList<BaseDataForSelectWindow> GetAllInfoAbout(MenuItemType type)
     {
         List<BaseDataForSelectWindow> result = new List<BaseDataForSelectWindow>();
 
-        switch (type)
-        {
-            case MenuItemType.Leading:
-                result.Add(new BaseDataForSelectWindow()
-                {
-                   Id= 1,
-                    Name = "Дмитрий Кошкин",
-                    AvatarSprite = GameCore.LoadSprite(@"Iconc\avatar_leading\Koshkin"),
-                    Price = "Blabala"
-                });
-                result.Add(new BaseDataForSelectWindow()
-                {
-                    Id= 2,
-                    Name = "Владимир Пахомов",
-                    AvatarSprite = GameCore.LoadSprite(@"Iconc\avatar_leading\Pakhomov"),
-                    Price = "Blabala"
-                });
-                result.Add(new BaseDataForSelectWindow()
-                {
-                    Id= 3,
-                    Name = "Максим Лобов",
-                    AvatarSprite = GameCore.LoadSprite(@"Iconc\avatar_leading\Lobov"),
-                    Price = "Blabala"
-                });
-                break;
-            case MenuItemType.Music:
-                result.Add(new BaseDataForSelectWindow()
-                {
-                    Id= 1,
-                    Name = "French",
-                    AvatarSprite = GameCore.LoadSprite(@"Iconc\avatar_music\French"),
-                    Price = "Blabala"
-                });
-                result.Add(new BaseDataForSelectWindow()
-                {
-                    Id= 2,
-                    Name = "Dj_Lime",
-                    AvatarSprite = GameCore.LoadSprite(@"Iconc\avatar_music\Dj_Lime"),
-                    Price = "Blabala"
-                });
-                result.Add(new BaseDataForSelectWindow()
-                {
-                    Id= 3,
-                    Name = "Hobots",
-                    AvatarSprite = GameCore.LoadSprite(@"Iconc\avatar_music\Hobots"),
-                    Price = "Blabala"
-                });
-                break;
-            case MenuItemType.Fotographer:
-                result.Add(new BaseDataForSelectWindow()
-                {
-                    Id= 1,
-                    Name = "Вероника Чернявская",
-                    AvatarSprite = GameCore.LoadSprite(@"Iconc\avatar_Fotographer\Chernyavskaya"),
-                    Price = "Blabala"
-                });
-                result.Add(new BaseDataForSelectWindow()
-                {
-                    Id= 2,
-                    Name = "Христя Мармонов",
-                    AvatarSprite = GameCore.LoadSprite(@"Iconc\avatar_Fotographer\Marmarov"),
-                    Price = "Blabala"
-                });
-                result.Add(new BaseDataForSelectWindow()
-                {
-                    Id= 3,
-                    Name = "Александр Сеоев",
-                    AvatarSprite = GameCore.LoadSprite(@"Iconc\avatar_Fotographer\Seoev"),
-                    Price = "Blabala"
-                });
-                break;
-            case MenuItemType.Decorator:
-                result.Add(new BaseDataForSelectWindow()
-                {
-                    Id= 1,
-                    Name = "Сад",
-                    AvatarSprite = GameCore.LoadSprite(@"Iconc\avatar_Decorator\Sad"),
-                    Price = "Blabala"
-                });
-                result.Add(new BaseDataForSelectWindow()
-                {
-                    Id= 2,
-                    Name = "Пронина Анастасия ",
-                    AvatarSprite = GameCore.LoadSprite(@"Iconc\avatar_Decorator\Pronina"),
-                    Price = "Blabala"
-                });
-                result.Add(new BaseDataForSelectWindow()
-                {
-                    Id= 3,
-                    Name = "Чудное Мгновение",
-                    AvatarSprite = GameCore.LoadSprite(@"Iconc\avatar_Decorator\Mgnovenie"),
-                    Price = "Blabala"
-                });
-                break;
-            case MenuItemType.Videograph:
-                result.Add(new BaseDataForSelectWindow()
-                {
-                    Id = 1,
-                    Name = "Алексей Иванов",
-                    AvatarSprite = GameCore.LoadSprite(@"Iconc\avatar_Videograph\Ivanov"),
-                    Price = "Blabala"
-                });
-                result.Add(new BaseDataForSelectWindow()
-                {
-                    Id = 2,
-                    Name = "Артем Дрягин",
-                    AvatarSprite = GameCore.LoadSprite(@"Iconc\avatar_Videograph\Draygin"),
-                    Price = "Blabala"
-                });
-                result.Add(new BaseDataForSelectWindow()
-                {
-                    Id = 3,
-                    Name = "Сергей Студеникин",
-                    AvatarSprite = GameCore.LoadSprite(@"Iconc\avatar_Videograph\Studenikin"),
-                    Price = "Blabala"
-                });
-                break;
-            case MenuItemType.ShowProgramm:
-                result.Add(new BaseDataForSelectWindow()
-                {
-                    Id = 1,
-                    Name = "Старт Наука",
-                    AvatarSprite = GameCore.LoadSprite(@"Iconc\avatar_ShowProgramm\Start"),
-                    Price = "Blabala"
-                });
-                result.Add(new BaseDataForSelectWindow()
-                {
-                    Id = 2,
-                    Name = "Арт-Бар",
-                    AvatarSprite = GameCore.LoadSprite(@"Iconc\avatar_ShowProgramm\ArtBar"),
-                    Price = "Blabala"
-                });
-                result.Add(new BaseDataForSelectWindow()
-                {
-                    Id = 3,
-                    Name = "Бар-Молекула",
-                    AvatarSprite = GameCore.LoadSprite(@"Iconc\avatar_ShowProgramm\Molecula"),
-                    Price = "Blabala"
-                });
-                break;
-            default:
-                throw new ArgumentOutOfRangeException("type", type, null);
-        }
+        //switch (type)
+        //{
+        //    case MenuItemType.Leading:
+        //        result.Add(new BaseDataForSelectWindow()
+        //        {
+        //           Id= 1,
+        //            Name = "Дмитрий Кошкин",
+        //            AvatarSprite = @"Iconc\avatar_leading\Koshkin",
+        //            Price = "Blabala"
+        //        });
+        //        result.Add(new BaseDataForSelectWindow()
+        //        {
+        //            Id= 2,
+        //            Name = "Владимир Пахомов",
+        //            AvatarSprite = GameCore.LoadSprite(@"Iconc\avatar_leading\Pakhomov"),
+        //            Price = "Blabala"
+        //        });
+        //        result.Add(new BaseDataForSelectWindow()
+        //        {
+        //            Id= 3,
+        //            Name = "Максим Лобов",
+        //            AvatarSprite = GameCore.LoadSprite(@"Iconc\avatar_leading\Lobov"),
+        //            Price = "Blabala"
+        //        });
+        //        break;
+        //    case MenuItemType.Music:
+        //        result.Add(new BaseDataForSelectWindow()
+        //        {
+        //            Id= 1,
+        //            Name = "French",
+        //            AvatarSprite = GameCore.LoadSprite(@"Iconc\avatar_music\French"),
+        //            Price = "Blabala"
+        //        });
+        //        result.Add(new BaseDataForSelectWindow()
+        //        {
+        //            Id= 2,
+        //            Name = "Dj_Lime",
+        //            AvatarSprite = GameCore.LoadSprite(@"Iconc\avatar_music\Dj_Lime"),
+        //            Price = "Blabala"
+        //        });
+        //        result.Add(new BaseDataForSelectWindow()
+        //        {
+        //            Id= 3,
+        //            Name = "Hobots",
+        //            AvatarSprite = GameCore.LoadSprite(@"Iconc\avatar_music\Hobots"),
+        //            Price = "Blabala"
+        //        });
+        //        break;
+        //    case MenuItemType.Fotographer:
+        //        result.Add(new BaseDataForSelectWindow()
+        //        {
+        //            Id= 1,
+        //            Name = "Вероника Чернявская",
+        //            AvatarSprite = GameCore.LoadSprite(@"Iconc\avatar_Fotographer\Chernyavskaya"),
+        //            Price = "Blabala"
+        //        });
+        //        result.Add(new BaseDataForSelectWindow()
+        //        {
+        //            Id= 2,
+        //            Name = "Христя Мармонов",
+        //            AvatarSprite = GameCore.LoadSprite(@"Iconc\avatar_Fotographer\Marmarov"),
+        //            Price = "Blabala"
+        //        });
+        //        result.Add(new BaseDataForSelectWindow()
+        //        {
+        //            Id= 3,
+        //            Name = "Александр Сеоев",
+        //            AvatarSprite = GameCore.LoadSprite(@"Iconc\avatar_Fotographer\Seoev"),
+        //            Price = "Blabala"
+        //        });
+        //        break;
+        //    case MenuItemType.Decorator:
+        //        result.Add(new BaseDataForSelectWindow()
+        //        {
+        //            Id= 1,
+        //            Name = "Сад",
+        //            AvatarSprite = GameCore.LoadSprite(@"Iconc\avatar_Decorator\Sad"),
+        //            Price = "Blabala"
+        //        });
+        //        result.Add(new BaseDataForSelectWindow()
+        //        {
+        //            Id= 2,
+        //            Name = "Пронина Анастасия ",
+        //            AvatarSprite = GameCore.LoadSprite(@"Iconc\avatar_Decorator\Pronina"),
+        //            Price = "Blabala"
+        //        });
+        //        result.Add(new BaseDataForSelectWindow()
+        //        {
+        //            Id= 3,
+        //            Name = "Чудное Мгновение",
+        //            AvatarSprite = GameCore.LoadSprite(@"Iconc\avatar_Decorator\Mgnovenie"),
+        //            Price = "Blabala"
+        //        });
+        //        break;
+        //    case MenuItemType.Videograph:
+        //        result.Add(new BaseDataForSelectWindow()
+        //        {
+        //            Id = 1,
+        //            Name = "Алексей Иванов",
+        //            AvatarSprite = GameCore.LoadSprite(@"Iconc\avatar_Videograph\Ivanov"),
+        //            Price = "Blabala"
+        //        });
+        //        result.Add(new BaseDataForSelectWindow()
+        //        {
+        //            Id = 2,
+        //            Name = "Артем Дрягин",
+        //            AvatarSprite = GameCore.LoadSprite(@"Iconc\avatar_Videograph\Draygin"),
+        //            Price = "Blabala"
+        //        });
+        //        result.Add(new BaseDataForSelectWindow()
+        //        {
+        //            Id = 3,
+        //            Name = "Сергей Студеникин",
+        //            AvatarSprite = GameCore.LoadSprite(@"Iconc\avatar_Videograph\Studenikin"),
+        //            Price = "Blabala"
+        //        });
+        //        break;
+        //    case MenuItemType.ShowProgramm:
+        //        result.Add(new BaseDataForSelectWindow()
+        //        {
+        //            Id = 1,
+        //            Name = "Старт Наука",
+        //            AvatarSprite = GameCore.LoadSprite(@"Iconc\avatar_ShowProgramm\Start"),
+        //            Price = "Blabala"
+        //        });
+        //        result.Add(new BaseDataForSelectWindow()
+        //        {
+        //            Id = 2,
+        //            Name = "Арт-Бар",
+        //            AvatarSprite = GameCore.LoadSprite(@"Iconc\avatar_ShowProgramm\ArtBar"),
+        //            Price = "Blabala"
+        //        });
+        //        result.Add(new BaseDataForSelectWindow()
+        //        {
+        //            Id = 3,
+        //            Name = "Бар-Молекула",
+        //            AvatarSprite = GameCore.LoadSprite(@"Iconc\avatar_ShowProgramm\Molecula"),
+        //            Price = "Blabala"
+        //        });
+        //        break;
+        //    default:
+        //        throw new ArgumentOutOfRangeException("type", type, null);
+        //}
         return result;
     }
 
@@ -174,14 +174,7 @@ public static class BDWrapper
     {
         // first we need to connect to the google-spreadsheet to get all the first row of the cells
         // which are used for the properties of data class.
-        Debug.Log(GameCore.GoogleSettings._AccessCode);
-        Debug.Log(GameCore.GoogleSettings._AccessToken);
-        Debug.Log(GameCore.GoogleSettings._RefreshToken);
-        Debug.Log(GameCore.GoogleSettings.OAuth2Data.client_id);
-        Debug.Log(GameCore.GoogleSettings.OAuth2Data.token_uri);
-        Debug.Log(GameCore.GoogleSettings.OAuth2Data.client_secret);
-        Debug.Log(GameCore.GoogleSettings.OAuth2Data.auth_uri);
-        var client = new DatabaseClient("", "", GameCore.GoogleSettings);
+        var client = new DatabaseClient(GameCore.GoogleSettings);
 
         if (string.IsNullOrEmpty(machine.SpreadSheetName))
             return;
@@ -238,7 +231,10 @@ public static class BDWrapper
         // query the first columns only.
         DoCellQuery(machine,(cell) =>
         {
-
+            Debug.Log(cell.Title.Text);
+            Debug.Log(cell.Title.Type);
+            Debug.Log(cell.Value);
+            Debug.Log("_______________");
             // get numerical value from a cell's address in A1 notation
             // only retrieves first column of the worksheet 
             // which is used for member fields of the created data class.

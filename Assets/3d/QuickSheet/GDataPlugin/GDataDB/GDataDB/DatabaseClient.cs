@@ -22,7 +22,7 @@ namespace GDataDB {
             get { return spreadsheetService; }
         }
 
-        public DatabaseClient(string username, string password, GoogleDataSettings settings) {
+        public DatabaseClient(GoogleDataSettings settings) {
 
             GOAuth2RequestFactory requestFactory = GDataDBRequestFactory.RefreshAuthenticate(settings);
 
@@ -61,7 +61,7 @@ namespace GDataDB {
                 // Make a request to the API and get all spreadsheets.
                 SpreadsheetsService service = spreadsheetService as SpreadsheetsService;
 
-                SpreadsheetFeed feed = service.Query(query);
+                SpreadsheetFeed feed = service. Query(query);
 
                 if (feed.Entries.Count == 0)
                 {

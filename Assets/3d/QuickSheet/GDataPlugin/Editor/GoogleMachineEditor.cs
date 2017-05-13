@@ -187,7 +187,7 @@ namespace UnityQuickSheet
         {
             // first we need to connect to the google-spreadsheet to get all the first row of the cells
             // which are used for the properties of data class.
-            var client = new DatabaseClient("", "", GameCore.GoogleSettings);
+            var client = new DatabaseClient(GameCore.GoogleSettings);
 
             if (string.IsNullOrEmpty(machine.SpreadSheetName))
                 return;

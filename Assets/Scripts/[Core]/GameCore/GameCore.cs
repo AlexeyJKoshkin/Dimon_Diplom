@@ -66,33 +66,8 @@ namespace ShutEye.Core
         [SerializeField]
         private GoogleDataSettings _googleSettings;
 
-        public static BaseRuntimeMachine GoogleMachine
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (Application.isPlaying)
-                {
-                    return machine;
-                }
-                else
-                {
-                    return machine;
-                }
-#else
-
-                return googleSettings;
-#endif
-            }
-        }
-
-        private static BaseRuntimeMachine machine;
-        /// <summary>
-        /// A singleton instance.
-        /// </summary>
         [SerializeField]
-        private GoogleRuntimeMachine _machine;
-
+        public DiplomSheetDataWrapper _wrapper;
 
         private void Awake()
         {
@@ -100,9 +75,11 @@ namespace ShutEye.Core
             _allProviders.ForEach(b => data.RegisterProvider(b));
             googleSettings = _googleSettings;
             _data = data;
-            machine = _machine;
+        
             var logger = FindObjectOfType<LoggerUI>();
             if (logger != null) logger.InitLogger();
+            UnsafeSecurityPolicy.Instate();
+            _wrapper.GetFullDB();
             OnAllReady();
         }
 

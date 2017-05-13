@@ -6,7 +6,7 @@ using System.Collections;
 /// </summary>
 public class BaseDataForSelectWindow : DataObject
 {
-    public Sprite AvatarSprite;
+    public string AvatarSprite;
     public string Price;
 }
 

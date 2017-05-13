@@ -18,7 +18,7 @@ namespace UnityQuickSheet
     /// A class which stores various settings for a worksheet which is imported.
     /// </summary>
     [Serializable]
-    public class BaseRuntimeMachine
+    public class BaseRuntimeMachine 
     {
         public readonly static string ImportSettingFilename = "New Import Setting.asset";
 

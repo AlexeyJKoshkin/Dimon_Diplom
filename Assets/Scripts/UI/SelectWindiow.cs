@@ -1,6 +1,7 @@
 ﻿using System;
 using GameKit;
 using GameKit.UI;
+using ShutEye.Core;
 using ShutEye.UI.Core;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -35,7 +36,7 @@ public class SelectWindiow : BaseWindow
 
     public void ShowType(MenuItemType type)
     {
-        var listResults = BDWrapper.GetAllInfoAbout(type);
+        var listResults = GameCore.Instance._wrapper.GetAllInfoAbout(type);
         _currentViewType = type;
         _itemsContloller.InitDataToList<BaseDataForSelectWindow>(listResults);
         if (listResults.Count == 0)
