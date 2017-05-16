@@ -8,11 +8,7 @@
 
 using UnityEngine;
 using System;
-using System.Collections.Generic;
 using Google.GData.Client;
-using Google.GData.Spreadsheets;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using UnityQuickSheet;
 
 namespace GDataDB.Impl
@@ -86,7 +82,7 @@ namespace GDataDB.Impl
                 Application.OpenURL(authorizationUrl);
             }
             else
-                EditorUtility.DisplayDialog("Error", "Invalid URL: " + authorizationUrl, "OK");
+                Debug.LogError("Invalid URL: " + authorizationUrl);
         }
 
         /// <summary>
