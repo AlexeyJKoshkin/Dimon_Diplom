@@ -29,16 +29,15 @@ public class DiplomSheetDataWrapper : MonoBehaviour
         get { return Path.Combine(Application.persistentDataPath, "db_pfofileData.txt"); }
     }
 
+    /// <summary>
+    /// Таблица
+    /// </summary>
+    private IDatabase _bdSelect;
 
     /// <summary>
     /// Таблица
     /// </summary>
-    private IDatabase _bd;
-
-    /// <summary>
-    /// поток для получения таблицы из гугла
-    /// </summary>
-    private Thread _getDbThread;
+    private IDatabase _bdProfile;
 
     public float Percent { get; private set; }
 
@@ -53,31 +52,16 @@ public class DiplomSheetDataWrapper : MonoBehaviour
         {
             _runtimeDbSelect.Add(t, new List<BaseDataForSelectWindow>());
         }
-
-        if (string.IsNullOrEmpty(SelectTableName))
-            yield break;
         var client = new DatabaseClient(GameCore.GoogleSettings);
-        _getDbThread = new Thread(() =>
-        {
-            string error = string.Empty;
-            _bd = client.GetDatabase(SelectTableName, ref error);
-        });
-        _getDbThread.Start();
-        while (_bd == null)
-        {
-            yield return null;
-        }
-        int lastVesr = 0;
+
+        yield return LoadBD(client, _bdSelect, SelectTableName);
+
+        int lastVesr = PlayerPrefs.GetInt(LastVersionSelected, 0);
         int currentVersion = 0;
         try
         {
-            lastVesr = PlayerPrefs.GetInt(LastVersionSelected, 0);
             GameCore.LogSys("Last Version {0}", lastVesr);
-            var worksheet = ((Database)_bd).GetWorksheetEntry("Version");
-            CellQuery cellQuery = new CellQuery(worksheet.CellFeedLink);
-            var cellFeed = client.SpreadsheetService.Query(cellQuery);
-            Debug.Log(((CellEntry)cellFeed.Entries[0]).Value);
-            currentVersion = int.Parse(((CellEntry)cellFeed.Entries[1]).Value);
+            currentVersion = GetVersion(_bdSelect as Database, client);
             GameCore.LogSys("Data Version {0}", currentVersion);
         }
         catch (Exception e)
@@ -88,8 +72,6 @@ public class DiplomSheetDataWrapper : MonoBehaviour
         if (currentVersion > lastVesr)
         {
             GameCore.LogSys("Preprare Uptdate To {0}", currentVersion);
-            PlayerPrefs.SetInt(LastVersionSelected, currentVersion);
-            PlayerPrefs.Save();
             lastVesr = currentVersion;
             yield return UpdateSelectDB(client);
 
@@ -99,7 +81,8 @@ public class DiplomSheetDataWrapper : MonoBehaviour
                 Data = o.Value.ToArray()
             }).ToList();
             SaveToSelectFile(PathSelectData, SEJsonConverter.Serialize(list));
-
+            PlayerPrefs.SetInt(LastVersionSelected, currentVersion);
+            PlayerPrefs.Save();
         }
         else
         {
@@ -107,8 +90,6 @@ public class DiplomSheetDataWrapper : MonoBehaviour
             _runtimeDbSelect = res.ToDictionary(o => o.Type, o => o.Data.ToList());
             yield return null;
         }
-
-        // Fetch the cell feed of the worksheet.
     }
 
     public IEnumerator GetPfofileDb()
@@ -118,32 +99,16 @@ public class DiplomSheetDataWrapper : MonoBehaviour
         {
             _runTimeDB_Profile.Add(t, new List<BaseDataForProfileWindow>());
         }
-
-        if (string.IsNullOrEmpty(ProfileTableName))
-            yield break;
         var client = new DatabaseClient(GameCore.GoogleSettings);
-        _getDbThread = new Thread(() =>
-        {
-            string error = string.Empty;
-            _bd = client.GetDatabase(ProfileTableName, ref error);
-        });
-        _getDbThread.Start();
-        while (_bd == null)
-        {
-            yield return null;
-        }
-        int lastVesr = 0;
+
+        yield return LoadBD(client, _bdProfile, ProfileTableName);
+        int lastVesr = PlayerPrefs.GetInt(LastVersionProfile, 0);
         int currentVersion = 0;
         try
         {
-            lastVesr = PlayerPrefs.GetInt(LastVersionProfile, 0);
-            GameCore.LogSys("Last Version {0}", lastVesr);
-            var worksheet = ((Database)_bd).GetWorksheetEntry("Version");
-            CellQuery cellQuery = new CellQuery(worksheet.CellFeedLink);
-            var cellFeed = client.SpreadsheetService.Query(cellQuery);
-            Debug.Log(((CellEntry)cellFeed.Entries[0]).Value);
-            currentVersion = int.Parse(((CellEntry)cellFeed.Entries[1]).Value);
-            GameCore.LogSys("Data Version {0}", currentVersion);
+            GameCore.LogSys("Last Prfile Version {0}", lastVesr);
+            currentVersion = GetVersion(_bdProfile as Database, client);
+            GameCore.LogSys("Prfile Version {0}", currentVersion);
         }
         catch (Exception e)
         {
@@ -152,10 +117,7 @@ public class DiplomSheetDataWrapper : MonoBehaviour
         }
         if (currentVersion > lastVesr)
         {
-            GameCore.LogSys("Preprare Uptdate To {0}", currentVersion);
-            PlayerPrefs.SetInt(LastVersionProfile, currentVersion);
-            PlayerPrefs.Save();
-            lastVesr = currentVersion;
+            GameCore.LogSys("Preprare Update Prfile To {0}", currentVersion);
             yield return UpdateProfileDB(client);
             {
                 var list = _runTimeDB_Profile.Select(o => new SaveProfileData()
@@ -164,6 +126,8 @@ public class DiplomSheetDataWrapper : MonoBehaviour
                     Data = o.Value.ToArray()
                 }).ToList();
                 SaveToSelectFile(PathProfileData, SEJsonConverter.Serialize(list));
+                PlayerPrefs.SetInt(LastVersionProfile, currentVersion);
+                PlayerPrefs.Save();
             }
         }
         else
@@ -176,30 +140,25 @@ public class DiplomSheetDataWrapper : MonoBehaviour
         // Fetch the cell feed of the worksheet.
     }
 
-    private string LoadSelectTableFromFile(string path)
+    IEnumerator LoadBD(DatabaseClient client, IDatabase bd, string TableName)
     {
-        if (!File.Exists(path))
+        var _getDbThread = new Thread(() =>
         {
-            File.CreateText(path).Close();
-        }
-        return File.ReadAllText(path);
-    }
-
-    private void SaveToSelectFile(string path, string saveData)
-    {
-        if (!File.Exists(path))
+            string error = string.Empty;
+            bd = client.GetDatabase(TableName, ref error);
+        });
+        _getDbThread.Start();
+        while (bd == null)
         {
-            File.CreateText(path).Close();
+            yield return null;
         }
-        File.WriteAllText(path, saveData);
-        GameCore.LogSys("Succesfull Update");
     }
 
     IEnumerator UpdateSelectDB(DatabaseClient client)
     {
         foreach (MenuItemType sheet in Enum.GetValues(typeof(MenuItemType)))
         {
-            var worksheet = ((Database)_bd).GetWorksheetEntry(sheet.ToString());
+            var worksheet = ((Database)_bdSelect).GetWorksheetEntry(sheet.ToString());
             CellQuery cellQuery = new CellQuery(worksheet.CellFeedLink);
             var cellFeed = client.SpreadsheetService.Query(cellQuery);
             int counter = 0;
@@ -235,7 +194,7 @@ public class DiplomSheetDataWrapper : MonoBehaviour
     {
         foreach (MenuItemType sheet in Enum.GetValues(typeof(MenuItemType)))
         {
-            var worksheet = ((Database)_bd).GetWorksheetEntry(sheet.ToString());
+            var worksheet = ((Database)_bdProfile).GetWorksheetEntry(sheet.ToString());
             CellQuery cellQuery = new CellQuery(worksheet.CellFeedLink);
             var cellFeed = client.SpreadsheetService.Query(cellQuery);
             int counter = 0;
@@ -269,5 +228,39 @@ public class DiplomSheetDataWrapper : MonoBehaviour
     public IList<BaseDataForSelectWindow> GetAllInfoAbout(MenuItemType type)
     {
         return _runtimeDbSelect[type];
+    }
+
+
+    private string LoadSelectTableFromFile(string path)
+    {
+        if (!File.Exists(path))
+        {
+            File.CreateText(path).Close();
+        }
+        return File.ReadAllText(path);
+    }
+
+    private void SaveToSelectFile(string path, string saveData)
+    {
+        if (!File.Exists(path))
+        {
+            File.CreateText(path).Close();
+        }
+        File.WriteAllText(path, saveData);
+        GameCore.LogSys("Succesfull Update");
+    }
+
+    private int  GetVersion(Database bd, DatabaseClient client)
+    {
+        if (bd == null)
+        {
+            Debug.LogError("Db is NULL");
+            return 0;
+        }
+        var worksheet = (bd).GetWorksheetEntry("Version");
+        CellQuery cellQuery = new CellQuery(worksheet.CellFeedLink);
+        var cellFeed = client.SpreadsheetService.Query(cellQuery);
+        Debug.Log(((CellEntry)cellFeed.Entries[0]).Value);
+         return int.Parse(((CellEntry)cellFeed.Entries[1]).Value);
     }
 }
