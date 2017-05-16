@@ -7,7 +7,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 using UnityEngine;
-using UnityEditor;
 using System;
 using System.Collections.Generic;
 using Google.GData.Client;
@@ -85,8 +84,6 @@ namespace GDataDB.Impl
             if (IsValidURL(authorizationUrl))
             {
                 Application.OpenURL(authorizationUrl);
-                const string message = @"Copy the 'Access Code' on your browser into the access code textfield.";
-                EditorUtility.DisplayDialog("Info", message, "OK");
             }
             else
                 EditorUtility.DisplayDialog("Error", "Invalid URL: " + authorizationUrl, "OK");

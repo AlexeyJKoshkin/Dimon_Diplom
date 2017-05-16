@@ -1,9 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
-///
 /// GoogleDataSettings.cs
-/// 
 /// (c)2013 Kim, Hyoun Woo
-///
 ///////////////////////////////////////////////////////////////////////////////
 using UnityEngine;
 
@@ -66,6 +63,5 @@ namespace UnityQuickSheet
         public string _RefreshToken = "";
 
         public string _AccessToken = "";
-     
     }
 }
