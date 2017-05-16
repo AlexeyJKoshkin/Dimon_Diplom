@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading;
 using GDataDB;
 using GDataDB.Impl;
+using Google.GData.Client;
 using Google.GData.Spreadsheets;
 using ShutEye.Core;
 using ShutEye.Data;
@@ -18,6 +19,8 @@ public class DiplomSheetDataWrapper : MonoBehaviour
 
     public const string LastVersionSelected = "LAST_VERSION_SELECTED";
     public const string LastVersionProfile = "LAST_VERSION_PROFILE";
+
+    DatabaseClient client = new DatabaseClient(GameCore.GoogleSettings);
 
     public static string PathSelectData
     {
@@ -52,7 +55,6 @@ public class DiplomSheetDataWrapper : MonoBehaviour
         {
             _runtimeDbSelect.Add(t, new List<BaseDataForSelectWindow>());
         }
-        var client = new DatabaseClient(GameCore.GoogleSettings);
 
         yield return LoadBD(client, _bdSelect, SelectTableName);
 
@@ -73,7 +75,7 @@ public class DiplomSheetDataWrapper : MonoBehaviour
         {
             GameCore.LogSys("Preprare Uptdate To {0}", currentVersion);
             lastVesr = currentVersion;
-            yield return UpdateSelectDB(client);
+            yield return UpdateDB(client, _bdSelect as Database, AddSelectTableData);
 
             var list = _runtimeDbSelect.Select(o => new SaveSelectData()
             {
@@ -118,7 +120,7 @@ public class DiplomSheetDataWrapper : MonoBehaviour
         if (currentVersion > lastVesr)
         {
             GameCore.LogSys("Preprare Update Prfile To {0}", currentVersion);
-            yield return UpdateProfileDB(client);
+            yield return UpdateDB(client, _bdProfile as Database, AddPfofileTableData);
             {
                 var list = _runTimeDB_Profile.Select(o => new SaveProfileData()
                 {
@@ -154,74 +156,63 @@ public class DiplomSheetDataWrapper : MonoBehaviour
         }
     }
 
-    IEnumerator UpdateSelectDB(DatabaseClient client)
+    IEnumerator UpdateDB(DatabaseClient client, Database bd, Action<AtomEntryCollection, MenuItemType> action)
     {
         foreach (MenuItemType sheet in Enum.GetValues(typeof(MenuItemType)))
         {
-            var worksheet = ((Database)_bdSelect).GetWorksheetEntry(sheet.ToString());
+            var worksheet = bd.GetWorksheetEntry(sheet.ToString());
             CellQuery cellQuery = new CellQuery(worksheet.CellFeedLink);
             var cellFeed = client.SpreadsheetService.Query(cellQuery);
-            int counter = 0;
-            for (int i = 4; i < cellFeed.Entries.Count; i++)
-            {
-                CellEntry cell = cellFeed.Entries[i] as CellEntry;
-                switch (counter)
-                {
-                    case 0:
-                        _runtimeDbSelect[sheet].Add(new BaseDataForSelectWindow()
-                        {
-                            Id = int.Parse(cell.Value)
-                        }); break;
-                    case 1: _runtimeDbSelect[sheet].Last().Name = cell.Value; break;
-                    case 2: _runtimeDbSelect[sheet].Last().Price = cell.Value; break;
-                    case 3:
-                        _runtimeDbSelect[sheet].Last().AvatarSprite = cell.Value;
-                        counter = -1; break;
-                }
-                counter++;
-            }
+            AddSelectTableData(cellFeed.Entries, sheet);
             yield return null;
-        }
-
-        foreach (var VARIABLE in _runtimeDbSelect)
-        {
-            Debug.Log(VARIABLE.Key + " " + VARIABLE.Value.Count);
         }
     }
 
-
-    IEnumerator UpdateProfileDB(DatabaseClient client)
+    void AddSelectTableData(AtomEntryCollection colectCollection, MenuItemType sheet)
     {
-        foreach (MenuItemType sheet in Enum.GetValues(typeof(MenuItemType)))
+        int counter = 0;
+        for (int i = 4; i < colectCollection.Count; i++)
         {
-            var worksheet = ((Database)_bdProfile).GetWorksheetEntry(sheet.ToString());
-            CellQuery cellQuery = new CellQuery(worksheet.CellFeedLink);
-            var cellFeed = client.SpreadsheetService.Query(cellQuery);
-            int counter = 0;
-            for (int i = 4; i < cellFeed.Entries.Count; i++)
+            CellEntry cell = colectCollection[i] as CellEntry;
+            switch (counter)
             {
-                //CellEntry cell = cellFeed.Entries[i] as CellEntry;
-                //switch (counter)
-                //{
-                //    case 0:
-                //        _runTimeDB_Profile[sheet].Add(new BaseDataForSelectWindow()
-                //        {
-                //            Id = int.Parse(cell.Value)
-                //        }); break;
-                //    case 1: _runTimeDB_Profile[sheet].Last().Name = cell.Value; break;
-                //    case 2: _runTimeDB_Profile[sheet].Last().Price = cell.Value; break;
-                //    case 3:
-                //        _runTimeDB_Profile[sheet].Last().AvatarSprite = cell.Value;
-                //        counter = -1; break;
-                //}
-                //counter++;
+                case 0:
+                    _runtimeDbSelect[sheet].Add(new BaseDataForSelectWindow()
+                    {
+                        Id = int.Parse(cell.Value)
+                    }); break;
+                case 1: _runtimeDbSelect[sheet].Last().Name = cell.Value; break;
+                case 2: _runtimeDbSelect[sheet].Last().Price = cell.Value; break;
+                case 3:
+                    _runtimeDbSelect[sheet].Last().AvatarSprite = cell.Value;
+                    counter = -1; break;
             }
-            yield return null;
+            counter++;
         }
+    }
 
-        foreach (var VARIABLE in _runtimeDbSelect)
+    void AddPfofileTableData(AtomEntryCollection colectCollection, MenuItemType sheet)
+    {
+        int counter = 0;
+        for (int i = 6; i < colectCollection.Count; i++)
         {
-            Debug.Log(VARIABLE.Key + " " + VARIABLE.Value.Count);
+            CellEntry cell = colectCollection[i] as CellEntry;
+            switch (counter)
+            {
+                case 0:
+                    _runTimeDB_Profile[sheet].Add(new BaseDataForProfileWindow()
+                    {
+                        Id = int.Parse(cell.Value)
+                    }); break;
+                case 1: _runTimeDB_Profile[sheet].Last().Name = cell.Value; break;
+                case 2: _runTimeDB_Profile[sheet].Last().FullInfo = cell.Value; break;
+                case 3: _runTimeDB_Profile[sheet].Last().Foto = cell.Value; break;
+                case 4: _runTimeDB_Profile[sheet].Last().Contatcts = cell.Value; break;
+                case 5:
+                    _runTimeDB_Profile[sheet].Last().Porfolio = cell.Value.Split('^');
+                    counter = -1; break;
+            }
+            counter++;
         }
     }
 
@@ -229,7 +220,6 @@ public class DiplomSheetDataWrapper : MonoBehaviour
     {
         return _runtimeDbSelect[type];
     }
-
 
     private string LoadSelectTableFromFile(string path)
     {
@@ -250,7 +240,7 @@ public class DiplomSheetDataWrapper : MonoBehaviour
         GameCore.LogSys("Succesfull Update");
     }
 
-    private int  GetVersion(Database bd, DatabaseClient client)
+    private int GetVersion(Database bd, DatabaseClient client)
     {
         if (bd == null)
         {
@@ -261,6 +251,6 @@ public class DiplomSheetDataWrapper : MonoBehaviour
         CellQuery cellQuery = new CellQuery(worksheet.CellFeedLink);
         var cellFeed = client.SpreadsheetService.Query(cellQuery);
         Debug.Log(((CellEntry)cellFeed.Entries[0]).Value);
-         return int.Parse(((CellEntry)cellFeed.Entries[1]).Value);
+        return int.Parse(((CellEntry)cellFeed.Entries[1]).Value);
     }
 }
