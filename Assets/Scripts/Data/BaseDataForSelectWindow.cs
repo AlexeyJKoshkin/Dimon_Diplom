@@ -3,11 +3,27 @@ using UnityEngine;
 using System.Collections;
 
 [Serializable]
-public struct SaveDataStruct
+public class SaveSelectData : BaseSaveTableData
 {
-    public MenuItemType Type;
     public BaseDataForSelectWindow[] Data;
 }
+
+[Serializable]
+public class SaveProfileData : BaseSaveTableData
+{
+    public BaseDataForProfileWindow[] Data;
+}
+
+
+
+[Serializable]
+public abstract class BaseSaveTableData
+{
+    public MenuItemType Type;
+}
+
+
+
 
 /// <summary>
 /// базовые данные под отображение

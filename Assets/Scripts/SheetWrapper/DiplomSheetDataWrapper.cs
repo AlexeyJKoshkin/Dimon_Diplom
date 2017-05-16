@@ -8,19 +8,25 @@ using System.Threading;
 using GDataDB;
 using GDataDB.Impl;
 using Google.GData.Spreadsheets;
-using Newtonsoft.Json;
 using ShutEye.Core;
 using ShutEye.Data;
 
 public class DiplomSheetDataWrapper : MonoBehaviour
 {
-    public string TableName = "GoogleData";
+    private const string SelectTableName = "GoogleData";
+    private const string ProfileTableName = "GoogleData";
 
-    public const string LastVersion = "LAST_VERSION";
+    public const string LastVersionSelected = "LAST_VERSION_SELECTED";
+    public const string LastVersionProfile = "LAST_VERSION_PROFILE";
 
-    public static string PathData
+    public static string PathSelectData
     {
         get { return Path.Combine(Application.persistentDataPath, "db_GoogleData.txt"); }
+    }
+
+    public static string PathProfileData
+    {
+        get { return Path.Combine(Application.persistentDataPath, "db_pfofileData.txt"); }
     }
 
 
@@ -36,24 +42,25 @@ public class DiplomSheetDataWrapper : MonoBehaviour
 
     public float Percent { get; private set; }
 
-    private Dictionary<MenuItemType, List<BaseDataForSelectWindow>> _runtime_DB = new Dictionary<MenuItemType, List<BaseDataForSelectWindow>>();
+    private Dictionary<MenuItemType, List<BaseDataForSelectWindow>> _runtimeDbSelect = new Dictionary<MenuItemType, List<BaseDataForSelectWindow>>();
 
+    private Dictionary<MenuItemType, List<BaseDataForProfileWindow>> _runTimeDB_Profile = new Dictionary<MenuItemType, List<BaseDataForProfileWindow>>();
 
-    public IEnumerator GetDb()
+    public IEnumerator GetSelectDb()
     {
-        _runtime_DB.Clear();
+        _runtimeDbSelect.Clear();
         foreach (MenuItemType t in Enum.GetValues(typeof(MenuItemType)))
         {
-            _runtime_DB.Add(t, new List<BaseDataForSelectWindow>());
+            _runtimeDbSelect.Add(t, new List<BaseDataForSelectWindow>());
         }
 
-        if (string.IsNullOrEmpty(TableName))
+        if (string.IsNullOrEmpty(SelectTableName))
             yield break;
         var client = new DatabaseClient(GameCore.GoogleSettings);
         _getDbThread = new Thread(() =>
         {
             string error = string.Empty;
-            _bd = client.GetDatabase(TableName, ref error);
+            _bd = client.GetDatabase(SelectTableName, ref error);
         });
         _getDbThread.Start();
         while (_bd == null)
@@ -64,7 +71,7 @@ public class DiplomSheetDataWrapper : MonoBehaviour
         int currentVersion = 0;
         try
         {
-            lastVesr = PlayerPrefs.GetInt(LastVersion, 0);
+            lastVesr = PlayerPrefs.GetInt(LastVersionSelected, 0);
             GameCore.LogSys("Last Version {0}", lastVesr);
             var worksheet = ((Database)_bd).GetWorksheetEntry("Version");
             CellQuery cellQuery = new CellQuery(worksheet.CellFeedLink);
@@ -81,48 +88,114 @@ public class DiplomSheetDataWrapper : MonoBehaviour
         if (currentVersion > lastVesr)
         {
             GameCore.LogSys("Preprare Uptdate To {0}", currentVersion);
-            PlayerPrefs.SetInt(LastVersion, currentVersion);
+            PlayerPrefs.SetInt(LastVersionSelected, currentVersion);
             PlayerPrefs.Save();
             lastVesr = currentVersion;
-            yield return UpdateDB(client);
-            yield return SaveToFile();
+            yield return UpdateSelectDB(client);
+
+            var list = _runtimeDbSelect.Select(o => new SaveSelectData()
+            {
+                Type = o.Key,
+                Data = o.Value.ToArray()
+            }).ToList();
+            SaveToSelectFile(PathSelectData, SEJsonConverter.Serialize(list));
+
         }
         else
-            yield return LoadFromFile();
+        {
+            var res = SEJsonConverter.Deserialize<List<SaveSelectData>>(LoadSelectTableFromFile(PathSelectData));
+            _runtimeDbSelect = res.ToDictionary(o => o.Type, o => o.Data.ToList());
+            yield return null;
+        }
+
         // Fetch the cell feed of the worksheet.
     }
 
-    private IEnumerator LoadFromFile()
+    public IEnumerator GetPfofileDb()
     {
-        if (!File.Exists(PathData))
+        _runTimeDB_Profile.Clear();
+        foreach (MenuItemType t in Enum.GetValues(typeof(MenuItemType)))
         {
-            File.CreateText(PathData).Close();
+            _runTimeDB_Profile.Add(t, new List<BaseDataForProfileWindow>());
         }
-        string ser = File.ReadAllText(PathData);
-        var res = SEJsonConverter.Deserialize<List<SaveDataStruct>>(ser);
-        _runtime_DB = res.ToDictionary(o => o.Type, o => o.Data.ToList());
-        yield return null;
-        GameCore.LogSys("Succesfull Load");
+
+        if (string.IsNullOrEmpty(ProfileTableName))
+            yield break;
+        var client = new DatabaseClient(GameCore.GoogleSettings);
+        _getDbThread = new Thread(() =>
+        {
+            string error = string.Empty;
+            _bd = client.GetDatabase(ProfileTableName, ref error);
+        });
+        _getDbThread.Start();
+        while (_bd == null)
+        {
+            yield return null;
+        }
+        int lastVesr = 0;
+        int currentVersion = 0;
+        try
+        {
+            lastVesr = PlayerPrefs.GetInt(LastVersionProfile, 0);
+            GameCore.LogSys("Last Version {0}", lastVesr);
+            var worksheet = ((Database)_bd).GetWorksheetEntry("Version");
+            CellQuery cellQuery = new CellQuery(worksheet.CellFeedLink);
+            var cellFeed = client.SpreadsheetService.Query(cellQuery);
+            Debug.Log(((CellEntry)cellFeed.Entries[0]).Value);
+            currentVersion = int.Parse(((CellEntry)cellFeed.Entries[1]).Value);
+            GameCore.LogSys("Data Version {0}", currentVersion);
+        }
+        catch (Exception e)
+        {
+            Debug.LogException(e);
+            yield break;
+        }
+        if (currentVersion > lastVesr)
+        {
+            GameCore.LogSys("Preprare Uptdate To {0}", currentVersion);
+            PlayerPrefs.SetInt(LastVersionProfile, currentVersion);
+            PlayerPrefs.Save();
+            lastVesr = currentVersion;
+            yield return UpdateProfileDB(client);
+            {
+                var list = _runTimeDB_Profile.Select(o => new SaveProfileData()
+                {
+                    Type = o.Key,
+                    Data = o.Value.ToArray()
+                }).ToList();
+                SaveToSelectFile(PathProfileData, SEJsonConverter.Serialize(list));
+            }
+        }
+        else
+        {
+            var res = SEJsonConverter.Deserialize<List<SaveProfileData>>(LoadSelectTableFromFile(PathProfileData));
+            _runTimeDB_Profile = res.ToDictionary(o => o.Type, o => o.Data.ToList());
+            yield return null;
+        }
+
+        // Fetch the cell feed of the worksheet.
     }
 
-    private IEnumerator SaveToFile()
+    private string LoadSelectTableFromFile(string path)
     {
-        if (!File.Exists(PathData))
+        if (!File.Exists(path))
         {
-            File.CreateText(PathData).Close();
+            File.CreateText(path).Close();
         }
-        var list = _runtime_DB.Select(o => new SaveDataStruct()
-        {
-            Type = o.Key,
-            Data = o.Value.ToArray()
-        }).ToList();
-        File.WriteAllText(PathData, SEJsonConverter.Serialize(list));
-        yield return null;
+        return File.ReadAllText(path);
+    }
 
+    private void SaveToSelectFile(string path, string saveData)
+    {
+        if (!File.Exists(path))
+        {
+            File.CreateText(path).Close();
+        }
+        File.WriteAllText(path, saveData);
         GameCore.LogSys("Succesfull Update");
     }
 
-    IEnumerator UpdateDB(DatabaseClient client)
+    IEnumerator UpdateSelectDB(DatabaseClient client)
     {
         foreach (MenuItemType sheet in Enum.GetValues(typeof(MenuItemType)))
         {
@@ -136,14 +209,14 @@ public class DiplomSheetDataWrapper : MonoBehaviour
                 switch (counter)
                 {
                     case 0:
-                        _runtime_DB[sheet].Add(new BaseDataForSelectWindow()
+                        _runtimeDbSelect[sheet].Add(new BaseDataForSelectWindow()
                         {
                             Id = int.Parse(cell.Value)
                         }); break;
-                    case 1: _runtime_DB[sheet].Last().Name = cell.Value; break;
-                    case 2: _runtime_DB[sheet].Last().Price = cell.Value; break;
+                    case 1: _runtimeDbSelect[sheet].Last().Name = cell.Value; break;
+                    case 2: _runtimeDbSelect[sheet].Last().Price = cell.Value; break;
                     case 3:
-                        _runtime_DB[sheet].Last().AvatarSprite = cell.Value;
+                        _runtimeDbSelect[sheet].Last().AvatarSprite = cell.Value;
                         counter = -1; break;
                 }
                 counter++;
@@ -151,7 +224,43 @@ public class DiplomSheetDataWrapper : MonoBehaviour
             yield return null;
         }
 
-        foreach (var VARIABLE in _runtime_DB)
+        foreach (var VARIABLE in _runtimeDbSelect)
+        {
+            Debug.Log(VARIABLE.Key + " " + VARIABLE.Value.Count);
+        }
+    }
+
+
+    IEnumerator UpdateProfileDB(DatabaseClient client)
+    {
+        foreach (MenuItemType sheet in Enum.GetValues(typeof(MenuItemType)))
+        {
+            var worksheet = ((Database)_bd).GetWorksheetEntry(sheet.ToString());
+            CellQuery cellQuery = new CellQuery(worksheet.CellFeedLink);
+            var cellFeed = client.SpreadsheetService.Query(cellQuery);
+            int counter = 0;
+            for (int i = 4; i < cellFeed.Entries.Count; i++)
+            {
+                //CellEntry cell = cellFeed.Entries[i] as CellEntry;
+                //switch (counter)
+                //{
+                //    case 0:
+                //        _runTimeDB_Profile[sheet].Add(new BaseDataForSelectWindow()
+                //        {
+                //            Id = int.Parse(cell.Value)
+                //        }); break;
+                //    case 1: _runTimeDB_Profile[sheet].Last().Name = cell.Value; break;
+                //    case 2: _runTimeDB_Profile[sheet].Last().Price = cell.Value; break;
+                //    case 3:
+                //        _runTimeDB_Profile[sheet].Last().AvatarSprite = cell.Value;
+                //        counter = -1; break;
+                //}
+                //counter++;
+            }
+            yield return null;
+        }
+
+        foreach (var VARIABLE in _runtimeDbSelect)
         {
             Debug.Log(VARIABLE.Key + " " + VARIABLE.Value.Count);
         }
@@ -159,6 +268,6 @@ public class DiplomSheetDataWrapper : MonoBehaviour
 
     public IList<BaseDataForSelectWindow> GetAllInfoAbout(MenuItemType type)
     {
-        return _runtime_DB[type];
+        return _runtimeDbSelect[type];
     }
 }
