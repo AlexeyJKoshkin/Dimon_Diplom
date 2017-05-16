@@ -216,10 +216,7 @@ public class DiplomSheetDataWrapper : MonoBehaviour
         }
     }
 
-    public IList<BaseDataForSelectWindow> GetAllInfoAbout(MenuItemType type)
-    {
-        return _runtimeDbSelect[type];
-    }
+    
 
     private string LoadSelectTableFromFile(string path)
     {
@@ -252,5 +249,16 @@ public class DiplomSheetDataWrapper : MonoBehaviour
         var cellFeed = client.SpreadsheetService.Query(cellQuery);
         Debug.Log(((CellEntry)cellFeed.Entries[0]).Value);
         return int.Parse(((CellEntry)cellFeed.Entries[1]).Value);
+    }
+
+
+    public IList<BaseDataForSelectWindow> GetAllInfoAbout(MenuItemType type)
+    {
+        return _runtimeDbSelect[type];
+    }
+
+    public BaseDataForProfileWindow GetFullInfo(MenuItemType currentViewType, int currentDataId)
+    {
+        return _runTimeDB_Profile[currentViewType].FirstOrDefault(o => o.Id == currentDataId);
     }
 }
