@@ -8,7 +8,6 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
-using UnityQuickSheet;
 
 public static partial class AssemblyReflectionHelper
 {
@@ -117,38 +116,7 @@ public static partial class AssemblyReflectionHelper
            });
     }
 
-    /// <summary>
-    /// Create .asset file for google spreadsheet setting if it does not exist.
-    /// </summary>
-    public static GoogleDataSettings Create()
-    {
-       
-        string filePath = GoogleDataSettings.AssetPath + GoogleDataSettings.AssetFileName;
-        var res = UnityEditor.AssetDatabase.LoadAssetAtPath<GoogleDataSettings>(filePath);
-
-        if (res == null)
-        {
-            res = ScriptableObject.CreateInstance<GoogleDataSettings>();
-
-            string path = GetUniqueAssetPathNameOrFallback(GoogleDataSettings.AssetFileName);
-            UnityEditor.AssetDatabase.CreateAsset(res, path);
-
-            GoogleDataSettings.AssetPath = Path.GetDirectoryName(path);
-            GoogleDataSettings.AssetPath += "/";
-
-            // saves file path of the created asset.
-            UnityEditor.EditorUtility.SetDirty(res);
-            UnityEditor.AssetDatabase.SaveAssets();
-        }
-        else
-        {
-            Debug.LogWarning("Already exist at " + filePath);
-        }
-
-        UnityEditor.Selection.activeObject = res;
-
-        return res;
-    }
+  
 
     public static T CreateAsset<T>() where T : ScriptableObject
     {

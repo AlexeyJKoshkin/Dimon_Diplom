@@ -1,12 +1,11 @@
 using DG.Tweening;
-using Entitas;
 using ShutEye.UI.Core;
 using System;
 using UnityEngine;
 
 namespace GameKit.UI
 {
-    public abstract partial class BaseWindow : SEComponentUI, IDataBinding<Entity>
+    public abstract partial class BaseWindow : SEComponentUI
     {
         public abstract Enum TypeWindow { get; }
         public abstract WindowState State { get; set; }
@@ -29,14 +28,6 @@ namespace GameKit.UI
         [Range(0, 10)]
         public float Hidenimation = 2;
 
-        public void UpdateDataView(Entity newdata)
-        {
-            if (CurrentData == newdata) return;
-            CurrentData = newdata;
-            RefreshView();
-        }
-
-        public Entity CurrentData { get; private set; }
     }
 
     /// <summary>

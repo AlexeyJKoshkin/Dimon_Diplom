@@ -11,8 +11,9 @@ using Google.GData.Client;
 using Google.GData.Spreadsheets;
 using ShutEye.Core;
 using ShutEye.Data;
+using UnityQuickSheet;
 
-public class DiplomSheetDataWrapper : MonoBehaviour
+public class SheetDataRuntimeWrapper : MonoBehaviour
 {
     private const string SelectTableName = "GoogleData";
     private const string ProfileTableName = "GoogleData";
@@ -20,7 +21,7 @@ public class DiplomSheetDataWrapper : MonoBehaviour
     public const string LastVersionSelected = "LAST_VERSION_SELECTED";
     public const string LastVersionProfile = "LAST_VERSION_PROFILE";
 
-    DatabaseClient client = new DatabaseClient(GameCore.GoogleSettings);
+    private DatabaseClient client;
 
     public static string PathSelectData
     {
@@ -48,6 +49,11 @@ public class DiplomSheetDataWrapper : MonoBehaviour
 
     private Dictionary<MenuItemType, List<BaseDataForProfileWindow>> _runTimeDB_Profile = new Dictionary<MenuItemType, List<BaseDataForProfileWindow>>();
 
+    public void Init(GoogleDataSettings settings)
+    {
+        client = new DatabaseClient(settings);
+    }
+
     public IEnumerator GetSelectDb()
     {
         _runtimeDbSelect.Clear();
@@ -56,8 +62,8 @@ public class DiplomSheetDataWrapper : MonoBehaviour
             _runtimeDbSelect.Add(t, new List<BaseDataForSelectWindow>());
         }
 
-        yield return LoadBD(client, _bdSelect, SelectTableName);
-
+        yield return LoadBD(client, (bd)=> _bdSelect = bd, SelectTableName);
+        Debug.Log(_bdSelect);
         int lastVesr = PlayerPrefs.GetInt(LastVersionSelected, 0);
         int currentVersion = 0;
         try
@@ -101,9 +107,7 @@ public class DiplomSheetDataWrapper : MonoBehaviour
         {
             _runTimeDB_Profile.Add(t, new List<BaseDataForProfileWindow>());
         }
-        var client = new DatabaseClient(GameCore.GoogleSettings);
-
-        yield return LoadBD(client, _bdProfile, ProfileTableName);
+        yield return LoadBD(client, bd=> _bdProfile = bd, ProfileTableName);
         int lastVesr = PlayerPrefs.GetInt(LastVersionProfile, 0);
         int currentVersion = 0;
         try
@@ -142,8 +146,9 @@ public class DiplomSheetDataWrapper : MonoBehaviour
         // Fetch the cell feed of the worksheet.
     }
 
-    IEnumerator LoadBD(DatabaseClient client, IDatabase bd, string TableName)
+    IEnumerator LoadBD(DatabaseClient client, Action<IDatabase> dbSetter, string TableName)
     {
+        IDatabase bd = null;
         var _getDbThread = new Thread(() =>
         {
             string error = string.Empty;
@@ -154,6 +159,9 @@ public class DiplomSheetDataWrapper : MonoBehaviour
         {
             yield return null;
         }
+        if(dbSetter != null)
+            dbSetter.Invoke(bd);
+        Debug.Log(bd);
     }
 
     IEnumerator UpdateDB(DatabaseClient client, Database bd, Action<AtomEntryCollection, MenuItemType> action)

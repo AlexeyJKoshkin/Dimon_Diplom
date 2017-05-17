@@ -7,23 +7,13 @@
 ///////////////////////////////////////////////////////////////////////////////
 using UnityEngine;
 using UnityEditor;
-using System.Collections;
-using System.Collections.Generic;
 using System;
 using System.IO;
 using System.Text;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-
-using System.Net;
-using System.Net.Security;
-using System.Security.Cryptography.X509Certificates;
-using ShutEye.Core;
-
 namespace UnityQuickSheet
 {
-  
-
     /// <summary>
     /// Editor script class for GoogleDataSettings scriptable object to hide password of google account.
     /// </summary>
@@ -84,11 +74,11 @@ namespace UnityQuickSheet
                     {
                         setting.OAuth2Data.client_id = string.Empty;
                         setting.OAuth2Data.client_secret = string.Empty;
-                        GameCore.GoogleSettings._AccessCode = string.Empty;
+                        setting._AccessCode = string.Empty;
 
                         // retrieves from google developer center.
-                        GameCore.GoogleSettings._RefreshToken = string.Empty;
-                        GameCore.GoogleSettings._AccessToken = string.Empty;
+                        setting._RefreshToken = string.Empty;
+                        setting._AccessToken = string.Empty;
                     }
                 }
                 if (GoogleDataSettings.useOAuth2JsonFile)
@@ -132,7 +122,7 @@ namespace UnityQuickSheet
                             foreach (JToken token in propertyValues)
                             {
                                 string val = token.ToString();
-                                GameCore.GoogleSettings.OAuth2Data = JsonConvert.DeserializeObject<GoogleDataSettings.OAuth2JsonData>(val);
+                                setting.OAuth2Data = JsonConvert.DeserializeObject<GoogleDataSettings.OAuth2JsonData>(val);
                             }
 
                             setting.JsonFilePath = path;
@@ -168,15 +158,15 @@ namespace UnityQuickSheet
 
                 if (GUILayout.Button("Start Authentication"))
                 {
-                    GDataDB.Impl.GDataDBRequestFactory.InitAuthenticate(GameCore.GoogleSettings);
+                    GDataDB.Impl.GDataDBRequestFactory.InitAuthenticate(setting);
                 }
 
-                GameCore.GoogleSettings._AccessCode = EditorGUILayout.TextField("AccessCode", GameCore.GoogleSettings._AccessCode);
+                setting._AccessCode = EditorGUILayout.TextField("AccessCode", setting._AccessCode);
                 if (GUILayout.Button("Finish Authentication"))
                 {
                     try
                     {
-                        GDataDB.Impl.GDataDBRequestFactory.FinishAuthenticate(GameCore.GoogleSettings);
+                        GDataDB.Impl.GDataDBRequestFactory.FinishAuthenticate(setting);
                     }
                     catch (Exception e)
                     {
@@ -184,16 +174,6 @@ namespace UnityQuickSheet
                     }
                 }
                 EditorGUILayout.Separator();
-
-                GUILayout.BeginHorizontal();
-                GUILayout.Label("Runtime Path: ", GUILayout.Width(LabelWidth));
-                setting.RuntimePath = GUILayout.TextField(setting.RuntimePath);
-                GUILayout.EndHorizontal();
-
-                GUILayout.BeginHorizontal();
-                GUILayout.Label("Editor Path: ", GUILayout.Width(LabelWidth));
-                setting.EditorPath = GUILayout.TextField(setting.EditorPath);
-                GUILayout.EndHorizontal();
             }
             else
             {

@@ -47,7 +47,6 @@ public class SelectWindiow : BaseWindow
 
     private void ItemsContlollerOnOnChange(IContainerUI<BaseDataForSelectWindow> containerUi, PointerEventData.InputButton inputButton)
     {
-
         BaseDataForProfileWindow fullInfo = GameCore.Instance.MainBD.GetFullInfo(_currentViewType, containerUi.CurrentData.Id);
         UIInstance.Instance.GetWindow<ProfileWindow>().UpdateDataView(fullInfo);
         this.HideWindow(null);

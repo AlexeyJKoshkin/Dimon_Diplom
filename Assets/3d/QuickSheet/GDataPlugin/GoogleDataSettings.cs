@@ -5,6 +5,7 @@
 using UnityEngine;
 
 using System.Collections.Generic;
+using System.IO;
 using ShutEye.Core;
 
 namespace UnityQuickSheet
@@ -17,6 +18,52 @@ namespace UnityQuickSheet
         public static string AssetPath = "Assets/3d/QuickSheet/GDataPlugin/";
 
         public static readonly string AssetFileName = "GoogleDataSettings.asset";
+
+        private static GoogleDataSettings s_Instance;
+        ///// <summary>
+        ///// A property for a singleton instance.
+        ///// </summary>
+        //public static GoogleDataSettings Instance
+        //{
+        //    get
+        //    {
+        //        if (s_Instance == null)
+        //        {
+        //            s_Instance = Create();
+        //        }
+        //        return s_Instance;
+        //    }
+        //}
+
+        //static GoogleDataSettings Create()
+        //{
+        //    string filePath = GoogleDataSettings.AssetPath + GoogleDataSettings.AssetFileName;
+        //    var res = UnityEditor.AssetDatabase.LoadAssetAtPath<GoogleDataSettings>(filePath);
+
+        //    if (res == null)
+        //    {
+        //        res = ScriptableObject.CreateInstance<GoogleDataSettings>();
+
+        //        string path = AssemblyReflectionHelper.GetUniqueAssetPathNameOrFallback(GoogleDataSettings.AssetFileName);
+        //        UnityEditor.AssetDatabase.CreateAsset(res, path);
+
+        //        GoogleDataSettings.AssetPath = Path.GetDirectoryName(path);
+        //        GoogleDataSettings.AssetPath += "/";
+
+        //        // saves file path of the created asset.
+        //        UnityEditor.EditorUtility.SetDirty(res);
+        //        UnityEditor.AssetDatabase.SaveAssets();
+        //    }
+        //    else
+        //    {
+        //        Debug.LogWarning("Already exist at " + filePath);
+        //    }
+
+        //    UnityEditor.Selection.activeObject = res;
+
+        //    return res;
+        //}
+
 
         // A flag which indicates use local installed oauth2 json file for authentication or not.
         static public bool useOAuth2JsonFile = false;
@@ -32,16 +79,6 @@ namespace UnityQuickSheet
         }
 
         private string jsonFilePath = string.Empty;
-
-        /// <summary>
-        /// A path where generated ScriptableObject derived class and its data class script files are to be put.
-        /// </summary>
-        public string RuntimePath = string.Empty;
-
-        /// <summary>
-        /// A path where generated editor script files are to be put.
-        /// </summary>
-        public string EditorPath = string.Empty;
 
         [System.Serializable]
         public struct OAuth2JsonData

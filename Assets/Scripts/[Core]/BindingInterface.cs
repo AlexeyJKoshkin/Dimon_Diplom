@@ -1,6 +1,4 @@
-﻿using Entitas;
-
-namespace GameKit
+﻿namespace GameKit
 {
     public interface IDataBinding
     {
@@ -12,9 +10,5 @@ namespace GameKit
         void UpdateDataView(TData newdata);
 
         TData CurrentData { get; }
-    }
-
-    public interface IEntityBinging<out T> : IDataBinding<Entity> where T : Entity
-    {
     }
 }

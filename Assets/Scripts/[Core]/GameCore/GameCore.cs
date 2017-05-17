@@ -1,4 +1,3 @@
-using Entitas.VisualDebugging.Unity;
 using ShutEye.Data;
 using ShutEye.Data.Provider;
 using System;
@@ -39,46 +38,24 @@ namespace ShutEye.Core
         [SerializeField]
         private List<DataBox> _allProviders;
         
-        // public static IEntityByCollider InteractiveObjects { get { return GameCore.Pools.game.ShutEyeLevel; } }
-        public static GoogleDataSettings GoogleSettings
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (Application.isPlaying)
-                {
-                    return googleSettings;
-                }
-                else
-                {
-                    return googleSettings ?? (googleSettings = AssemblyReflectionHelper.Create());
-                }
-#else
 
-                return googleSettings;
-#endif
-            }
-        }
-
-        private static GoogleDataSettings googleSettings;
         /// <summary>
         /// A singleton instance.
         /// </summary>
         [SerializeField]
         private GoogleDataSettings _googleSettings;
 
-        public DiplomSheetDataWrapper MainBD {
+        public SheetDataRuntimeWrapper MainBD {
             get { return _wrapper; }
         }
 
         [SerializeField]
-        private DiplomSheetDataWrapper _wrapper;
+        private SheetDataRuntimeWrapper _wrapper;
 
         private void Awake()
         {
             var data = new LocalDataBoxStorage();
             _allProviders.ForEach(b => data.RegisterProvider(b));
-            googleSettings = _googleSettings;
             _data = data;
             var logger = FindObjectOfType<LoggerUI>();
             if (logger != null) logger.InitLogger();
@@ -88,13 +65,9 @@ namespace ShutEye.Core
 
         private IEnumerator Start()
         {
-#if UNITY_EDITOR
-            foreach (var debugSystemsBehaviour in FindObjectsOfType<DebugSystemsBehaviour>())
-            {
-                debugSystemsBehaviour.gameObject.AddComponent<DontDestroyOnLoad>();
-            }
-#endif
-            yield return _wrapper.GetDb();
+            _wrapper.Init(_googleSettings);
+            yield return _wrapper.GetSelectDb();
+            yield return _wrapper.GetPfofileDb();
             SceneManager.LoadScene(STRH.DefaultNames.MainMenuScene); // грузим главное меню
         }
 

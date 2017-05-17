@@ -1,6 +1,4 @@
-﻿using Entitas;
-using ShutEye.Core;
-using ShutEye.UI.Core;
+﻿using ShutEye.UI.Core;
 using System;
 using UnityEngine;
 

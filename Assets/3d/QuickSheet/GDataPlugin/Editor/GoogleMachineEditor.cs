@@ -41,7 +41,8 @@ namespace UnityQuickSheet
         [MenuItem("Assets/Create/QuickSheet/Setting/GoogleData Setting")]
         public static void CreateGoogleDataSetting()
         {
-            AssemblyReflectionHelper.Create();
+            Debug.LogError("Создать настройки");
+            //AssemblyReflectionHelper.Create();
         }
 
         /// <summary>
@@ -57,18 +58,18 @@ namespace UnityQuickSheet
             Selection.activeObject = inst;
         }
 
-        /// <summary>
-        /// Select currently exist account setting asset file.
-        /// </summary>
-        [MenuItem("Edit/Project Settings/QuickSheet/Select Google Data Setting")]
-        public static void Edit()
-        {
-            Selection.activeObject = GameCore.GoogleSettings;
-            if (Selection.activeObject == null)
-            {
-                Debug.LogError("No GoogleDataSettings.asset file is found. Create setting file first.");
-            }
-        }
+        ///// <summary>
+        ///// Select currently exist account setting asset file.
+        ///// </summary>
+        //[MenuItem("Edit/Project Settings/QuickSheet/Select Google Data Setting")]
+        //public static void Edit()
+        //{
+        //    Selection.activeObject = GameCore.GoogleSettings;
+        //    if (Selection.activeObject == null)
+        //    {
+        //        Debug.LogError("No GoogleDataSettings.asset file is found. Create setting file first.");
+        //    }
+        //}
 
         protected override void OnEnable()
         {
@@ -81,12 +82,6 @@ namespace UnityQuickSheet
             if (machine != null)
             {
                 machine.ReInitialize();
-
-                // Specify paths with one on the GoogleDataSettings.asset file.
-                if (string.IsNullOrEmpty(GameCore.GoogleSettings.RuntimePath) == false)
-                    machine.RuntimeClassPath = GameCore.GoogleSettings.RuntimePath;
-                if (string.IsNullOrEmpty(GameCore.GoogleSettings.EditorPath) == false)
-                    machine.EditorClassPath = GameCore.GoogleSettings.EditorPath;
             }
         }
 
@@ -96,17 +91,6 @@ namespace UnityQuickSheet
         public override void OnInspectorGUI()
         {
             base.OnInspectorGUI();
-
-            if (GameCore.GoogleSettings == null)
-            {
-                GUILayout.BeginHorizontal();
-                GUILayout.Toggle(true, "", "CN EntryError", GUILayout.Width(20));
-                GUILayout.BeginVertical();
-                GUILayout.Label("", GUILayout.Height(12));
-                GUILayout.Label("Check the GoogleDataSetting.asset file exists or its path is correct.", GUILayout.Height(20));
-                GUILayout.EndVertical();
-                GUILayout.EndHorizontal();
-            }
 
             GUILayout.Label("Google Spreadsheet Settings:", headerStyle);
 
@@ -152,24 +136,10 @@ namespace UnityQuickSheet
 
             EditorGUILayout.Separator();
 
-            if (GUILayout.Button("Generate"))
-            {
-                if (string.IsNullOrEmpty(machine.SpreadSheetName) || string.IsNullOrEmpty(machine.WorkSheetName))
-                {
-                    Debug.LogWarning("No spreadsheet or worksheet is specified.");
-                    return;
-                }
-
-                if (Generate(this.machine) != null)
-                    Debug.Log("Successfully generated!");
-                else
-                    Debug.LogError("Failed to create a script from Google Spreadsheet.");
-            }
-
             // force save changed type.
             if (GUI.changed)
             {
-                EditorUtility.SetDirty(GameCore.GoogleSettings);
+               // EditorUtility.SetDirty(GameCore.GoogleSettings);
                 EditorUtility.SetDirty(machine);
             }
         }
@@ -185,43 +155,44 @@ namespace UnityQuickSheet
         /// </summary>
         private void DoCellQuery(OnEachCell onCell)
         {
-            // first we need to connect to the google-spreadsheet to get all the first row of the cells
-            // which are used for the properties of data class.
-            var client = new DatabaseClient(GameCore.GoogleSettings);
+            Debug.LogError("Писюн");
+            //// first we need to connect to the google-spreadsheet to get all the first row of the cells
+            //// which are used for the properties of data class.
+            //var client = new DatabaseClient(GameCore.GoogleSettings);
 
-            if (string.IsNullOrEmpty(machine.SpreadSheetName))
-                return;
-            if (string.IsNullOrEmpty(machine.WorkSheetName))
-                return;
+            //if (string.IsNullOrEmpty(machine.SpreadSheetName))
+            //    return;
+            //if (string.IsNullOrEmpty(machine.WorkSheetName))
+            //    return;
 
-            string error = string.Empty;
-            var db = client.GetDatabase(machine.SpreadSheetName, ref error);
-            if (db == null)
-            {
-                string message = string.Empty;
-                if (string.IsNullOrEmpty(error))
-                    message = @"Unknown error.";
-                else
-                    message = string.Format(@"{0}", error);
+            //string error = string.Empty;
+            //var db = client.GetDatabase(machine.SpreadSheetName, ref error);
+            //if (db == null)
+            //{
+            //    string message = string.Empty;
+            //    if (string.IsNullOrEmpty(error))
+            //        message = @"Unknown error.";
+            //    else
+            //        message = string.Format(@"{0}", error);
 
-                message += "\n\nOn the other hand, see 'GoogleDataSettings.asset' file and check the oAuth2 setting is correctly done.";
-                EditorUtility.DisplayDialog("Error", message, "OK");
-                return;
-            }
+            //    message += "\n\nOn the other hand, see 'GoogleDataSettings.asset' file and check the oAuth2 setting is correctly done.";
+            //    EditorUtility.DisplayDialog("Error", message, "OK");
+            //    return;
+            //}
 
-            // retrieves all cells
-            var worksheet = ((Database)db).GetWorksheetEntry(machine.WorkSheetName);
+            //// retrieves all cells
+            //var worksheet = ((Database)db).GetWorksheetEntry(machine.WorkSheetName);
 
-            // Fetch the cell feed of the worksheet.
-            CellQuery cellQuery = new CellQuery(worksheet.CellFeedLink);
-            var cellFeed = client.SpreadsheetService.Query(cellQuery);
+            //// Fetch the cell feed of the worksheet.
+            //CellQuery cellQuery = new CellQuery(worksheet.CellFeedLink);
+            //var cellFeed = client.SpreadsheetService.Query(cellQuery);
 
-            // Iterate through each cell, printing its value.
-            foreach (CellEntry cell in cellFeed.Entries)
-            {
-                if (onCell != null)
-                    onCell(cell);
-            }
+            //// Iterate through each cell, printing its value.
+            //foreach (CellEntry cell in cellFeed.Entries)
+            //{
+            //    if (onCell != null)
+            //        onCell(cell);
+            //}
         }
 
         /// <summary>
