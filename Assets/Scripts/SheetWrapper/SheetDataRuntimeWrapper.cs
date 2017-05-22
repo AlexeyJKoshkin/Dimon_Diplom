@@ -217,7 +217,7 @@ public class SheetDataRuntimeWrapper : MonoBehaviour
                 case 3: _runTimeDB_Profile[sheet].Last().Foto = cell.Value; break;
                 case 4: _runTimeDB_Profile[sheet].Last().Contatcts = cell.Value; break;
                 case 5:
-                    _runTimeDB_Profile[sheet].Last().Porfolio = cell.Value.Split('^');
+                    _runTimeDB_Profile[sheet].Last().Porfolio = cell.Value.Split('\n');
                     counter = -1; break;
             }
             counter++;
