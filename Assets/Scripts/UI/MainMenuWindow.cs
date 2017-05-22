@@ -18,6 +18,8 @@ public class MainMenuWindow : BaseWindow
 
     protected override void PrepareUI(Action _onComplete)
     {
+         if(_itemsContainer.Containers.Length == 0) Application.Quit();
+
         _itemsContainer.OnChange  += ItemsContainerOnOnChange;
         base.PrepareUI(_onComplete);
     }

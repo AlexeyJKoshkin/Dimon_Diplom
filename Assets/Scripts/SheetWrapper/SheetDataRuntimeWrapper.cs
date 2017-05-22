@@ -16,7 +16,7 @@ using UnityQuickSheet;
 public class SheetDataRuntimeWrapper : MonoBehaviour
 {
     private const string SelectTableName = "GoogleData";
-    private const string ProfileTableName = "GoogleData";
+    private const string ProfileTableName = "ProfileData";
 
     public const string LastVersionSelected = "LAST_VERSION_SELECTED";
     public const string LastVersionProfile = "LAST_VERSION_PROFILE";
