@@ -42,6 +42,7 @@ public class ProfileWindow : BaseWindow, IDataBinding<BaseDataForProfileWindow>
         _fio.text = CurrentData.Name;
         _fullInfo.text = CurrentData.FullInfo;
         _contacts.text = CurrentData.Contatcts;
+        ShowWindow(null);
     }
 
     private void OnLoadPhoto(Sprite obj)
@@ -55,6 +56,7 @@ public class ProfileWindow : BaseWindow, IDataBinding<BaseDataForProfileWindow>
         {
             CurrentData = newdata;
         }
+        RefreshView();
     }
 
     public BaseDataForProfileWindow CurrentData { get; private set; }

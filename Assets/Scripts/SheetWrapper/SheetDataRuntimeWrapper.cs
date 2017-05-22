@@ -171,7 +171,7 @@ public class SheetDataRuntimeWrapper : MonoBehaviour
             var worksheet = bd.GetWorksheetEntry(sheet.ToString());
             CellQuery cellQuery = new CellQuery(worksheet.CellFeedLink);
             var cellFeed = client.SpreadsheetService.Query(cellQuery);
-            AddSelectTableData(cellFeed.Entries, sheet);
+            action(cellFeed.Entries, sheet);
             yield return null;
         }
     }
