@@ -35,7 +35,11 @@ public class ProfileWindow : BaseWindow, IDataBinding<BaseDataForProfileWindow>
     protected override void PrepareUI(Action _onComplete)
     {
         _mainMenuBtn = _mainMenuBtn ?? GetComponentInChildren<UnityEngine.UI.Button>();
-        _mainMenuBtn.onClick.AddListener(this.BackMainMenu);
+        _mainMenuBtn.onClick.AddListener(() =>
+        {
+            HideWindow(null);
+            UIInstance.Instance.GetWindow<SelectWindiow>().ShowType(CurrentData.Type);
+        });
         base.PrepareUI(_onComplete);
     }
 

@@ -36,6 +36,7 @@ public class BaseDataForSelectWindow : DataObject
 
 public class BaseDataForProfileWindow : DataObject
 {
+    public MenuItemType Type;
     public string[] Porfolio;
     public string FullInfo;
     public string Foto;

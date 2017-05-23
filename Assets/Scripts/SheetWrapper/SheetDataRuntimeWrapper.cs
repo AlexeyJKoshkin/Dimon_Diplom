@@ -33,9 +33,12 @@ public class SheetDataRuntimeWrapper : MonoBehaviour
         get { return Path.Combine(Application.persistentDataPath, "db_pfofileData.txt"); }
     }
 
-    [ContextMenu("Clean local Cash")]
-    public static void ClearLocalCashData()
+    [ContextMenu(("Clean local Cash"))]
+    public void ClearLocalCashData()
     {
+        PlayerPrefs.SetInt(LastVersionProfile,0);
+        PlayerPrefs.SetInt(LastVersionSelected, 0);
+        PlayerPrefs.Save();
         if (File.Exists(PathProfileData))
         {
             File.Delete(PathProfileData);
@@ -223,7 +226,8 @@ public class SheetDataRuntimeWrapper : MonoBehaviour
                 case 0:
                     _runTimeDB_Profile[sheet].Add(new BaseDataForProfileWindow()
                     {
-                        Id = int.Parse(cell.Value)
+                        Id = int.Parse(cell.Value),
+                        Type = sheet
                     }); break;
                 case 1: _runTimeDB_Profile[sheet].Last().Name = cell.Value; break;
                 case 2: _runTimeDB_Profile[sheet].Last().FullInfo = cell.Value; break;
