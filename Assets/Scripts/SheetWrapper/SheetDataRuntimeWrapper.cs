@@ -33,6 +33,19 @@ public class SheetDataRuntimeWrapper : MonoBehaviour
         get { return Path.Combine(Application.persistentDataPath, "db_pfofileData.txt"); }
     }
 
+    [ContextMenu("Clean local Cash")]
+    public static void ClearLocalCashData()
+    {
+        if (File.Exists(PathProfileData))
+        {
+            File.Delete(PathProfileData);
+        }
+        if (File.Exists(PathSelectData))
+        {
+            File.Delete(PathSelectData);
+        }
+    }
+
     /// <summary>
     /// Таблица
     /// </summary>

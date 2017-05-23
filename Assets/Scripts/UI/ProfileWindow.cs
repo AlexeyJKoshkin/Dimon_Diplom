@@ -29,6 +29,9 @@ public class ProfileWindow : BaseWindow, IDataBinding<BaseDataForProfileWindow>
     [SerializeField]
     private Text _contacts;
 
+    [SerializeField]
+    private PortfolioContainersController _allPhotos;
+
     protected override void PrepareUI(Action _onComplete)
     {
         _mainMenuBtn = _mainMenuBtn ?? GetComponentInChildren<UnityEngine.UI.Button>();
@@ -42,6 +45,10 @@ public class ProfileWindow : BaseWindow, IDataBinding<BaseDataForProfileWindow>
         _fio.text = CurrentData.Name;
         _fullInfo.text = CurrentData.FullInfo;
         _contacts.text = CurrentData.Contatcts;
+        for (int i = 0; i < CurrentData.Porfolio.Length; i++)
+        {
+            _allPhotos.GetSlotByN(i).UpdateDataView(CurrentData.Porfolio[i]);
+        }
         ShowWindow(null);
     }
 

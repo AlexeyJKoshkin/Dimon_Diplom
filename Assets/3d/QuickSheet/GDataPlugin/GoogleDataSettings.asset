@@ -8,7 +8,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dbcda13c00cae4f4087d84a149a1c70b, type: 3}
+  m_Script: {fileID: 11500000, guid: c1e9ba1f75c380b45ba5b987d856b297, type: 3}
   m_Name: GoogleDataSettings
   m_EditorClassIdentifier: 
   OAuth2Data:
@@ -20,6 +20,6 @@ MonoBehaviour:
     redirect_uris:
     - urn:ietf:wg:oauth:2.0:oob
     - http://localhost
-  _AccessCode: 4/69fC2sm8JEYz9jGP7Qxe4cK1seMcY5VSvKpzmS3k11U
-  _RefreshToken: 1/fF_wzfX6_ke945AwpwNjqm3etuB_FTUq5cKXez9hoao1Yzsgy9JE49VhTkPLgUiK
-  _AccessToken: ya29.GltSBO7PZ6TuyEFdC85ZQ0-uGkYYKb_7DA5F0GEFQg5jJzhwUVGXjfcDCN-nWaUqnhm2VN_oJ3qYYtKIy6Hnw1VZ7_zKdyenLjECE_2KyBVdZbtobEZ9vv1Smnjs
+  _AccessCode: 4/NtbWotwnJuteUKO1Nas-CqkQDq3qoOtkyGPtkT4N4Vg
+  _RefreshToken: 1/gor3ZLNo-f_eU-UtoNrBvb6Ho8rUPKWwVSI4O70DDP0
+  _AccessToken: ya29.GltTBDB0OHXMGponrDkkin_sIkWuOymIsz05-Zxsu4vZEpFuhqcDbpchD5lLYxvTBDp74pj6OPpi7-zKCQvXgacUnvRwkdsU0wKRCaJ2hC9Miw38wej2Ou993xft
