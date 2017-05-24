@@ -177,7 +177,6 @@ public class SheetDataRuntimeWrapper : MonoBehaviour
         }
         if(dbSetter != null)
             dbSetter.Invoke(bd);
-        Debug.Log(bd);
     }
 
     IEnumerator UpdateDB(DatabaseClient client, Database bd, Action<AtomEntryCollection, MenuItemType> action)
@@ -235,6 +234,10 @@ public class SheetDataRuntimeWrapper : MonoBehaviour
                 case 4: _runTimeDB_Profile[sheet].Last().Contatcts = cell.Value; break;
                 case 5:
                     _runTimeDB_Profile[sheet].Last().Porfolio = cell.Value.Split('\n');
+                    foreach (var s in _runTimeDB_Profile[sheet].Last().Porfolio)
+                    {
+                        Debug.Log(s);
+                    }
                     counter = -1; break;
             }
             counter++;

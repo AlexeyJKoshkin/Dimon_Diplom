@@ -5,6 +5,10 @@ using UnityEngine.UI;
 
 public class PortfolioContainerUI : SEButtonUI<string>
 {
+    public Sprite LoadPhoto {
+        get { return _foto.sprite; }
+    }
+
     [SerializeField]
     private Image _foto;
 

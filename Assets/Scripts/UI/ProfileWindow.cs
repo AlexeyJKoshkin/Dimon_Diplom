@@ -2,7 +2,9 @@
 using GameKit;
 using GameKit.UI;
 using ShutEye.Core;
+using ShutEye.UI.Core;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class ProfileWindow : BaseWindow, IDataBinding<BaseDataForProfileWindow>
@@ -40,7 +42,14 @@ public class ProfileWindow : BaseWindow, IDataBinding<BaseDataForProfileWindow>
             HideWindow(null);
             UIInstance.Instance.GetWindow<SelectWindiow>().ShowType(CurrentData.Type);
         });
+        _allPhotos.OnChange += AllPhotosOnOnChange;
         base.PrepareUI(_onComplete);
+    }
+
+    private void AllPhotosOnOnChange(IContainerUI<string> containerUi, PointerEventData.InputButton inputButton)
+    {
+        _fullSprite.sprite = ((PortfolioContainerUI) containerUi).LoadPhoto;
+        Debug.Log("Show Photo");
     }
 
     public override void RefreshView()

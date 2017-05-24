@@ -87,6 +87,7 @@ namespace ShutEye.Core
 
         internal void LoadSprite(string avatarSprite, Action<Sprite> onLoadSprite)
         {
+            avatarSprite = avatarSprite.Replace("\r", "");
             if (_cashadSprites.ContainsKey(avatarSprite))
             {
                 if (onLoadSprite != null)
@@ -101,6 +102,7 @@ namespace ShutEye.Core
 
         private IEnumerator LoadSpriteCoroutine(string url, Action<Sprite> Onfinish)
         {
+            ;
             var www = new WWW(url);
             yield return www;
             if (string.IsNullOrEmpty(www.error))
@@ -109,6 +111,11 @@ namespace ShutEye.Core
                     new Vector2(0, 0));
                 _cashadSprites.Add(url, sprite);
                 Onfinish.Invoke(sprite);
+            }
+            else
+            {
+                Debug.LogError(url);
+                Debug.LogError(www.error);
             }
             www.Dispose();
         }
