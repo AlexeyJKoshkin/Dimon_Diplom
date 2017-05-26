@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using EnhancedUI;
 using EnhancedUI.EnhancedScroller;
+using ShutEye.UI.Core;
 
 namespace EnhancedScrollerDemos.ViewDrivenCellSizes
 {
@@ -22,7 +23,7 @@ namespace EnhancedScrollerDemos.ViewDrivenCellSizes
         private int _reloadScrollerFrameCountLeft = -1;
 
         public EnhancedScroller scroller;
-        public EnhancedScrollerCellView cellViewPrefab;
+        public SEUIContainerItem cellViewPrefab;
 
         void Start()
         {
@@ -110,7 +111,7 @@ namespace EnhancedScrollerDemos.ViewDrivenCellSizes
             return _data[dataIndex].cellSize;
         }
 
-        public EnhancedScrollerCellView GetCellView(EnhancedScroller scroller, int dataIndex, int cellIndex)
+        public SEUIContainerItem GetCellView(EnhancedScroller scroller, int dataIndex, int cellIndex)
         {
             CellView cellView = scroller.GetCellView(cellViewPrefab) as CellView;
             cellView.SetData(_data[dataIndex]);

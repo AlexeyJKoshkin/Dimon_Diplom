@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 using EnhancedUI.EnhancedScroller;
 using EnhancedUI;
+using ShutEye.UI.Core;
 
 namespace EnhancedScrollerDemos.SelectionDemo
 {
@@ -30,12 +31,12 @@ namespace EnhancedScrollerDemos.SelectionDemo
         /// <summary>
         /// The cell view prefab for the vertical scroller
         /// </summary>
-        public EnhancedScrollerCellView vCellViewPrefab;
+        public SEUIContainerItem vCellViewPrefab;
         
         /// <summary>
         /// The cell view prefab for the horizontal scroller
         /// </summary>
-        public EnhancedScrollerCellView hCellViewPrefab;
+        public SEUIContainerItem hCellViewPrefab;
 
         /// <summary>
         /// The image that shows which item is selected
@@ -113,7 +114,7 @@ namespace EnhancedScrollerDemos.SelectionDemo
         /// This function handles the cell view's button click event
         /// </summary>
         /// <param name="cellView">The cell view that had the button clicked</param>
-        private void CellViewSelected(EnhancedScrollerCellView cellView)
+        private void CellViewSelected(SEUIContainerItem cellView)
         {
             if (cellView == null)
             {
@@ -207,7 +208,7 @@ namespace EnhancedScrollerDemos.SelectionDemo
         /// <param name="dataIndex">The index of the data list</param>
         /// <param name="cellIndex">The cell index (This will be different from dataindex if looping is involved)</param>
         /// <returns>The cell to display</returns>
-        public EnhancedScrollerCellView GetCellView(EnhancedScroller scroller, int dataIndex, int cellIndex)
+        public SEUIContainerItem GetCellView(EnhancedScroller scroller, int dataIndex, int cellIndex)
         {
             // first get a cell from the scroller. The scroller will recycle if it can.
             // We want a vertical cell prefab for the vertical scroller and a horizontal

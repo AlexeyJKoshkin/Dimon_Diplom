@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using EnhancedUI.EnhancedScroller;
+using ShutEye.UI.Core;
 
 namespace EnhancedScrollerDemos.ViewDrivenCellSizes
 {
-    public class CellView : EnhancedScrollerCellView
+    public class CellView : SEUIContainerItem
     {
         public Text someTextText;
 

@@ -48,7 +48,9 @@ namespace ShutEye.UI.Core
             _cellIdentifier = "";
         }
 
-        public abstract void RefreshView();
+        public virtual void RefreshView()
+        {
+        }
 
         public string CellIndetifer
         {
@@ -67,7 +69,17 @@ namespace ShutEye.UI.Core
             get { return name; }
             set { name = value; }
         }
+        /// <summary>
+        /// Whether the cell is active or recycled
+        /// </summary>
+        [NonSerialized]
+        public bool active;
 
+        /// <summary>
+        /// Whether the cell is active or recycled
+        /// </summary>
+        [NonSerialized]
+        public int dataIndex;
         /// <summary>
         /// The cellIdentifier is a unique string that allows the scroller
         /// to handle different types of cells in a single list. Each type

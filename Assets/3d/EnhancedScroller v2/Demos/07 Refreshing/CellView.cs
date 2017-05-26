@@ -1,20 +1,15 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using EnhancedUI.EnhancedScroller;
+using ShutEye.UI.Core;
 
 namespace EnhancedScrollerDemos.RefreshDemo
 {
     /// <summary>
     /// This is the view of our cell which handles how the cell looks.
     /// </summary>
-    public class CellView : EnhancedScrollerCellView
+    public class CellView : SEButtonUI<Data>
     {
-        /// <summary>
-        /// This is a reference to the cell's underlying data.
-        /// We will store it in the SetData method, and use it
-        /// in the RefreshCellView method.
-        /// </summary>
-        private Data _data;
 
         /// <summary>
         /// A reference to the UI Text element to display the cell data
@@ -30,23 +25,10 @@ namespace EnhancedScrollerDemos.RefreshDemo
             }
         }
 
-        /// <summary>
-        /// This function just takes the Demo data and displays it
-        /// </summary>
-        /// <param name="data"></param>
-        public void SetData(Data data)
+        public override void RefreshView()
         {
-            // store the data so that it can be used when refreshing
-            _data = data;
-
-            // update the cell's UI
-            RefreshCellView();
-        }
-
-        public override void RefreshCellView()
-        {
-            // update the UI text with the cell data
-            someTextText.text = _data.someText;
+            base.RefreshView();
+            someTextText.text = CurrentData.someText;
         }
     }
 }

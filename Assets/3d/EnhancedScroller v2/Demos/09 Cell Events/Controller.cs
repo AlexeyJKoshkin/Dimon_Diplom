@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using EnhancedUI;
 using EnhancedUI.EnhancedScroller;
+using ShutEye.UI.Core;
 
 namespace EnhancedScrollerDemos.CellEvents
 {
@@ -13,7 +14,7 @@ namespace EnhancedScrollerDemos.CellEvents
         private List<Data> _data;
 
         public EnhancedScroller scroller;
-        public EnhancedScrollerCellView cellViewPrefab;
+        public SEUIContainerItem cellViewPrefab;
         public float cellSize;
 
         void Start()
@@ -42,7 +43,7 @@ namespace EnhancedScrollerDemos.CellEvents
             return cellSize;
         }
 
-        public EnhancedScrollerCellView GetCellView(EnhancedScroller scroller, int dataIndex, int cellIndex)
+        public SEUIContainerItem GetCellView(EnhancedScroller scroller, int dataIndex, int cellIndex)
         {
             CellView cellView = scroller.GetCellView(cellViewPrefab) as CellView;
 

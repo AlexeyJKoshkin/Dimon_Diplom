@@ -2,6 +2,7 @@
 using System.Collections;
 using EnhancedUI;
 using EnhancedUI.EnhancedScroller;
+using ShutEye.UI.Core;
 
 namespace EnhancedScrollerDemos.MultipleCellTypesDemo
 {
@@ -18,9 +19,9 @@ namespace EnhancedScrollerDemos.MultipleCellTypesDemo
         /// </summary>
         public EnhancedScroller scroller;
 
-        public EnhancedScrollerCellView headerCellViewPrefab;
-        public EnhancedScrollerCellView rowCellViewPrefab;
-        public EnhancedScrollerCellView footerCellViewPrefab;
+        public SEUIContainerItem headerCellViewPrefab;
+        public SEUIContainerItem rowCellViewPrefab;
+        public SEUIContainerItem footerCellViewPrefab;
 
         /// <summary>
         /// The base path to the resources folder where sprites are located
@@ -122,7 +123,7 @@ namespace EnhancedScrollerDemos.MultipleCellTypesDemo
         /// <param name="dataIndex">The index of the data that the scroller is requesting</param>
         /// <param name="cellIndex">The index of the list. This will likely be different from the dataIndex if the scroller is looping</param>
         /// <returns>The cell for the scroller to use</returns>
-        public EnhancedScrollerCellView GetCellView(EnhancedScroller scroller, int dataIndex, int cellIndex)
+        public SEUIContainerItem GetCellView(EnhancedScroller scroller, int dataIndex, int cellIndex)
         {
             CellView cellView;
 

@@ -1,13 +1,14 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using EnhancedUI.EnhancedScroller;
+using ShutEye.UI.Core;
 
 namespace EnhancedScrollerDemos.SuperSimpleDemo
 {
     /// <summary>
     /// This is the view of our cell which handles how the cell looks.
     /// </summary>
-    public class CellView : EnhancedScrollerCellView
+    public class CellView : SEUIContainerItem
     {
         /// <summary>
         /// A reference to the UI Text element to display the cell data

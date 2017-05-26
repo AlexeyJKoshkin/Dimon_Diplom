@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using EnhancedUI.EnhancedScroller;
+using ShutEye.UI.Core;
 
 namespace EnhancedScrollerDemos.MultipleCellTypesDemo
 {
@@ -8,7 +9,7 @@ namespace EnhancedScrollerDemos.MultipleCellTypesDemo
     /// This is the base class for the different cell types. We use a base class
     /// to make calling SetData easier in the demo script.
     /// </summary>
-    public class CellView : EnhancedScrollerCellView
+    public class CellView : SEUIContainerItem
     {
         /// <summary>
         /// Internal reference to our base data class

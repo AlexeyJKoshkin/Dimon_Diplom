@@ -1,9 +1,7 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
-using System.Collections;
-using System.Collections.Generic;
 using EnhancedUI.EnhancedScroller;
 using EnhancedUI;
+using ShutEye.UI.Core;
 
 namespace EnhancedScrollerDemos.RemoteResourcesDemo
 {
@@ -27,7 +25,7 @@ namespace EnhancedScrollerDemos.RemoteResourcesDemo
         /// <summary>
         /// The prefab of the cell view
         /// </summary>
-        public EnhancedScrollerCellView cellViewPrefab;
+        public SEUIContainerItem cellViewPrefab;
 
         void Start()
         {
@@ -85,7 +83,7 @@ namespace EnhancedScrollerDemos.RemoteResourcesDemo
         /// <param name="dataIndex">The index of the data that the scroller is requesting</param>
         /// <param name="cellIndex">The index of the list. This will likely be different from the dataIndex if the scroller is looping</param>
         /// <returns>The cell for the scroller to use</returns>
-        public EnhancedScrollerCellView GetCellView(EnhancedScroller scroller, int dataIndex, int cellIndex)
+        public SEUIContainerItem GetCellView(EnhancedScroller scroller, int dataIndex, int cellIndex)
         {
             // first, we get a cell from the scroller by passing a prefab.
             // if the scroller finds one it can recycle it will do so, otherwise
@@ -109,7 +107,7 @@ namespace EnhancedScrollerDemos.RemoteResourcesDemo
         /// This handler will be called any time a cell view is shown or hidden
         /// </summary>
         /// <param name="cellView">The cell view that was shown or hidden</param>
-        private void CellViewVisibilityChanged(EnhancedScrollerCellView cellView)
+        private void CellViewVisibilityChanged(SEUIContainerItem cellView)
         {
             // cast the cell view to our custom view
             CellView view = cellView as CellView;
@@ -119,7 +117,7 @@ namespace EnhancedScrollerDemos.RemoteResourcesDemo
             // its default state
 
             if (cellView.active)
-                view.SetData(_data[cellView.dataIndex]);
+                view.UpdateDataView(_data[cellView.dataIndex]);
             else
                 view.ClearImage();
         }

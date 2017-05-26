@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using EnhancedUI.EnhancedScroller;
+using ShutEye.UI.Core;
 
 namespace EnhancedScrollerDemos.SelectionDemo
 {
@@ -8,14 +9,14 @@ namespace EnhancedScrollerDemos.SelectionDemo
     /// This delegate handles the UI's button click
     /// </summary>
     /// <param name="cellView">The cell view that had the button click</param>
-    public delegate void SelectedDelegate(EnhancedScrollerCellView cellView);
+    public delegate void SelectedDelegate(SEUIContainerItem cellView);
 
     /// <summary>
     /// This class handles the presentation of the inventory cell view. Both the 
     /// horizontal and vertical cell views share the same view class. The difference
     /// between them is layout and sprite for this example.
     /// </summary>
-    public class InventoryCellView : EnhancedScrollerCellView
+    public class InventoryCellView : SEUIContainerItem
     {
         /// <summary>
         /// Reference to the underlying data driving this view
@@ -50,13 +51,9 @@ namespace EnhancedScrollerDemos.SelectionDemo
         /// </summary>
         public SelectedDelegate selected;
 
-        /// <summary>
-        /// This is called if the cell is destroyed. The EnhancedScroller will
-        /// not call this since it uses recycling, but we include it in case 
-        /// the user decides to destroy the cell anyway
-        /// </summary>
-        void OnDestroy()
+        protected override void OnDestroy()
         {
+            base.OnDestroy();
             if (_data != null)
             {
                 // remove the handler from the data so 
@@ -65,6 +62,7 @@ namespace EnhancedScrollerDemos.SelectionDemo
                 _data.selectedChanged -= SelectedChanged;
             }
         }
+
 
         /// <summary>
         /// This function sets up the data for the cell view

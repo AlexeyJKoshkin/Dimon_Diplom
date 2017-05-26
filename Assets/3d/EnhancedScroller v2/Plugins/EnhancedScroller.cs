@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 using System;
+using ShutEye.UI.Core;
 
 namespace EnhancedUI.EnhancedScroller
 {
@@ -9,7 +10,7 @@ namespace EnhancedUI.EnhancedScroller
     /// This delegate handles the visibility changes of cell views
     /// </summary>
     /// <param name="cellView">The cell view that changed visibility</param>
-    public delegate void CellViewVisibilityChangedDelegate(EnhancedScrollerCellView cellView);
+    public delegate void CellViewVisibilityChangedDelegate(SEUIContainerItem cellView);
 
     /// <summary>
     /// This delegate handles the scrolling callback of the ScrollRect.
@@ -467,7 +468,7 @@ namespace EnhancedUI.EnhancedScroller
         /// </summary>
         /// <param name="cellPrefab">The prefab to use to create the cell view</param>
         /// <returns></returns>
-        public EnhancedScrollerCellView GetCellView(EnhancedScrollerCellView cellPrefab)
+        public SEUIContainerItem GetCellView(SEUIContainerItem cellPrefab)
         {
             // see if there is a view to recycle
             var cellView = _GetRecycledCellView(cellPrefab);
@@ -476,7 +477,7 @@ namespace EnhancedUI.EnhancedScroller
                 // no recyleable cell found, so we create a new view
                 // and attach it to our container
                 var go = Instantiate(cellPrefab.gameObject);
-                cellView = go.GetComponent<EnhancedScrollerCellView>();
+                cellView = go.GetComponent<SEUIContainerItem>();
                 cellView.transform.SetParent(_container);
             }
 
@@ -513,7 +514,7 @@ namespace EnhancedUI.EnhancedScroller
         {
             for (var i = 0; i < _activeCellViews.Count; i++)
             {
-                _activeCellViews[i].RefreshCellView();
+                _activeCellViews[i].RefreshView();
             }
         }
 
@@ -809,7 +810,7 @@ namespace EnhancedUI.EnhancedScroller
         /// <summary>
         /// List of views that have been recycled
         /// </summary>
-        private SmallList<EnhancedScrollerCellView> _recycledCellViews = new SmallList<EnhancedScrollerCellView>();
+        private SmallList<SEUIContainerItem> _recycledCellViews = new SmallList<SEUIContainerItem>();
 
         /// <summary>
         /// Cached reference to the element used to offset the first visible cell view
@@ -847,7 +848,7 @@ namespace EnhancedUI.EnhancedScroller
         /// <summary>
         /// The list of cell views that are currently being displayed
         /// </summary>
-        private SmallList<EnhancedScrollerCellView> _activeCellViews = new SmallList<EnhancedScrollerCellView>();
+        private SmallList<SEUIContainerItem> _activeCellViews = new SmallList<SEUIContainerItem>();
 
         /// <summary>
         /// The index of the first cell view that is being displayed
@@ -1088,11 +1089,11 @@ namespace EnhancedUI.EnhancedScroller
         /// </summary>
         /// <param name="cellPrefab">The prefab to check for</param>
         /// <returns></returns>
-        private EnhancedScrollerCellView _GetRecycledCellView(EnhancedScrollerCellView cellPrefab)
+        private SEUIContainerItem _GetRecycledCellView(SEUIContainerItem cellPrefab)
         {
             for (var i = 0; i < _recycledCellViews.Count; i++)
             {
-                if (_recycledCellViews[i].cellIdentifier == cellPrefab.cellIdentifier)
+                if (_recycledCellViews[i].CellIndetifer == cellPrefab.CellIndetifer)
                 {
                     // the cell view was found, so we use this recycled one.
                     // we also remove it from the recycled list
@@ -1120,7 +1121,7 @@ namespace EnhancedUI.EnhancedScroller
             SmallList<int> remainingCellIndices = new SmallList<int>();
             while (i < _activeCellViews.Count)
             {
-                if (_activeCellViews[i].cellIndex < startIndex || _activeCellViews[i].cellIndex > endIndex)
+                if (_activeCellViews[i].CellIndex < startIndex || _activeCellViews[i].CellIndex > endIndex)
                 {
                     _RecycleCell(_activeCellViews[i]);
                 }
@@ -1128,7 +1129,7 @@ namespace EnhancedUI.EnhancedScroller
                 {
                     // this cell index falls in the new range, so we add its
                     // index to the reusable list
-                    remainingCellIndices.Add(_activeCellViews[i].cellIndex);
+                    remainingCellIndices.Add(_activeCellViews[i].CellIndex);
                     i++;
                 }
             }
@@ -1195,7 +1196,7 @@ namespace EnhancedUI.EnhancedScroller
         /// Recycles one cell view
         /// </summary>
         /// <param name="cellView"></param>
-        private void _RecycleCell(EnhancedScrollerCellView cellView)
+        private void _RecycleCell(SEUIContainerItem cellView)
         {
             // remove the cell view from the active list
             _activeCellViews.Remove(cellView);
@@ -1208,7 +1209,7 @@ namespace EnhancedUI.EnhancedScroller
 
             // reset the cellView's properties
             cellView.dataIndex = 0;
-            cellView.cellIndex = 0;
+            cellView.CellIndex = 0;
             cellView.active = false;
 
             if (cellViewVisibilityChanged != null) cellViewVisibilityChanged(cellView);
@@ -1229,7 +1230,7 @@ namespace EnhancedUI.EnhancedScroller
             var cellView = _delegate.GetCellView(this, dataIndex, cellIndex);
 
             // set the cell's properties
-            cellView.cellIndex = cellIndex;
+            cellView.CellIndex = cellIndex;
             cellView.dataIndex = dataIndex;
             cellView.active = true;
 

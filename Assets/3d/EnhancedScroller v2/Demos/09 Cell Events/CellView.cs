@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using EnhancedUI.EnhancedScroller;
+using ShutEye.UI.Core;
 
 namespace EnhancedScrollerDemos.CellEvents
 {
@@ -11,7 +12,7 @@ namespace EnhancedScrollerDemos.CellEvents
     public delegate void CellButtonTextClickedDelegate(string value);
     public delegate void CellButtonIntegerClickedDelegate(int value);
 
-    public class CellView : EnhancedScrollerCellView
+    public class CellView : SEUIContainerItem
     {
         private Data _data;
 

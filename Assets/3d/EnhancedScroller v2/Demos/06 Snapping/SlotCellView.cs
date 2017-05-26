@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using EnhancedUI.EnhancedScroller;
+using ShutEye.UI.Core;
 
 namespace EnhancedScrollerDemos.SnappingDemo
 {
-    public class SlotCellView : EnhancedScrollerCellView
+    public class SlotCellView : SEUIContainerItem
     {
         /// <summary>
         /// These are the UI elements that will be updated when the data changes

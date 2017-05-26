@@ -2,17 +2,18 @@
 using UnityEngine.UI;
 using EnhancedUI.EnhancedScroller;
 using System.Collections;
+using ShutEye.UI.Core;
 
 namespace EnhancedScrollerDemos.RemoteResourcesDemo
 {
-    public class CellView : EnhancedScrollerCellView
+    public class CellView : SEButtonUI<Data>
     {
         public Image cellImage;
         public Sprite defaultSprite;
 
-        public void SetData(Data data)
+        public override void RefreshView()
         {
-            StartCoroutine(LoadRemoteImage(data));
+            StartCoroutine(LoadRemoteImage(CurrentData));
         }
 
         public IEnumerator LoadRemoteImage(Data data)

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using ShutEye.UI.Core;
 
 namespace EnhancedUI.EnhancedScroller
 {
@@ -33,6 +34,6 @@ namespace EnhancedUI.EnhancedScroller
         /// <param name="dataIndex"></param>
         /// <param name="cellIndex"></param>
         /// <returns></returns>
-        EnhancedScrollerCellView GetCellView(EnhancedScroller scroller, int dataIndex, int cellIndex);
+        SEUIContainerItem GetCellView(EnhancedScroller scroller, int dataIndex, int cellIndex);
     }
 }

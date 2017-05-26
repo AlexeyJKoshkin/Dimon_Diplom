@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 using EnhancedUI.EnhancedScroller;
+using ShutEye.UI.Core;
 
 namespace EnhancedScrollerDemos.JumpToDemo
 {
@@ -36,7 +37,7 @@ namespace EnhancedScrollerDemos.JumpToDemo
         /// <summary>
         /// Reference to the cell prefab
         /// </summary>
-        public EnhancedScrollerCellView cellViewPrefab;
+        public SEUIContainerItem cellViewPrefab;
 
         public EnhancedScroller.TweenType vScrollerTweenType = EnhancedScroller.TweenType.immediate;
         public float vScrollerTweenTime = 0f;
@@ -121,7 +122,7 @@ namespace EnhancedScrollerDemos.JumpToDemo
         /// <param name="dataIndex">The index of the data that the scroller is requesting</param>
         /// <param name="cellIndex">The index of the list. This will likely be different from the dataIndex if the scroller is looping</param>
         /// <returns>The cell for the scroller to use</returns>
-        public EnhancedScrollerCellView GetCellView(EnhancedScroller scroller, int dataIndex, int cellIndex)
+        public SEUIContainerItem GetCellView(EnhancedScroller scroller, int dataIndex, int cellIndex)
         {
             // first, we get a cell from the scroller by passing a prefab.
             // if the scroller finds one it can recycle it will do so, otherwise

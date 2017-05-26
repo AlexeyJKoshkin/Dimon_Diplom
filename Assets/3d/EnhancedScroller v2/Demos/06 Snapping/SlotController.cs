@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 using EnhancedUI.EnhancedScroller;
 using EnhancedUI;
+using ShutEye.UI.Core;
 
 namespace EnhancedScrollerDemos.SnappingDemo
 {
@@ -26,7 +27,7 @@ namespace EnhancedScrollerDemos.SnappingDemo
         /// <summary>
         /// The slot cell view prefab to use in the scroller
         /// </summary>
-        public EnhancedScrollerCellView slotCellViewPrefab;
+        public SEUIContainerItem slotCellViewPrefab;
 
         void Awake()
         {
@@ -96,7 +97,7 @@ namespace EnhancedScrollerDemos.SnappingDemo
         /// <param name="dataIndex">The index of the data list</param>
         /// <param name="cellIndex">The cell index (This will be different from dataindex if looping is involved)</param>
         /// <returns>The cell to display</returns>
-        public EnhancedScrollerCellView GetCellView(EnhancedScroller scroller, int dataIndex, int cellIndex)
+        public SEUIContainerItem GetCellView(EnhancedScroller scroller, int dataIndex, int cellIndex)
         {
             // get the cell view from the scroller, recycling if possible
             SlotCellView cellView = scroller.GetCellView(slotCellViewPrefab) as SlotCellView;
