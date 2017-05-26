@@ -31,15 +31,25 @@ namespace ShutEye.UI.Core
         /// <summary>
         /// по клику на контейнер
         /// </summary>
-        public event Action<IContainerUI, PointerEventData.InputButton> ClickOnViewEvent;
+        public event Action<IContainerUI, PointerEventData.InputButton> ClickOnViewEvent {
+            add
+            {
+                _clickAction -= value;
+                _clickAction += value;
+            }
+            remove { _clickAction -= value; }
+        }
+
+
+        private Action<IContainerUI, PointerEventData.InputButton> _clickAction;
 
         public virtual bool IsMouseOver { get; protected set; }
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            if (ClickOnViewEvent != null)
+            if (_clickAction != null)
             {
-                ClickOnViewEvent.Invoke(this, eventData.button);
+                _clickAction.Invoke(this, eventData.button);
             }
         }
 

@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using EnhancedScrollerDemos.RemoteResourcesDemo;
-using EnhancedUI;
 using EnhancedUI.EnhancedScroller;
 using GameKit.UI;
 using ShutEye.Core;
@@ -17,8 +15,8 @@ public class SelectWindiow : BaseWindow, IEnhancedScrollerDelegate
     }
     public override WindowState State { get; set; }
 
-    [SerializeField]
-    private SelectItemsContloller _itemsContloller;
+    //[SerializeField]
+    //private SelectItemsContloller _itemsContloller;
 
     [SerializeField]
     private UnityEngine.UI.Button _mainMenuBtn;
@@ -38,7 +36,7 @@ public class SelectWindiow : BaseWindow, IEnhancedScrollerDelegate
     /// <summary>
     /// The prefab of the cell view
     /// </summary>
-    public SEUIContainerItem cellViewPrefab;
+    public SelectWindowContainer cellViewPrefab;
 
     public override void RefreshView()
     {
@@ -54,7 +52,7 @@ public class SelectWindiow : BaseWindow, IEnhancedScrollerDelegate
 
         // tell the scroller to reload now that we have the data
        
-        _itemsContloller.OnChange += ItemsContlollerOnOnChange;
+      //  _itemsContloller.OnChange += ItemsContlollerOnOnChange;
         _mainMenuBtn = _mainMenuBtn ?? GetComponentInChildren<UnityEngine.UI.Button>();
         _mainMenuBtn.onClick.AddListener(this.BackMainMenu);
         base.PrepareUI(_onComplete);
@@ -62,14 +60,24 @@ public class SelectWindiow : BaseWindow, IEnhancedScrollerDelegate
 
     private void CellViewVisibilityChanged(SEUIContainerItem cellview)
     {
-        throw new NotImplementedException();
+        // cast the cell view to our custom view
+        SelectWindowContainer view = cellview as SelectWindowContainer;
+
+        // if the cell is active, we set its data, 
+        // otherwise we will clear the image back to 
+        // its default state
+
+        if (cellview.active)
+            view.UpdateDataView(_data[cellview.dataIndex]);
+        else
+            view.ClearView();
     }
 
     public void ShowType(MenuItemType type)
     {
         _data = GameCore.Instance.MainBD.GetAllInfoAbout(type);
         _currentViewType = type;
-        _itemsContloller.InitDataToList<BaseDataForSelectWindow>(_data);
+        //_itemsContloller.InitDataToList<BaseDataForSelectWindow>(_data);
         if (_data.Count == 0)
         {
             Debug.LogError("Никого нет");
@@ -77,14 +85,6 @@ public class SelectWindiow : BaseWindow, IEnhancedScrollerDelegate
         scroller.ReloadData();
         this.ShowWindow(null);
     }
-
-    private void ItemsContlollerOnOnChange(IContainerUI<BaseDataForSelectWindow> containerUi, PointerEventData.InputButton inputButton)
-    {
-        BaseDataForProfileWindow fullInfo = GameCore.Instance.MainBD.GetFullInfo(_currentViewType, containerUi.CurrentData.Id);
-        UIInstance.Instance.GetWindow<ProfileWindow>().UpdateDataView(fullInfo);
-        this.HideWindow(null);
-    }
-
 
 
     public int GetNumberOfCells(EnhancedScroller scroller)
@@ -103,8 +103,9 @@ public class SelectWindiow : BaseWindow, IEnhancedScrollerDelegate
         // first, we get a cell from the scroller by passing a prefab.
         // if the scroller finds one it can recycle it will do so, otherwise
         // it will create a new cell.
-        CellView cellView = scroller.GetCellView(cellViewPrefab) as CellView;
+        var cellView = scroller.GetCellView(cellViewPrefab);
 
+        cellView.ClickOnViewEvent += CellViewOnClickOnViewEvent;
         // set the name of the game object to the cell's data index.
         // this is optional, but it helps up debug the objects in 
         // the scene hierarchy.
@@ -116,5 +117,13 @@ public class SelectWindiow : BaseWindow, IEnhancedScrollerDelegate
 
         // return the cell to the scroller
         return cellView;
+    }
+
+    private void CellViewOnClickOnViewEvent(IContainerUI containerUi, PointerEventData.InputButton inputButton)
+    {
+        var data = ((IContainerUI<BaseDataForSelectWindow>) containerUi).CurrentData;
+        BaseDataForProfileWindow fullInfo = GameCore.Instance.MainBD.GetFullInfo(_currentViewType, data.Id);
+        UIInstance.Instance.GetWindow<ProfileWindow>().UpdateDataView(fullInfo);
+        this.HideWindow(null);
     }
 }
