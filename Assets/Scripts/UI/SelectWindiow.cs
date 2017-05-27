@@ -89,13 +89,13 @@ public class SelectWindiow : BaseWindow, IEnhancedScrollerDelegate
 
     public int GetNumberOfCells(EnhancedScroller scroller)
     {
-        return _data.Count;
+        return _data == null ? 0 : _data.Count;
     }
 
     public float GetCellViewSize(EnhancedScroller scroller, int dataIndex)
     {
         // return a fixed cell size of 200 pixels
-        return (260f);
+        return cellViewPrefab.GetComponent<RectTransform>().rect.height;
     }
 
     public SEUIContainerItem GetCellView(EnhancedScroller scroller, int dataIndex, int cellIndex)

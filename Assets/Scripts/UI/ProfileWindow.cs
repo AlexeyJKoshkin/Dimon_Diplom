@@ -106,7 +106,7 @@ public class ProfileWindow : BaseWindow, IDataBinding<BaseDataForProfileWindow> 
 
     public int GetNumberOfCells(EnhancedScroller scroller)
     {
-        return CurrentData.Porfolio.Length;
+        return CurrentData ==null ? 0 : CurrentData.Porfolio.Length;
     }
 
     public float GetCellViewSize(EnhancedScroller scroller, int dataIndex)

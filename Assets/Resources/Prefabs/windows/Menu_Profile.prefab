@@ -93,6 +93,7 @@ GameObject:
   - component: {fileID: 224331845499473464}
   - component: {fileID: 222586187817012394}
   - component: {fileID: 114944153695681060}
+  - component: {fileID: 114005820954233582}
   - component: {fileID: 114528644649211106}
   - component: {fileID: 114775228831673394}
   m_Layer: 5
@@ -170,6 +171,34 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &114005820954233582
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1463208214305402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c1b74f910281224a8cae6d8e4fc1f43, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scrollDirection: 1
+  spacing: 0
+  padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
+  loop: 0
+  scrollbarVisibility: 2
+  snapping: 0
+  snapVelocityThreshold: 0
+  snapWatchOffset: 0
+  snapJumpToOffset: 0
+  snapCellCenterOffset: 0
+  snapUseCellSpacing: 0
+  snapTweenType: 0
+  snapTweenTime: 0
 --- !u!114 &114005879306860928
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -430,7 +459,9 @@ MonoBehaviour:
   _fio: {fileID: 114804408113239704}
   _fullInfo: {fileID: 114995249393671776}
   _contacts: {fileID: 114623618500568280}
-  _allPhotos: {fileID: 114005879306860928}
+  scroller: {fileID: 114005820954233582}
+  cellViewPrefab: {fileID: 114030974885760186, guid: 8651e5f064401774db8c24ad5c56431c,
+    type: 2}
 --- !u!114 &114775228831673394
 MonoBehaviour:
   m_ObjectHideFlags: 1
