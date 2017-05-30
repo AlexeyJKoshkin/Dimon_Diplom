@@ -649,28 +649,7 @@ namespace EnhancedUI.EnhancedScroller
             StartCoroutine(TweenPosition(tweenType, tweenTime, ScrollPosition, newScrollPosition, jumpComplete));
         }
 
-        /// <summary>
-        /// Jump to a position in the scroller based on a dataIndex.
-        /// </summary>
-        /// <param name="dataIndex">The data index to jump to</param>
-        /// <param name="position">Whether you should jump before or after the cell view</param>
-        [System.Obsolete("This is an obsolete method, please use the version of this function with a cell offset.")]
-        public void JumpToDataIndex(int dataIndex,
-            CellViewPositionEnum position = CellViewPositionEnum.Before,
-            bool useSpacing = true)
-        {
-            // if looping is on, we need to jump to the middle set of data, otherwise just use the dataIndex for the cellIndex
-            ScrollPosition = GetScrollPositionForDataIndex(dataIndex, position);
-
-            // if spacing is used, adjust the final position
-            if (useSpacing)
-            {
-                if (position == CellViewPositionEnum.Before)
-                    ScrollPosition = _scrollPosition - spacing;
-                else
-                    ScrollPosition = _scrollPosition + spacing;
-            }
-        }
+      
 
         /// <summary>
         /// Snaps the scroller on command. This is called internally when snapping is set to true and the velocity
