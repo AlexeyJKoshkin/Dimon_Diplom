@@ -1,32 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
 using EnhancedUI.EnhancedScroller;
+using GameKit;
 using GameKit.UI;
 using ShutEye.Core;
 using ShutEye.UI.Core;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
-public class SelectWindiow : BaseWindow, IEnhancedScrollerDelegate
+public class PortolioWindow : BaseWindow, IDataBinding<BaseDataForProfileWindow> , IEnhancedScrollerDelegate
 {
     public override Enum TypeWindow
     {
-        get { return  WindowType.SelectWindiow; }
+        get { return WindowType.Portfolio; }
     }
-    public override WindowState State { get; set; }
 
-    //[SerializeField]
-    //private SelectItemsContloller _itemsContloller;
+    public override WindowState State { get; set; }
 
     [SerializeField]
     private UnityEngine.UI.Button _mainMenuBtn;
-
-    private MenuItemType _currentViewType;
-
-    /// <summary>
-    /// The data for the scroller
-    /// </summary>
-    private IList<BaseDataForSelectWindow> _data;
 
     /// <summary>
     /// The scroller to control
@@ -36,11 +28,7 @@ public class SelectWindiow : BaseWindow, IEnhancedScrollerDelegate
     /// <summary>
     /// The prefab of the cell view
     /// </summary>
-    public SelectWindowContainer cellViewPrefab;
-
-    public override void RefreshView()
-    {
-    }
+    public PortfolioContainerUI cellViewPrefab;
 
     protected override void PrepareUI(Action _onComplete)
     {
@@ -49,52 +37,56 @@ public class SelectWindiow : BaseWindow, IEnhancedScrollerDelegate
 
         // set the scroller's cell view visbility changed delegate to a method in this controller
         scroller.cellViewVisibilityChanged = CellViewVisibilityChanged;
-
-        // tell the scroller to reload now that we have the data
-       
-      //  _itemsContloller.OnChange += ItemsContlollerOnOnChange;
         _mainMenuBtn = _mainMenuBtn ?? GetComponentInChildren<UnityEngine.UI.Button>();
-        _mainMenuBtn.onClick.AddListener(this.BackMainMenu);
+        _mainMenuBtn.onClick.AddListener(() =>
+        {
+            HideWindow(null);
+            UIInstance.Instance.GetWindow<SelectWindiow>().ShowType(CurrentData.Type);
+        });
         base.PrepareUI(_onComplete);
     }
 
     private void CellViewVisibilityChanged(SEUIContainerItem cellview)
     {
         // cast the cell view to our custom view
-        SelectWindowContainer view = cellview as SelectWindowContainer;
+        PortfolioContainerUI view = cellview as PortfolioContainerUI;
 
         // if the cell is active, we set its data, 
         // otherwise we will clear the image back to 
         // its default state
 
         if (cellview.active)
-            view.UpdateDataView(_data[cellview.dataIndex]);
+            view.UpdateDataView(CurrentData.Porfolio[cellview.dataIndex]);
         else
             view.ClearView();
     }
 
-    public void ShowType(MenuItemType type)
+
+    public override void RefreshView()
     {
-        _data = GameCore.Instance.MainBD.GetAllInfoAbout(type);
-        _currentViewType = type;
-        //_itemsContloller.InitDataToList<BaseDataForSelectWindow>(_data);
-        if (_data.Count == 0)
-        {
-            Debug.LogError("Никого нет");
-        }
         scroller.ReloadData();
-        this.ShowWindow(null);
+        ShowWindow(null);
     }
 
+    public void UpdateDataView(BaseDataForProfileWindow newdata)
+    {
+        if (newdata != null)
+        {
+            CurrentData = newdata;
+        }
+        RefreshView();
+    }
+
+    public BaseDataForProfileWindow CurrentData { get; private set; }
 
     public int GetNumberOfCells(EnhancedScroller scroller)
     {
-        return _data == null ? 0 : _data.Count;
+        return CurrentData ==null ? 0 : CurrentData.Porfolio.Length;
     }
 
     public float GetCellViewSize(EnhancedScroller scroller, int dataIndex)
     {
-        return cellViewPrefab.GetComponent<RectTransform>().rect.height;
+        return 600;
     }
 
     public SEUIContainerItem GetCellView(EnhancedScroller scroller, int dataIndex, int cellIndex)
@@ -108,7 +100,7 @@ public class SelectWindiow : BaseWindow, IEnhancedScrollerDelegate
         // set the name of the game object to the cell's data index.
         // this is optional, but it helps up debug the objects in 
         // the scene hierarchy.
-        cellView.NameCell= "Cell " + dataIndex.ToString();
+        cellView.NameCell = "Cell " + dataIndex.ToString();
 
         // In this example, we do not set the data here since the cell is not visibile yet. Use a coroutine
         // before the cell is visibile will result in errors, so we defer loading until the cell has
@@ -118,11 +110,9 @@ public class SelectWindiow : BaseWindow, IEnhancedScrollerDelegate
         return cellView;
     }
 
-    private void CellViewOnClickOnViewEvent(IContainerUI containerUi, PointerEventData.InputButton inputButton)
+    private void CellViewOnClickOnViewEvent(IContainerUI arg1, PointerEventData.InputButton arg2)
     {
-        var data = ((IContainerUI<BaseDataForSelectWindow>) containerUi).CurrentData;
-        BaseDataForProfileWindow fullInfo = GameCore.Instance.MainBD.GetFullInfo(_currentViewType, data.Id);
-        UIInstance.Instance.GetWindow<ProfileWindow>().UpdateDataView(fullInfo);
+        UIInstance.Instance.GetWindow<ProfileWindow>().ShowWindow(null);
         this.HideWindow(null);
     }
 }

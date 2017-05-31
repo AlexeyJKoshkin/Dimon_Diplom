@@ -8,7 +8,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ProfileWindow : BaseWindow, IDataBinding<BaseDataForProfileWindow> , IEnhancedScrollerDelegate
+public class ProfileWindow : BaseWindow, IDataBinding<BaseDataForProfileWindow>, IEnhancedScrollerDelegate
 {
     public override Enum TypeWindow
     {
@@ -80,7 +80,7 @@ public class ProfileWindow : BaseWindow, IDataBinding<BaseDataForProfileWindow> 
     public override void RefreshView()
     {
         GameCore.Instance.LoadSprite(CurrentData.Foto, OnLoadPhoto);
-        
+
         _fio.text = CurrentData.Name;
         _fullInfo.text = CurrentData.FullInfo;
         _contacts.text = CurrentData.Contatcts;
@@ -106,12 +106,12 @@ public class ProfileWindow : BaseWindow, IDataBinding<BaseDataForProfileWindow> 
 
     public int GetNumberOfCells(EnhancedScroller scroller)
     {
-        return CurrentData ==null ? 0 : CurrentData.Porfolio.Length;
+        return CurrentData == null ? 0 : CurrentData.Porfolio.Length;
     }
 
     public float GetCellViewSize(EnhancedScroller scroller, int dataIndex)
     {
-        return 150;
+        return 200;
     }
 
     public SEUIContainerItem GetCellView(EnhancedScroller scroller, int dataIndex, int cellIndex)
@@ -137,7 +137,7 @@ public class ProfileWindow : BaseWindow, IDataBinding<BaseDataForProfileWindow> 
 
     private void CellViewOnClickOnViewEvent(IContainerUI arg1, PointerEventData.InputButton arg2)
     {
-        _fullSprite.sprite = ((PortfolioContainerUI)arg1).LoadPhoto;
-        Debug.Log("Show Photo");
+        UIInstance.Instance.GetWindow<PortolioWindow>().UpdateDataView(CurrentData);
+        this.HideWindow(null);
     }
 }

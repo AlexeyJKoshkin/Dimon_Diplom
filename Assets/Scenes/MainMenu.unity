@@ -143,6 +143,7 @@ MonoBehaviour:
   _prefabsWindow:
   - {fileID: 114918266353645424, guid: 31d1669a6c4877d4390344096d0c65ae, type: 2}
   - {fileID: 114220833838560404, guid: 966877c6a7d9cda499c06cdc2e5050f9, type: 2}
+  - {fileID: 114150846002619656, guid: 1adf67ad1f070044e92e1c65c7c51c81, type: 2}
   - {fileID: 114772590486670012, guid: d0dde38e1f7ea5a46a65316d609f5c9b, type: 2}
   _popUPWindow: []
   _allWindow: []
