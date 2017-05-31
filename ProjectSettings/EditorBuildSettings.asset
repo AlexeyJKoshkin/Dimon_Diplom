@@ -5,13 +5,13 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/PreLoader.unity
     guid: dbc7a7e0ef59ee448bc4fd46d3836be3
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/MainMenu.unity
     guid: f176d4d948e022941a43a8c80a4bca87
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/GameUIScene.unity
     guid: 5e585821881585d4b9602262049e2960
   - enabled: 0
@@ -22,4 +22,7 @@ EditorBuildSettings:
     guid: 00000000000000000000000000000000
   - enabled: 0
     path: Assets/Scenes/Levels/ForestHouse_objects.unity
+    guid: 00000000000000000000000000000000
+  - enabled: 1
+    path: Assets/3d/EnhancedScroller v2/Demos/05 Remote Resources/05.unity
     guid: 00000000000000000000000000000000
