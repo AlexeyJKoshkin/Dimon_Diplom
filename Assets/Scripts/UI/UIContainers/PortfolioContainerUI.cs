@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using ShutEye.Core;
 using ShutEye.UI.Core;
 using UnityEngine.UI;
@@ -11,6 +12,19 @@ public class PortfolioContainerUI : SEButtonUI<string>
 
     [SerializeField]
     private Image _foto;
+
+
+    protected override void PrepareUI(Action _onComplete)
+    {
+        var la = GetComponent<LayoutElement>();
+        if (la != null)
+        {
+            var delta = _foto.GetComponent<RectTransform>().sizeDelta;
+            _foto.GetComponent<RectTransform>().sizeDelta = new Vector2(la.minWidth, delta.y);
+        }
+         
+        base.PrepareUI(_onComplete);
+    }
 
     public override void RefreshView()
     {

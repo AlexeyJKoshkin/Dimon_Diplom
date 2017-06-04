@@ -346,12 +346,12 @@ MonoBehaviour:
     m_Bottom: 0
   loop: 0
   scrollbarVisibility: 2
-  snapping: 0
-  snapVelocityThreshold: 0
+  snapping: 1
+  snapVelocityThreshold: 10
   snapWatchOffset: 0
   snapJumpToOffset: 0
-  snapCellCenterOffset: 0
-  snapUseCellSpacing: 0
+  snapCellCenterOffset: 10
+  snapUseCellSpacing: 1
   snapTweenType: 0
   snapTweenTime: 0
 --- !u!114 &114974502154696026

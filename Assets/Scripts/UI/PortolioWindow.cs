@@ -86,7 +86,7 @@ public class PortolioWindow : BaseWindow, IDataBinding<BaseDataForProfileWindow>
 
     public float GetCellViewSize(EnhancedScroller scroller, int dataIndex)
     {
-        return 600;
+        return 740;
     }
 
     public SEUIContainerItem GetCellView(EnhancedScroller scroller, int dataIndex, int cellIndex)
