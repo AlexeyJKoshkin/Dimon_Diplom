@@ -96,6 +96,7 @@ GameObject:
   - component: {fileID: 114005820954233582}
   - component: {fileID: 114528644649211106}
   - component: {fileID: 114775228831673394}
+  - component: {fileID: 114310209730384264}
   m_Layer: 5
   m_Name: ScrollPortFolio
   m_TagString: Untagged
@@ -182,8 +183,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c1b74f910281224a8cae6d8e4fc1f43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scrollDirection: 0
-  spacing: 10
+  scrollDirection: 1
+  spacing: 0
   padding:
     m_Left: 10
     m_Right: 10
@@ -241,6 +242,21 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114310209730384264
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1463208214305402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99ac9fb5c33ef7649a6fa099715846fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cellIdentifier: 
+  _cellIndex: 0
+  _prefab: {fileID: 114030974885760186, guid: 8651e5f064401774db8c24ad5c56431c, type: 2}
+  _createNewIfNoSlot: 1
 --- !u!114 &114433111908168452
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -460,8 +476,7 @@ MonoBehaviour:
   _fullInfo: {fileID: 114995249393671776}
   _contacts: {fileID: 114623618500568280}
   scroller: {fileID: 114005820954233582}
-  cellViewPrefab: {fileID: 114030974885760186, guid: 8651e5f064401774db8c24ad5c56431c,
-    type: 2}
+  _controller: {fileID: 114310209730384264}
 --- !u!114 &114775228831673394
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -758,8 +773,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.000030517578, y: -82.56198}
-  m_SizeDelta: {x: 0, y: -852.88}
+  m_AnchoredPosition: {x: 0.000030517578, y: -82.50098}
+  m_SizeDelta: {x: 0, y: -853.00195}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224412167904018100
 RectTransform:
