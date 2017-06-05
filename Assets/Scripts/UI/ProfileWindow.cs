@@ -8,7 +8,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ProfileWindow : BaseWindow, IDataBinding<BaseDataForProfileWindow>, IEnhancedScrollerDelegate
+public class ProfileWindow : BaseWindow, IDataBinding<BaseDataForProfileWindow>
 {
     public override Enum TypeWindow
     {
@@ -37,10 +37,9 @@ public class ProfileWindow : BaseWindow, IDataBinding<BaseDataForProfileWindow>,
     /// </summary>
     public EnhancedScroller scroller;
 
-    /// <summary>
-    /// The prefab of the cell view
-    /// </summary>
-    public PortfolioContainerUI cellViewPrefab;
+    [SerializeField]
+    private scrolportfolioContrpller _controller;
+    
 
     //[SerializeField]
     //private PortfolioContainersController _allPhotos;
@@ -48,10 +47,11 @@ public class ProfileWindow : BaseWindow, IDataBinding<BaseDataForProfileWindow>,
     protected override void PrepareUI(Action _onComplete)
     {
         // set the scroller's delegate to this controller
-        scroller.Delegate = this;
+        scroller.Delegate = _controller;
 
         // set the scroller's cell view visbility changed delegate to a method in this controller
         scroller.cellViewVisibilityChanged = CellViewVisibilityChanged;
+        _controller.OnChange += ControllerOnOnChange;
         _mainMenuBtn = _mainMenuBtn ?? GetComponentInChildren<UnityEngine.UI.Button>();
         _mainMenuBtn.onClick.AddListener(() =>
         {
@@ -59,6 +59,12 @@ public class ProfileWindow : BaseWindow, IDataBinding<BaseDataForProfileWindow>,
             UIInstance.Instance.GetWindow<SelectWindiow>().ShowType(CurrentData.Type);
         });
         base.PrepareUI(_onComplete);
+    }
+
+    private void ControllerOnOnChange(PortfolioContainerUI portfolioContainerUi, PointerEventData.InputButton inputButton)
+    {
+        UIInstance.Instance.GetWindow<PortolioWindow>().UpdateDataView(CurrentData);
+        this.HideWindow(null);
     }
 
     private void CellViewVisibilityChanged(SEUIContainerItem cellview)
@@ -84,6 +90,7 @@ public class ProfileWindow : BaseWindow, IDataBinding<BaseDataForProfileWindow>,
         _fio.text = CurrentData.Name;
         _fullInfo.text = CurrentData.FullInfo;
         _contacts.text = CurrentData.Contatcts;
+        _controller.UpdateDataView(CurrentData.Porfolio);
         scroller.ReloadData();
         ShowWindow(null);
     }
@@ -104,40 +111,5 @@ public class ProfileWindow : BaseWindow, IDataBinding<BaseDataForProfileWindow>,
 
     public BaseDataForProfileWindow CurrentData { get; private set; }
 
-    public int GetNumberOfCells(EnhancedScroller scroller)
-    {
-        return CurrentData == null ? 0 : CurrentData.Porfolio.Length;
-    }
 
-    public float GetCellViewSize(EnhancedScroller scroller, int dataIndex)
-    {
-        return 200;
-    }
-
-    public SEUIContainerItem GetCellView(EnhancedScroller scroller, int dataIndex, int cellIndex)
-    {
-        // first, we get a cell from the scroller by passing a prefab.
-        // if the scroller finds one it can recycle it will do so, otherwise
-        // it will create a new cell.
-        var cellView = scroller.GetCellView(cellViewPrefab);
-
-        cellView.ClickOnViewEvent += CellViewOnClickOnViewEvent;
-        // set the name of the game object to the cell's data index.
-        // this is optional, but it helps up debug the objects in 
-        // the scene hierarchy.
-        cellView.NameCell = "Cell " + dataIndex.ToString();
-
-        // In this example, we do not set the data here since the cell is not visibile yet. Use a coroutine
-        // before the cell is visibile will result in errors, so we defer loading until the cell has
-        // become visible. We can trap this in the cellViewVisibilityChanged delegate handled below
-
-        // return the cell to the scroller
-        return cellView;
-    }
-
-    private void CellViewOnClickOnViewEvent(IContainerUI arg1, PointerEventData.InputButton arg2)
-    {
-        UIInstance.Instance.GetWindow<PortolioWindow>().UpdateDataView(CurrentData);
-        this.HideWindow(null);
-    }
 }

@@ -182,23 +182,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c1b74f910281224a8cae6d8e4fc1f43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scrollDirection: 1
-  spacing: 0
+  scrollDirection: 0
+  spacing: 10
   padding:
-    m_Left: 0
-    m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
+    m_Left: 10
+    m_Right: 10
+    m_Top: 10
+    m_Bottom: 10
   loop: 0
   scrollbarVisibility: 2
   snapping: 0
-  snapVelocityThreshold: 0
-  snapWatchOffset: 0
-  snapJumpToOffset: 0
-  snapCellCenterOffset: 0
-  snapUseCellSpacing: 0
-  snapTweenType: 0
-  snapTweenTime: 0
+  snapVelocityThreshold: 200
+  snapWatchOffset: 0.5
+  snapJumpToOffset: 0.5
+  snapCellCenterOffset: 0.5
+  snapUseCellSpacing: 1
+  snapTweenType: 25
+  snapTweenTime: 1
 --- !u!114 &114005879306860928
 MonoBehaviour:
   m_ObjectHideFlags: 1

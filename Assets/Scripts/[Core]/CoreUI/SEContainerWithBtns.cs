@@ -73,7 +73,7 @@ namespace ShutEye.UI.Core
             view.CashedTransform.SetParent(transform);
             view.CashedTransform.localScale = Vector3.one;
             view.CashedTransform.localPosition = Vector3.zero;
-            view.CellIndex = _containers.Length;
+            view.CellIndex = Containers.Length;
             view.CellIndetifer = "";
             PrepareContainer(view, _containers.Length);
             var temp = new T[_containers.Length + 1];

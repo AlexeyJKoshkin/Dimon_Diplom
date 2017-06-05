@@ -468,7 +468,7 @@ namespace EnhancedUI.EnhancedScroller
         /// </summary>
         /// <param name="cellPrefab">The prefab to use to create the cell view</param>
         /// <returns></returns>
-        public SEUIContainerItem GetCellView(SEUIContainerItem cellPrefab)
+        public SEUIContainerItem GetCellView(SEUIContainerItem cellPrefab, Func<SEUIContainerItem>  builder = null)
         {
             // see if there is a view to recycle
             var cellView = _GetRecycledCellView(cellPrefab);
@@ -476,9 +476,16 @@ namespace EnhancedUI.EnhancedScroller
             {
                 // no recyleable cell found, so we create a new view
                 // and attach it to our container
-                var go = Instantiate(cellPrefab.gameObject);
-                cellView = go.GetComponent<SEUIContainerItem>();
-                cellView.transform.SetParent(_container);
+                
+                if (builder == null)
+                {
+                    GameObject go = null;
+                    go = Instantiate(cellPrefab.gameObject);
+                    cellView = go.GetComponent<SEUIContainerItem>();
+                    cellView.transform.SetParent(_container);
+                }
+                else
+                    cellView = builder.Invoke();
             }
 
             return cellView;
