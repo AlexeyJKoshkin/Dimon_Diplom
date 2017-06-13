@@ -3,6 +3,7 @@ using EnhancedUI.EnhancedScroller;
 using GameKit;
 using GameKit.UI;
 using ShutEye.Core;
+using ShutEye.Extensions;
 using ShutEye.UI.Core;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -55,8 +56,8 @@ public class ProfileWindow : BaseWindow, IDataBinding<BaseDataForProfileWindow>
         _mainMenuBtn = _mainMenuBtn ?? GetComponentInChildren<UnityEngine.UI.Button>();
         _mainMenuBtn.onClick.AddListener(() =>
         {
-            HideWindow(null);
             UIInstance.Instance.GetWindow<SelectWindiow>().ShowType(CurrentData.Type);
+            HideWindow(null);
         });
         base.PrepareUI(_onComplete);
     }
@@ -84,13 +85,11 @@ public class ProfileWindow : BaseWindow, IDataBinding<BaseDataForProfileWindow>
     public override void HideWindow(Action callback)
     {
         base.HideWindow(callback);
-        if (CurrentData != null)
+        foreach (var portfolioContainerUi in _controller.GetComponentsInChildren<PortfolioContainerUI>())
         {
-            _fullSprite.sprite = null;
-            _controller.UpdateDataView(new[] {"", "", ""});
-            scroller.ReloadData();
-            CurrentData = null;
+            portfolioContainerUi.ClearView();
         }
+        _fullSprite.sprite = null;
     }
 
 

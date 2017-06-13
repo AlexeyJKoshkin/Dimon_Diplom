@@ -26,6 +26,12 @@ public class PortfolioContainerUI : SEButtonUI<string>
         base.PrepareUI(_onComplete);
     }
 
+    public override void ClearView()
+    {
+        _foto.sprite = null;
+        base.ClearView();
+    }
+
     public override void RefreshView()
     {
         GameCore.Instance.LoadSprite(CurrentData, OnLoadPhoto);
