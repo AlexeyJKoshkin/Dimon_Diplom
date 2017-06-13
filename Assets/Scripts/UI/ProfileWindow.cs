@@ -63,8 +63,7 @@ public class ProfileWindow : BaseWindow, IDataBinding<BaseDataForProfileWindow>
 
     private void ControllerOnOnChange(PortfolioContainerUI portfolioContainerUi, PointerEventData.InputButton inputButton)
     {
-        UIInstance.Instance.GetWindow<PortolioWindow>().UpdateDataView(CurrentData);
-        this.HideWindow(null);
+        GameCore.Instance.LoadSprite(portfolioContainerUi.CurrentData, OnLoadPhoto);
     }
 
     private void CellViewVisibilityChanged(SEUIContainerItem cellview)
@@ -80,6 +79,18 @@ public class ProfileWindow : BaseWindow, IDataBinding<BaseDataForProfileWindow>
             view.UpdateDataView(CurrentData.Porfolio[cellview.dataIndex]);
         else
             view.ClearView();
+    }
+
+    public override void HideWindow(Action callback)
+    {
+        base.HideWindow(callback);
+        if (CurrentData != null)
+        {
+            _fullSprite.sprite = null;
+            _controller.UpdateDataView(new[] {"", "", ""});
+            scroller.ReloadData();
+            CurrentData = null;
+        }
     }
 
 
@@ -110,6 +121,5 @@ public class ProfileWindow : BaseWindow, IDataBinding<BaseDataForProfileWindow>
     }
 
     public BaseDataForProfileWindow CurrentData { get; private set; }
-
 
 }

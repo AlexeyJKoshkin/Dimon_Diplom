@@ -32,6 +32,12 @@ public class BaseDataForSelectWindow : DataObject
 {
     public string AvatarSprite;
     public string Price;
+
+    public void Clear()
+    {
+        AvatarSprite = "";
+        Price = "";
+    }
 }
 
 public class BaseDataForProfileWindow : DataObject

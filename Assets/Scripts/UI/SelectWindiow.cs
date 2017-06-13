@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using EnhancedUI.EnhancedScroller;
 using GameKit.UI;
 using ShutEye.Core;
+using ShutEye.Extensions;
 using ShutEye.UI.Core;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -26,7 +27,7 @@ public class SelectWindiow : BaseWindow, IEnhancedScrollerDelegate
     /// <summary>
     /// The data for the scroller
     /// </summary>
-    private IList<BaseDataForSelectWindow> _data;
+    private IList<BaseDataForSelectWindow> _data = new List<BaseDataForSelectWindow>();
 
     /// <summary>
     /// The scroller to control
@@ -40,6 +41,13 @@ public class SelectWindiow : BaseWindow, IEnhancedScrollerDelegate
 
     public override void RefreshView()
     {
+    }
+
+    public override void HideWindow(Action callback)
+    {
+        base.HideWindow(callback);
+        _data.ForEach(e => e.Clear());
+        scroller.RefreshActiveCellViews();
     }
 
     protected override void PrepareUI(Action _onComplete)

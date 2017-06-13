@@ -2,11 +2,9 @@
 using EnhancedUI.EnhancedScroller;
 using GameKit;
 using GameKit.UI;
-using ShutEye.Core;
 using ShutEye.UI.Core;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 public class PortolioWindow : BaseWindow, IDataBinding<BaseDataForProfileWindow> , IEnhancedScrollerDelegate
 {

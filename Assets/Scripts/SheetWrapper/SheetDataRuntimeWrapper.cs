@@ -77,7 +77,7 @@ public class SheetDataRuntimeWrapper : MonoBehaviour
         {
             _runtimeDbSelect.Add(t, new List<BaseDataForSelectWindow>());
         }
-
+        Debug.LogError(SelectTableName);
         yield return LoadBD(client, (bd)=> _bdSelect = bd, SelectTableName);
         Debug.Log(_bdSelect);
         int lastVesr = PlayerPrefs.GetInt(LastVersionSelected, 0);
@@ -123,6 +123,7 @@ public class SheetDataRuntimeWrapper : MonoBehaviour
         {
             _runTimeDB_Profile.Add(t, new List<BaseDataForProfileWindow>());
         }
+        Debug.LogError(SelectTableName);
         yield return LoadBD(client, bd=> _bdProfile = bd, ProfileTableName);
         int lastVesr = PlayerPrefs.GetInt(LastVersionProfile, 0);
         int currentVersion = 0;

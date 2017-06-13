@@ -95,14 +95,14 @@ namespace ShutEye.Core
             }
             else
             {
-                if(onLoadSprite!= null)
+                if (onLoadSprite != null)
                     StartCoroutine(LoadSpriteCoroutine(avatarSprite, onLoadSprite));
             }
         }
 
         private IEnumerator LoadSpriteCoroutine(string url, Action<Sprite> Onfinish)
         {
-            ;
+            if (string.IsNullOrEmpty(url)) yield break;
             var www = new WWW(url);
             yield return www;
             if (string.IsNullOrEmpty(www.error))
