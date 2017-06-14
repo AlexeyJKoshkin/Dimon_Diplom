@@ -50,7 +50,7 @@ namespace ShutEye.Core
         {
             _wrapper.Init(_googleSettings);
 
-            yield return CheckInternet();
+           // yield return CheckInternet();
 
             yield return _wrapper.GetSelectDb(); //проверка и обновление таблицы категорий
             yield return _wrapper.GetPfofileDb();//профайлы
