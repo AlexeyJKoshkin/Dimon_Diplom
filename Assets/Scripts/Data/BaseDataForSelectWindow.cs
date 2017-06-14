@@ -26,7 +26,7 @@ public abstract class BaseSaveTableData
 
 
 /// <summary>
-/// базовые данные под отображение
+/// Данный по услугам
 /// </summary>
 public class BaseDataForSelectWindow : DataObject
 {
@@ -39,7 +39,9 @@ public class BaseDataForSelectWindow : DataObject
         Price = "";
     }
 }
-
+/// <summary>
+/// данные профиля
+/// </summary>
 public class BaseDataForProfileWindow : DataObject
 {
     public MenuItemType Type;

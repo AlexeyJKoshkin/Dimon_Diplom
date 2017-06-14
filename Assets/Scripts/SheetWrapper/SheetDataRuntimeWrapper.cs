@@ -15,24 +15,41 @@ using UnityQuickSheet;
 
 public class SheetDataRuntimeWrapper : MonoBehaviour
 {
+    /// <summary>
+    /// имена таблиц на гугл драйве
+    /// </summary>
     private const string SelectTableName = "GoogleData";
     private const string ProfileTableName = "ProfileData";
 
+    /// <summary>
+    /// Ключи в которых сохраненны данные по локальной БД
+    /// </summary>
     public const string LastVersionSelected = "LAST_VERSION_SELECTED";
     public const string LastVersionProfile = "LAST_VERSION_PROFILE";
 
+    /// <summary>
+    /// вспомогательный класс для работы с гугл таблицами
+    /// </summary>
     private DatabaseClient client;
 
+    /// <summary>
+    /// Путь по которому храниться локальная БД
+    /// </summary>
     public static string PathSelectData
     {
         get { return Path.Combine(Application.persistentDataPath, "db_GoogleData.txt"); }
     }
-
+    /// <summary>
+    /// Путь по которому храниться локальная БД профилей
+    /// </summary>
     public static string PathProfileData
     {
         get { return Path.Combine(Application.persistentDataPath, "db_pfofileData.txt"); }
     }
 
+    /// <summary>
+    /// Очистисть локальную БД
+    /// </summary>
     [ContextMenu(("Clean local Cash"))]
     public void ClearLocalCashData()
     {
@@ -59,57 +76,79 @@ public class SheetDataRuntimeWrapper : MonoBehaviour
     /// </summary>
     private IDatabase _bdProfile;
 
-    public float Percent { get; private set; }
-
+    /// <summary>
+    /// локальная Модель данных приложения
+    /// </summary>
     private Dictionary<MenuItemType, List<BaseDataForSelectWindow>> _runtimeDbSelect = new Dictionary<MenuItemType, List<BaseDataForSelectWindow>>();
 
+    /// <summary>
+    /// локальная Модель данных приложения профайлов
+    /// </summary>
     private Dictionary<MenuItemType, List<BaseDataForProfileWindow>> _runTimeDB_Profile = new Dictionary<MenuItemType, List<BaseDataForProfileWindow>>();
 
+    /// <summary>
+    /// инициализация модели данных
+    /// </summary>
+    /// <param name="settings"></param>
     public void Init(GoogleDataSettings settings)
     {
-        client = new DatabaseClient(settings);
+        client = new DatabaseClient(settings); //создаем клиента для доступа к гугл диску
     }
 
+    /// <summary>
+    /// Обновить локальную БД со списком услуг
+    /// </summary>
+    /// <returns></returns>
     public IEnumerator GetSelectDb()
     {
-        _runtimeDbSelect.Clear();
+        _runtimeDbSelect.Clear(); //очистка
+
+        //формирование списка услуг потипу
         foreach (MenuItemType t in Enum.GetValues(typeof(MenuItemType)))
         {
             _runtimeDbSelect.Add(t, new List<BaseDataForSelectWindow>());
         }
-        Debug.LogError(SelectTableName);
+        
+        //Загрузка таблицы с гугл диска
         yield return LoadBD(client, (bd)=> _bdSelect = bd, SelectTableName);
-        Debug.Log(_bdSelect);
+
+        #region Получение версии таблицы
         int lastVesr = PlayerPrefs.GetInt(LastVersionSelected, 0);
         int currentVersion = 0;
         try
         {
-            GameCore.LogSys("Last Version {0}", lastVesr);
+            Debug.LogFormat("Last Version {0}", lastVesr);
             currentVersion = GetVersion(_bdSelect as Database, client);
-            GameCore.LogSys("Data Version {0}", currentVersion);
+            Debug.LogFormat("Data Version {0}", currentVersion);
         }
         catch (Exception e)
         {
             Debug.LogException(e);
             yield break;
         }
+        #endregion
+
+        //если версия интернета свежеее
         if (currentVersion > lastVesr)
         {
-            GameCore.LogSys("Preprare Uptdate To {0}", currentVersion);
+            Debug.LogFormat("Preprare Uptdate To {0}", currentVersion);
             lastVesr = currentVersion;
-            yield return UpdateDB(client, _bdSelect as Database, AddSelectTableData);
+            //обновляем локальную БД
+            yield return UpdateDB(client, _bdSelect as Database, AddSelectTableData);  
 
             var list = _runtimeDbSelect.Select(o => new SaveSelectData()
             {
                 Type = o.Key,
                 Data = o.Value.ToArray()
             }).ToList();
+            //сохранить изменения на устройстве
             SaveToSelectFile(PathSelectData, SEJsonConverter.Serialize(list));
             PlayerPrefs.SetInt(LastVersionSelected, currentVersion);
             PlayerPrefs.Save();
         }
         else
         {
+            //подготовка данных для работы приложения
             var res = SEJsonConverter.Deserialize<List<SaveSelectData>>(LoadSelectTableFromFile(PathSelectData));
             _runtimeDbSelect = res.ToDictionary(o => o.Type, o => o.Data.ToList());
             yield return null;
@@ -119,28 +158,34 @@ public class SheetDataRuntimeWrapper : MonoBehaviour
     public IEnumerator GetPfofileDb()
     {
         _runTimeDB_Profile.Clear();
+        //очистка
+
+        //формирование списка людей потипу
         foreach (MenuItemType t in Enum.GetValues(typeof(MenuItemType)))
         {
             _runTimeDB_Profile.Add(t, new List<BaseDataForProfileWindow>());
         }
-        Debug.LogError(SelectTableName);
+        //Загрузка таблицы с гугл диска
         yield return LoadBD(client, bd=> _bdProfile = bd, ProfileTableName);
+        #region Получение версии таблицы
         int lastVesr = PlayerPrefs.GetInt(LastVersionProfile, 0);
         int currentVersion = 0;
         try
         {
-            GameCore.LogSys("Last Prfile Version {0}", lastVesr);
+            Debug.LogFormat("Last Prfile Version {0}", lastVesr);
             currentVersion = GetVersion(_bdProfile as Database, client);
-            GameCore.LogSys("Prfile Version {0}", currentVersion);
+            Debug.LogFormat("Prfile Version {0}", currentVersion);
         }
         catch (Exception e)
         {
             Debug.LogException(e);
             yield break;
         }
+#endregion
         if (currentVersion > lastVesr)
         {
-            GameCore.LogSys("Preprare Update Prfile To {0}", currentVersion);
+            Debug.LogFormat("Preprare Update Prfile To {0}", currentVersion);
+            //обновляем локальную БД
             yield return UpdateDB(client, _bdProfile as Database, AddPfofileTableData);
             {
                 var list = _runTimeDB_Profile.Select(o => new SaveProfileData()
@@ -148,6 +193,7 @@ public class SheetDataRuntimeWrapper : MonoBehaviour
                     Type = o.Key,
                     Data = o.Value.ToArray()
                 }).ToList();
+                //сохранить изменения на устройстве
                 SaveToSelectFile(PathProfileData, SEJsonConverter.Serialize(list));
                 PlayerPrefs.SetInt(LastVersionProfile, currentVersion);
                 PlayerPrefs.Save();
@@ -155,6 +201,7 @@ public class SheetDataRuntimeWrapper : MonoBehaviour
         }
         else
         {
+            //подготовка данных для работы приложения
             var res = SEJsonConverter.Deserialize<List<SaveProfileData>>(LoadSelectTableFromFile(PathProfileData));
             _runTimeDB_Profile = res.ToDictionary(o => o.Type, o => o.Data.ToList());
             yield return null;
@@ -163,6 +210,13 @@ public class SheetDataRuntimeWrapper : MonoBehaviour
         // Fetch the cell feed of the worksheet.
     }
 
+    /// <summary>
+    /// Загрузка таблица, по ее имени
+    /// </summary>
+    /// <param name="client"></param>
+    /// <param name="dbSetter"></param>
+    /// <param name="TableName"></param>
+    /// <returns></returns>
     IEnumerator LoadBD(DatabaseClient client, Action<IDatabase> dbSetter, string TableName)
     {
         IDatabase bd = null;
@@ -180,6 +234,13 @@ public class SheetDataRuntimeWrapper : MonoBehaviour
             dbSetter.Invoke(bd);
     }
 
+    /// <summary>
+    /// Обновление локальной БД
+    /// </summary>
+    /// <param name="client"></param>
+    /// <param name="bd"></param>
+    /// <param name="action"></param>
+    /// <returns></returns>
     IEnumerator UpdateDB(DatabaseClient client, Database bd, Action<AtomEntryCollection, MenuItemType> action)
     {
         foreach (MenuItemType sheet in Enum.GetValues(typeof(MenuItemType)))
@@ -246,7 +307,11 @@ public class SheetDataRuntimeWrapper : MonoBehaviour
     }
 
     
-
+    /// <summary>
+    /// Загрузить данные из файла на устройстве
+    /// </summary>
+    /// <param name="path">путь</param>
+    /// <returns></returns>
     private string LoadSelectTableFromFile(string path)
     {
         if (!File.Exists(path))
@@ -255,7 +320,11 @@ public class SheetDataRuntimeWrapper : MonoBehaviour
         }
         return File.ReadAllText(path);
     }
-
+    /// <summary>
+    /// сохранить данный в файл
+    /// </summary>
+    /// <param name="path">путь</param>
+    /// <param name="saveData">данный</param>
     private void SaveToSelectFile(string path, string saveData)
     {
         if (!File.Exists(path))
@@ -263,9 +332,15 @@ public class SheetDataRuntimeWrapper : MonoBehaviour
             File.CreateText(path).Close();
         }
         File.WriteAllText(path, saveData);
-        GameCore.LogSys("Succesfull Update");
+        Debug.LogFormat("Succesfull Update");
     }
 
+    /// <summary>
+    /// получить версию таблицы
+    /// </summary>
+    /// <param name="bd"></param>
+    /// <param name="client"></param>
+    /// <returns></returns>
     private int GetVersion(Database bd, DatabaseClient client)
     {
         if (bd == null)
@@ -281,11 +356,22 @@ public class SheetDataRuntimeWrapper : MonoBehaviour
     }
 
 
+    /// <summary>
+    /// получить список всех услуг в данной категории
+    /// </summary>
+    /// <param name="type"></param>
+    /// <returns></returns>
     public IList<BaseDataForSelectWindow> GetAllInfoAbout(MenuItemType type)
     {
         return _runtimeDbSelect[type];
     }
 
+    /// <summary>
+    /// получить информацию по личному номеру человека в конкретной категории
+    /// </summary>
+    /// <param name="currentViewType">категория</param>
+    /// <param name="currentDataId">личный номер при регистрации</param>
+    /// <returns></returns>
     public BaseDataForProfileWindow GetFullInfo(MenuItemType currentViewType, int currentDataId)
     {
         return _runTimeDB_Profile[currentViewType].FirstOrDefault(o => o.Id == currentDataId);

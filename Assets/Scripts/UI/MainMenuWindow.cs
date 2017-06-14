@@ -3,6 +3,10 @@ using GameKit.UI;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+
+/// <summary>
+/// Контролер главного меню
+/// </summary>
 public class MainMenuWindow : BaseWindow
 {
     public override Enum TypeWindow
@@ -12,10 +16,17 @@ public class MainMenuWindow : BaseWindow
 
     public override WindowState State { get; set; }
 
+    /// <summary>
+    /// список категорий
+    /// </summary>
     [SerializeField]
     private MenuItemController _itemsContainer;
 
-
+    /// <summary>
+    /// метод инициализации вызывается из DiplomU.
+    /// подписка на события, и клики пользователя
+    /// </summary>
+    /// <param name="_onComplete"></param>
     protected override void PrepareUI(Action _onComplete)
     {
          if(_itemsContainer.Containers.Length == 0) Application.Quit();
@@ -24,6 +35,11 @@ public class MainMenuWindow : BaseWindow
         base.PrepareUI(_onComplete);
     }
 
+    /// <summary>
+    /// метод обработки клика на категории
+    /// </summary>
+    /// <param name="mainMenuItemContainer"></param>
+    /// <param name="inputButton"></param>
     private void ItemsContainerOnOnChange(MainMenuItemContainer mainMenuItemContainer, PointerEventData.InputButton inputButton)
     {
         Debug.LogFormat("{0} Show", mainMenuItemContainer.CurrentData);
@@ -34,6 +50,5 @@ public class MainMenuWindow : BaseWindow
 
     public override void RefreshView()
     {
-
     }
 }

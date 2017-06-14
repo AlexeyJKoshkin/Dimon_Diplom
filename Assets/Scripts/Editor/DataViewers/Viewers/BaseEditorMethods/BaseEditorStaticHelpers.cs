@@ -207,25 +207,26 @@ namespace ShutEye.EditorsScripts
 
         public static Texture2D GetTextureForPreview(string path)
         {
-            Sprite sprite = GameCore.LoadSprite(path);
-            if (sprite == null)
-            {
-                return
-                    AssetDatabase.LoadAssetAtPath<Texture2D>(STRH.Editorstr.PathToNoPicture);
-            }
-            if (!path.Contains(":"))
-                return sprite.texture;
-            Color[] pixels = sprite.texture.GetPixels(
-                (int)sprite.rect.x,
-                (int)sprite.rect.y,
-                (int)sprite.rect.width,
-                (int)sprite.rect.height);
-            var tex2d_image = new Texture2D(
-                (int)sprite.rect.width,
-                (int)sprite.rect.height);
-            tex2d_image.SetPixels(pixels);
-            tex2d_image.Apply();
-            return tex2d_image;
+            //Sprite sprite = DiplomCore.LoadSprite(path);
+            //if (sprite == null)
+            //{
+            //    return
+            //        AssetDatabase.LoadAssetAtPath<Texture2D>(STRH.Editorstr.PathToNoPicture);
+            //}
+            //if (!path.Contains(":"))
+            //    return sprite.texture;
+            //Color[] pixels = sprite.texture.GetPixels(
+            //    (int)sprite.rect.x,
+            //    (int)sprite.rect.y,
+            //    (int)sprite.rect.width,
+            //    (int)sprite.rect.height);
+            //var tex2d_image = new Texture2D(
+            //    (int)sprite.rect.width,
+            //    (int)sprite.rect.height);
+            //tex2d_image.SetPixels(pixels);
+            //tex2d_image.Apply();
+            //return tex2d_image;
+            return null;
         }
 
         public static Texture2D GetTextureForPrefab(string path)

@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using GameKit.UI;
 using ShutEye.Core;
 using UnityEngine;
 using ShutEye.UI.Core;
@@ -15,7 +16,7 @@ public class SelectWindowContainer : SEUIContainerItem, IContainerUI<BaseDataFor
     /// </summary>
     [SerializeField]
     private Image _AvatarImage;
-
+    
     [SerializeField]
     private Text _nameText;
 
@@ -24,8 +25,8 @@ public class SelectWindowContainer : SEUIContainerItem, IContainerUI<BaseDataFor
 
     public override void RefreshView()
     {
-        _AvatarImage.sprite = GameSettings.DefaultIcon;
-        GameCore.Instance.LoadSprite(CurrentData.AvatarSprite, OnLoadSprite);
+        _AvatarImage.sprite = DiplomCore.Instance.DefaultSprite;
+        DiplomCore.Instance.LoadSprite(CurrentData.AvatarSprite, OnLoadSprite);
         _nameText.text = CurrentData.Name;
         _priceText.text = CurrentData.Price;
     }

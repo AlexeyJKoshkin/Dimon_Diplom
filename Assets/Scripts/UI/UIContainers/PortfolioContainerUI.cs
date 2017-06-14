@@ -34,7 +34,7 @@ public class PortfolioContainerUI : SEButtonUI<string>
 
     public override void RefreshView()
     {
-        GameCore.Instance.LoadSprite(CurrentData, OnLoadPhoto);
+        DiplomCore.Instance.LoadSprite(CurrentData, OnLoadPhoto);
     }
 
     private void OnLoadPhoto(Sprite obj)

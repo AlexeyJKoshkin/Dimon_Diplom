@@ -9,8 +9,12 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+/// <summary>
+/// Окно профиля приложения
+/// </summary>
 public class ProfileWindow : BaseWindow, IDataBinding<BaseDataForProfileWindow>
 {
+    #region Элементы интерфейса
     public override Enum TypeWindow
     {
         get { return WindowType.WindowInfo; }
@@ -32,7 +36,9 @@ public class ProfileWindow : BaseWindow, IDataBinding<BaseDataForProfileWindow>
 
     [SerializeField]
     private Text _contacts;
+    #endregion
 
+    #region Скролл с превью портфолию
     /// <summary>
     /// The scroller to control
     /// </summary>
@@ -40,11 +46,27 @@ public class ProfileWindow : BaseWindow, IDataBinding<BaseDataForProfileWindow>
 
     [SerializeField]
     private scrolportfolioContrpller _controller;
-    
 
-    //[SerializeField]
-    //private PortfolioContainersController _allPhotos;
+    private void CellViewVisibilityChanged(SEUIContainerItem cellview)
+    {
+        // cast the cell view to our custom view
+        PortfolioContainerUI view = cellview as PortfolioContainerUI;
 
+        // if the cell is active, we set its data, 
+        // otherwise we will clear the image back to 
+        // its default state
+
+        if (cellview.active)
+            view.UpdateDataView(CurrentData.Porfolio[cellview.dataIndex]);
+        else
+            view.ClearView();
+    }
+    #endregion
+    /// <summary>
+    /// метод инициализации вызывается из DiplomU.
+    /// подписка на события, и клики пользователя
+    /// </summary>
+    /// <param name="_onComplete"></param>
     protected override void PrepareUI(Action _onComplete)
     {
         // set the scroller's delegate to this controller
@@ -62,26 +84,20 @@ public class ProfileWindow : BaseWindow, IDataBinding<BaseDataForProfileWindow>
         base.PrepareUI(_onComplete);
     }
 
+    /// <summary>
+    /// клик на фото из превью - отобразить фотку на месте аватарки
+    /// </summary>
+    /// <param name="portfolioContainerUi"></param>
+    /// <param name="inputButton"></param>
     private void ControllerOnOnChange(PortfolioContainerUI portfolioContainerUi, PointerEventData.InputButton inputButton)
     {
-        GameCore.Instance.LoadSprite(portfolioContainerUi.CurrentData, OnLoadPhoto);
+        DiplomCore.Instance.LoadSprite(portfolioContainerUi.CurrentData, OnLoadPhoto);
     }
-
-    private void CellViewVisibilityChanged(SEUIContainerItem cellview)
-    {
-        // cast the cell view to our custom view
-        PortfolioContainerUI view = cellview as PortfolioContainerUI;
-
-        // if the cell is active, we set its data, 
-        // otherwise we will clear the image back to 
-        // its default state
-
-        if (cellview.active)
-            view.UpdateDataView(CurrentData.Porfolio[cellview.dataIndex]);
-        else
-            view.ClearView();
-    }
-
+    
+    /// <summary>
+    /// спрятать окно, очистить всю информацию о профайле
+    /// </summary>
+    /// <param name="callback"></param>
     public override void HideWindow(Action callback)
     {
         base.HideWindow(callback);
@@ -92,10 +108,14 @@ public class ProfileWindow : BaseWindow, IDataBinding<BaseDataForProfileWindow>
         _fullSprite.sprite = null;
     }
 
-
+    /// <summary>
+    /// обновить информацию в UI
+    /// 
+    /// выставляем фотки, контакты и тому подобное
+    /// </summary>
     public override void RefreshView()
     {
-        GameCore.Instance.LoadSprite(CurrentData.Foto, OnLoadPhoto);
+        DiplomCore.Instance.LoadSprite(CurrentData.Foto, OnLoadPhoto);
 
         _fio.text = CurrentData.Name;
         _fullInfo.text = CurrentData.FullInfo;

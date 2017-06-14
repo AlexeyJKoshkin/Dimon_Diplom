@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace GameKit.CustomEditors
 {
-    [CustomEditor(typeof(GameCore))]
+    [CustomEditor(typeof(DiplomCore))]
     public class GameCoreInspector : Editor
     {
         private enum StateGenerate

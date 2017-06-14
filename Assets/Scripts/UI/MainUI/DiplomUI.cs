@@ -1,4 +1,3 @@
-using GameKit.UI.Core;
 using ShutEye.Extensions;
 using ShutEye.UI.Core;
 using System;
@@ -11,43 +10,39 @@ namespace GameKit.UI
 {
     public class DiplomUI : SEComponentUI
     {
+        #region параметры и переменные
+        /// <summary>
+        /// Указатель на готовность UI к запуску
+        /// </summary>
         public bool IsReady { get; private set; }
 
         /// <summary>
-        /// Окна указанные в префабах
+        /// Окна указанные приложения
         /// </summary>
         [SerializeField]
         private BaseWindow[] _prefabsWindow;
 
-        [SerializeField]
-        private SEComponentUI[] _popUPWindow;
-
+        /// <summary>
+        /// Публичный список только для чтения со списком всех активных окон приложения
+        /// </summary>
         public ReadOnlyCollection<BaseWindow> AllWindows { get { return _allWindow.AsReadOnly(); } }
 
         [SerializeField]
         [ReadOnly]
         private List<BaseWindow> _allWindow;
 
-        private Stack<IPopUpWindow> _stackPopUps = new Stack<IPopUpWindow>();
-
-        private List<IPopUpWindow> _AlivePopups = new List<IPopUpWindow>();
         private BaseWindow _currentWindow;
+        #endregion
 
-        //public Enum CurrentWindowKey {get { return _currentWindowType;}}
-#pragma warning disable
-
-        [SerializeField]
-        [ReadOnlyAttribute]
-        private string _currentWindowType;
-
-#pragma warning enable
-
+        #region Инициализация UI приложения
+        /// <summary>
+        /// Метод вызывается один раз для инициализации всего интерфейса
+        /// </summary>
+        /// <param name="_onComplete"></param>
         protected override void PrepareUI(Action _onComplete)
         {
             //_currentWindowType = "Still Initing...";
             var windowOnScreen = gameObject.GetComponentsInChildren<BaseWindow>(true).ToList();
-
-            ////TODO: переделать инициализацию попапов
 
             windowOnScreen.ForEach(w =>
                {
@@ -71,6 +66,12 @@ namespace GameKit.UI
             base.PrepareUI(_onComplete);
         }
 
+        /// <summary>
+        /// инициализация окон, вызывается каждый раз для каждого типа окна
+        /// </summary>
+        /// <typeparam name="T">тип окна для инициализации</typeparam>
+        /// <param name="pref">префаб окна </param>
+        /// <returns></returns>
         private T InStantiateWindow<T>(SEComponentUI pref)
         {
             var old = pref.GetComponent<RectTransform>();
@@ -87,7 +88,14 @@ namespace GameKit.UI
             //Debug.Log(window.CashedTransform.sizeDelta);
             return window.GetComponent<T>();
         }
+        #endregion
 
+        #region Вывод окна на экран
+        /// <summary>
+        /// Вывести окно на экран
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="callback"></param>
         public void ShowWindow(Enum type, Action callback = null)
         {
             var window = _allWindow.FirstOrDefault(o => o.TypeWindow.Equals(type));
@@ -99,11 +107,21 @@ namespace GameKit.UI
             ShowWindow(window, callback);
         }
 
+        /// <summary>
+        /// Получить окно по его типу
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
         public T GetWindow<T>() where T : BaseWindow
         {
             return _allWindow.OfType<T>().FirstOrDefault();
         }
 
+        /// <summary>
+        /// внутренний метод для вывода окна на экран
+        /// </summary>
+        /// <param name="window"></param>
+        /// <param name="callback"></param>
         private void ShowWindow(BaseWindow window, Action callback = null)
         {
             if (_currentWindow != null)
@@ -123,54 +141,11 @@ namespace GameKit.UI
                 _showwindow(window, callback);
             }
         }
-
-        /// <summary>
-        /// просто показать попап
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        public T GetPopUp<T>() where T : IPopUpWindow
-        {
-            IPopUpWindow window = _AlivePopups.FirstOrDefault(o => o is T);
-            if (window != null)
-            {
-                _AlivePopups.Remove(window);
-            }
-            else
-            {
-                var popup = _popUPWindow.FirstOrDefault(o => o is T);
-                window = InStantiateWindow<T>(popup);
-                if (window == null)
-                {
-                    throw new NullReferenceException("No PopUp type " + typeof(T).Name);
-                }
-            }
-            _showPopUpwindow(window);
-            return (T)window;
-        }
-
         private void _showwindow(BaseWindow window, Action callback)
         {
             window.ShowWindow(callback);
             _currentWindow = window;
-            _currentWindowType = _currentWindow.TypeWindow.ToString();
         }
-
-        private void _showPopUpwindow(IPopUpWindow window)
-        {
-            if (_stackPopUps.Count > 0)
-            {
-                window.Depth = _stackPopUps.Peek().Depth + 50;
-            }
-            window.OnHideEvent += _clear;
-            _stackPopUps.Push(window);
-        }
-
-        private void _clear(IPopUpWindow obj)
-        {
-            if (obj == _stackPopUps.Peek())
-                _stackPopUps.Pop();
-            else
-                Debug.LogErrorFormat("{0} close before {1}", obj.GetType().Name, _stackPopUps.Peek().GetType().Name);
-        }
+#endregion
     }
 }
