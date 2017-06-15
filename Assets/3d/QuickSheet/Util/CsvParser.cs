@@ -54,6 +54,7 @@ namespace UnityQuickSheet
                             }
                             yield return new Token(TokenType.Quote, c.ToString());
                             break;
+
                         case ',':
                             if (value.Length > 0)
                             {
@@ -62,6 +63,7 @@ namespace UnityQuickSheet
                             }
                             yield return new Token(TokenType.Comma, c.ToString());
                             break;
+
                         default:
                             value.Append(c);
                             break;
@@ -110,13 +112,16 @@ namespace UnityQuickSheet
                             result.Length = 0;
                         }
                         break;
+
                     case TokenType.Quote:
                         // Toggle quote state
                         inQuote = !inQuote;
                         break;
+
                     case TokenType.Value:
                         result.Append(token.Value);
                         break;
+
                     default:
                         throw new InvalidOperationException("Unknown token type: " + token.Type);
                 }

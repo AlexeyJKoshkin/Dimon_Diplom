@@ -1,7 +1,6 @@
-﻿using UnityEngine;
+﻿using ShutEye.UI.Core;
+using UnityEngine;
 using UnityEngine.UI;
-using EnhancedUI.EnhancedScroller;
-using ShutEye.UI.Core;
 
 namespace EnhancedScrollerDemos.ViewDrivenCellSizes
 {

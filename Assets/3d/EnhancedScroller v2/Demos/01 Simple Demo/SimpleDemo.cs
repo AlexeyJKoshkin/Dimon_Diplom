@@ -1,14 +1,13 @@
-﻿using UnityEngine;
-using System.Collections;
-using EnhancedUI;
+﻿using EnhancedUI;
 using EnhancedUI.EnhancedScroller;
 using ShutEye.UI.Core;
+using UnityEngine;
 
 namespace EnhancedScrollerDemos.SuperSimpleDemo
 {
     /// <summary>
     /// Set up our demo script as a delegate for the scroller by inheriting from the IEnhancedScrollerDelegate interface
-    /// 
+    ///
     /// EnhancedScroller delegates will handle telling the scroller:
     ///  - How many cells it should allocate room for (GetNumberOfCells)
     ///  - What each cell size is (GetCellSize)
@@ -34,15 +33,15 @@ namespace EnhancedScrollerDemos.SuperSimpleDemo
         public SEUIContainerItem cellViewPrefab;
 
         /// <summary>
-        /// Be sure to set up your references to the scroller after the Awake function. The 
+        /// Be sure to set up your references to the scroller after the Awake function. The
         /// scroller does some internal configuration in its own Awake function. If you need to
         /// do this in the Awake function, you can set up the script order through the Unity editor.
         /// In this case, be sure to set the EnhancedScroller's script before your delegate.
-        /// 
+        ///
         /// In this example, we are calling our initializations in the delegate's Start function,
         /// but it could have been done later, perhaps in the Update function.
         /// </summary>
-        void Start()
+        private void Start()
         {
             // tell the scroller that this script will be its delegate
             scroller.Delegate = this;
@@ -99,7 +98,7 @@ namespace EnhancedScrollerDemos.SuperSimpleDemo
             LoadSmallData();
         }
 
-        #endregion
+        #endregion UI Handlers
 
         #region EnhancedScroller Handlers
 
@@ -144,7 +143,7 @@ namespace EnhancedScrollerDemos.SuperSimpleDemo
             CellView cellView = scroller.GetCellView(cellViewPrefab) as CellView;
 
             // set the name of the game object to the cell's data index.
-            // this is optional, but it helps up debug the objects in 
+            // this is optional, but it helps up debug the objects in
             // the scene hierarchy.
             cellView.name = "Cell " + dataIndex.ToString();
 
@@ -155,6 +154,6 @@ namespace EnhancedScrollerDemos.SuperSimpleDemo
             return cellView;
         }
 
-        #endregion
+        #endregion EnhancedScroller Handlers
     }
 }

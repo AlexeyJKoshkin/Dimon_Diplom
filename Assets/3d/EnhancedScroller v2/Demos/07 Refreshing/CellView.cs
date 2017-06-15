@@ -1,7 +1,6 @@
-﻿using UnityEngine;
+﻿using ShutEye.UI.Core;
+using UnityEngine;
 using UnityEngine.UI;
-using EnhancedUI.EnhancedScroller;
-using ShutEye.UI.Core;
 
 namespace EnhancedScrollerDemos.RefreshDemo
 {
@@ -10,7 +9,6 @@ namespace EnhancedScrollerDemos.RefreshDemo
     /// </summary>
     public class CellView : SEButtonUI<Data>
     {
-
         /// <summary>
         /// A reference to the UI Text element to display the cell data
         /// </summary>

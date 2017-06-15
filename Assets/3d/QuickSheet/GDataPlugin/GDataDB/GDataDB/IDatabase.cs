@@ -1,8 +1,10 @@
-namespace GDataDB {
+namespace GDataDB
+{
     /// <summary>
     /// Spreadsheet document
     /// </summary>
-    public interface IDatabase {
+    public interface IDatabase
+    {
         /// <summary>
         /// Creates a new worksheet in this document
         /// </summary>

@@ -1,12 +1,14 @@
 using System;
 using System.Collections.Generic;
 
-namespace GDataDB {
+namespace GDataDB
+{
     /// <summary>
     /// Worksheet in a spreadsheet document
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public interface ITable<T> {
+    public interface ITable<T>
+    {
         /// <summary>
         /// Deletes this worksheet
         /// </summary>
@@ -71,7 +73,6 @@ namespace GDataDB {
         /// <param name="q">query parameters</param>
         /// <returns>Matching rows</returns>
         IList<IRow<T>> Find(Query q);
-
 
         Uri GetFeedUrl();
     }

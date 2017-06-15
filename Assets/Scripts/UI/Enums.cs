@@ -13,5 +13,6 @@ public enum WindowType
     Menu,
     SelectWindiow,
     WindowInfo,
-    Portfolio
+    Portfolio,
+    AboutCompany
 }

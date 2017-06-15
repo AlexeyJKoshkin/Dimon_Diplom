@@ -1,8 +1,4 @@
-﻿using UnityEngine;
-using System;
-using System.Collections;
-
-namespace EnhancedUI.EnhancedScroller
+﻿namespace EnhancedUI.EnhancedScroller
 {
     ///// <summary>
     ///// This is the base class that all cell views should derive from

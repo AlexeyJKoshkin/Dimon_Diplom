@@ -1,8 +1,10 @@
-﻿namespace GDataDB {
+﻿namespace GDataDB
+{
     /// <summary>
     /// Query parameters
     /// </summary>
-    public class Query {
+    public class Query
+    {
         /// <summary>
         /// Start index, for paging
         /// </summary>

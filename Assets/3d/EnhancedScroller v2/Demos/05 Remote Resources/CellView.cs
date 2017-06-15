@@ -1,9 +1,9 @@
-﻿using System;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using ShutEye.UI.Core;
+using System;
 using System.Collections;
-using ShutEye.UI.Core;
+using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace EnhancedScrollerDemos.RemoteResourcesDemo
 {
@@ -42,6 +42,7 @@ namespace EnhancedScrollerDemos.RemoteResourcesDemo
                 OnStart.Invoke(this);
             Current = this;
         }
+
         private float _startY;
 
         public void OnDrag(PointerEventData eventData)

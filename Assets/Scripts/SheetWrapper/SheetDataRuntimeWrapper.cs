@@ -1,16 +1,15 @@
-﻿using System;
-using UnityEngine;
+﻿using GDataDB;
+using GDataDB.Impl;
+using Google.GData.Client;
+using Google.GData.Spreadsheets;
+using ShutEye.Data;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
-using GDataDB;
-using GDataDB.Impl;
-using Google.GData.Client;
-using Google.GData.Spreadsheets;
-using ShutEye.Core;
-using ShutEye.Data;
+using UnityEngine;
 using UnityQuickSheet;
 
 public class SheetDataRuntimeWrapper : MonoBehaviour
@@ -19,12 +18,14 @@ public class SheetDataRuntimeWrapper : MonoBehaviour
     /// имена таблиц на гугл драйве
     /// </summary>
     private const string SelectTableName = "GoogleData";
+
     private const string ProfileTableName = "ProfileData";
 
     /// <summary>
     /// Ключи в которых сохраненны данные по локальной БД
     /// </summary>
     public const string LastVersionSelected = "LAST_VERSION_SELECTED";
+
     public const string LastVersionProfile = "LAST_VERSION_PROFILE";
 
     /// <summary>
@@ -39,6 +40,7 @@ public class SheetDataRuntimeWrapper : MonoBehaviour
     {
         get { return Path.Combine(Application.persistentDataPath, "db_GoogleData.txt"); }
     }
+
     /// <summary>
     /// Путь по которому храниться локальная БД профилей
     /// </summary>
@@ -53,7 +55,7 @@ public class SheetDataRuntimeWrapper : MonoBehaviour
     [ContextMenu(("Clean local Cash"))]
     public void ClearLocalCashData()
     {
-        PlayerPrefs.SetInt(LastVersionProfile,0);
+        PlayerPrefs.SetInt(LastVersionProfile, 0);
         PlayerPrefs.SetInt(LastVersionSelected, 0);
         PlayerPrefs.Save();
         if (File.Exists(PathProfileData))
@@ -108,11 +110,12 @@ public class SheetDataRuntimeWrapper : MonoBehaviour
         {
             _runtimeDbSelect.Add(t, new List<BaseDataForSelectWindow>());
         }
-        
+
         //Загрузка таблицы с гугл диска
-        yield return LoadBD(client, (bd)=> _bdSelect = bd, SelectTableName);
+        yield return LoadBD(client, (bd) => _bdSelect = bd, SelectTableName);
 
         #region Получение версии таблицы
+
         int lastVesr = PlayerPrefs.GetInt(LastVersionSelected, 0);
         int currentVersion = 0;
         try
@@ -126,7 +129,8 @@ public class SheetDataRuntimeWrapper : MonoBehaviour
             Debug.LogException(e);
             yield break;
         }
-        #endregion
+
+        #endregion Получение версии таблицы
 
         //если версия интернета свежеее
         if (currentVersion > lastVesr)
@@ -134,7 +138,7 @@ public class SheetDataRuntimeWrapper : MonoBehaviour
             Debug.LogFormat("Preprare Uptdate To {0}", currentVersion);
             lastVesr = currentVersion;
             //обновляем локальную БД
-            yield return UpdateDB(client, _bdSelect as Database, AddSelectTableData);  
+            yield return UpdateDB(client, _bdSelect as Database, AddSelectTableData);
 
             var list = _runtimeDbSelect.Select(o => new SaveSelectData()
             {
@@ -166,8 +170,10 @@ public class SheetDataRuntimeWrapper : MonoBehaviour
             _runTimeDB_Profile.Add(t, new List<BaseDataForProfileWindow>());
         }
         //Загрузка таблицы с гугл диска
-        yield return LoadBD(client, bd=> _bdProfile = bd, ProfileTableName);
+        yield return LoadBD(client, bd => _bdProfile = bd, ProfileTableName);
+
         #region Получение версии таблицы
+
         int lastVesr = PlayerPrefs.GetInt(LastVersionProfile, 0);
         int currentVersion = 0;
         try
@@ -181,7 +187,9 @@ public class SheetDataRuntimeWrapper : MonoBehaviour
             Debug.LogException(e);
             yield break;
         }
-#endregion
+
+        #endregion Получение версии таблицы
+
         if (currentVersion > lastVesr)
         {
             Debug.LogFormat("Preprare Update Prfile To {0}", currentVersion);
@@ -217,7 +225,7 @@ public class SheetDataRuntimeWrapper : MonoBehaviour
     /// <param name="dbSetter"></param>
     /// <param name="TableName"></param>
     /// <returns></returns>
-    IEnumerator LoadBD(DatabaseClient client, Action<IDatabase> dbSetter, string TableName)
+    private IEnumerator LoadBD(DatabaseClient client, Action<IDatabase> dbSetter, string TableName)
     {
         IDatabase bd = null;
         var _getDbThread = new Thread(() =>
@@ -230,7 +238,7 @@ public class SheetDataRuntimeWrapper : MonoBehaviour
         {
             yield return null;
         }
-        if(dbSetter != null)
+        if (dbSetter != null)
             dbSetter.Invoke(bd);
     }
 
@@ -241,7 +249,7 @@ public class SheetDataRuntimeWrapper : MonoBehaviour
     /// <param name="bd"></param>
     /// <param name="action"></param>
     /// <returns></returns>
-    IEnumerator UpdateDB(DatabaseClient client, Database bd, Action<AtomEntryCollection, MenuItemType> action)
+    private IEnumerator UpdateDB(DatabaseClient client, Database bd, Action<AtomEntryCollection, MenuItemType> action)
     {
         foreach (MenuItemType sheet in Enum.GetValues(typeof(MenuItemType)))
         {
@@ -253,7 +261,7 @@ public class SheetDataRuntimeWrapper : MonoBehaviour
         }
     }
 
-    void AddSelectTableData(AtomEntryCollection colectCollection, MenuItemType sheet)
+    private void AddSelectTableData(AtomEntryCollection colectCollection, MenuItemType sheet)
     {
         int counter = 0;
         for (int i = 4; i < colectCollection.Count; i++)
@@ -276,7 +284,7 @@ public class SheetDataRuntimeWrapper : MonoBehaviour
         }
     }
 
-    void AddPfofileTableData(AtomEntryCollection colectCollection, MenuItemType sheet)
+    private void AddPfofileTableData(AtomEntryCollection colectCollection, MenuItemType sheet)
     {
         int counter = 0;
         for (int i = 6; i < colectCollection.Count; i++)
@@ -293,20 +301,22 @@ public class SheetDataRuntimeWrapper : MonoBehaviour
                 case 1: _runTimeDB_Profile[sheet].Last().Name = cell.Value; break;
                 case 2: _runTimeDB_Profile[sheet].Last().FullInfo = cell.Value; break;
                 case 3: _runTimeDB_Profile[sheet].Last().Foto = cell.Value; break;
-                case 4: _runTimeDB_Profile[sheet].Last().Contatcts = cell.Value; break;
+                case 4:
+                    {
+                        var list = cell.Value.Split('\n').ToList();
+                        list.RemoveAll(string.IsNullOrEmpty);
+                        _runTimeDB_Profile[sheet].Last().Contatcts = list[0];
+                        _runTimeDB_Profile[sheet].Last().Vk = "https://" + list[1];
+                        break;
+                    }
                 case 5:
                     _runTimeDB_Profile[sheet].Last().Porfolio = cell.Value.Split('\n');
-                    foreach (var s in _runTimeDB_Profile[sheet].Last().Porfolio)
-                    {
-                        Debug.Log(s);
-                    }
                     counter = -1; break;
             }
             counter++;
         }
     }
 
-    
     /// <summary>
     /// Загрузить данные из файла на устройстве
     /// </summary>
@@ -320,6 +330,7 @@ public class SheetDataRuntimeWrapper : MonoBehaviour
         }
         return File.ReadAllText(path);
     }
+
     /// <summary>
     /// сохранить данный в файл
     /// </summary>
@@ -354,7 +365,6 @@ public class SheetDataRuntimeWrapper : MonoBehaviour
         Debug.Log(((CellEntry)cellFeed.Entries[0]).Value);
         return int.Parse(((CellEntry)cellFeed.Entries[1]).Value);
     }
-
 
     /// <summary>
     /// получить список всех услуг в данной категории

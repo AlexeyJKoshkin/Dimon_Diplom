@@ -31,7 +31,8 @@ namespace ShutEye.UI.Core
         /// <summary>
         /// по клику на контейнер
         /// </summary>
-        public event Action<IContainerUI, PointerEventData.InputButton> ClickOnViewEvent {
+        public event Action<IContainerUI, PointerEventData.InputButton> ClickOnViewEvent
+        {
             add
             {
                 _clickAction -= value;
@@ -39,7 +40,6 @@ namespace ShutEye.UI.Core
             }
             remove { _clickAction -= value; }
         }
-
 
         private Action<IContainerUI, PointerEventData.InputButton> _clickAction;
 
@@ -79,6 +79,7 @@ namespace ShutEye.UI.Core
             get { return name; }
             set { name = value; }
         }
+
         /// <summary>
         /// Whether the cell is active or recycled
         /// </summary>
@@ -90,6 +91,7 @@ namespace ShutEye.UI.Core
         /// </summary>
         [NonSerialized]
         public int dataIndex;
+
         /// <summary>
         /// The cellIdentifier is a unique string that allows the scroller
         /// to handle different types of cells in a single list. Each type

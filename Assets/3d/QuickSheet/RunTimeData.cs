@@ -1,14 +1,14 @@
 ﻿///////////////////////////////////////////////////////////////////////////////
 ///
 /// BaseMachine.cs
-/// 
+///
 /// (c)2014 Kim, Hyoun Woo
 ///
 ///////////////////////////////////////////////////////////////////////////////
 
 using System;
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace UnityQuickSheet
 {
@@ -16,12 +16,13 @@ namespace UnityQuickSheet
     /// A class which stores various settings for a worksheet which is imported.
     /// </summary>
     [Serializable]
-    public class BaseRuntimeMachine 
+    public class BaseRuntimeMachine
     {
         public readonly static string ImportSettingFilename = "New Import Setting.asset";
 
         [SerializeField]
         private string sheetName;
+
         public string SpreadSheetName
         {
             get { return sheetName; }
@@ -30,6 +31,7 @@ namespace UnityQuickSheet
 
         [SerializeField]
         private string workSheetName;
+
         public string WorkSheetName
         {
             get { return workSheetName; }
@@ -71,7 +73,6 @@ namespace UnityQuickSheet
         /// </summary>
         public void ReInitialize()
         {
-            
             // reinitialize. it does not need to be serialized.
             onlyCreateDataClass = false;
         }
@@ -82,10 +83,11 @@ namespace UnityQuickSheet
     {
         [SerializeField]
         public static string generatorAssetPath = "Assets/QuickSheet/GDataPlugin/Tool/";
+
         [SerializeField]
         public static string assetFileName = "GoogleMachine.asset";
 
-        // excel and google plugin have its own template files, 
+        // excel and google plugin have its own template files,
         // so we need to set the different path when the asset file is created.
         private readonly string gDataTemplatePath = "QuickSheet/GDataPlugin/Templates";
 

@@ -1,29 +1,30 @@
 ﻿///////////////////////////////////////////////////////////////////////////////
+using Google.GData.Client;
+using System;
+
 ///
 /// GDataDBRequestFactory.cs
-/// 
+///
 /// (c)2015 Kim, Hyoun Woo
 ///
 ///////////////////////////////////////////////////////////////////////////////
 
 using UnityEngine;
-using System;
-using Google.GData.Client;
 using UnityQuickSheet;
 
 namespace GDataDB.Impl
 {
     /// <summary>
-    /// Handles OAuth2 credentials to access on google spreadsheets. 
-    /// 
+    /// Handles OAuth2 credentials to access on google spreadsheets.
+    ///
     /// Note that it needs json type of private key to get access code.
-    /// 
+    ///
     /// </summary>
     public class GDataDBRequestFactory
     {
-        const string SCOPE = "https://www.googleapis.com/auth/drive https://spreadsheets.google.com/feeds https://docs.google.com/feeds";
-        const string REDIRECT_URI = "urn:ietf:wg:oauth:2.0:oob";
-        const string TOKEN_TYPE = "refresh";
+        private const string SCOPE = "https://www.googleapis.com/auth/drive https://spreadsheets.google.com/feeds https://docs.google.com/feeds";
+        private const string REDIRECT_URI = "urn:ietf:wg:oauth:2.0:oob";
+        private const string TOKEN_TYPE = "refresh";
 
         public static GOAuth2RequestFactory RefreshAuthenticate(GoogleDataSettings settings)
         {
@@ -48,7 +49,7 @@ namespace GDataDB.Impl
             return new GOAuth2RequestFactory("spreadsheet", "MySpreadsheetIntegration-v1", parameters);
         }
 
-        public static void InitAuthenticate(GoogleDataSettings settings )
+        public static void InitAuthenticate(GoogleDataSettings settings)
         {
             string clientId = settings.OAuth2Data.client_id;
             string clientSecret = settings.OAuth2Data.client_secret;
@@ -66,8 +67,8 @@ namespace GDataDB.Impl
             };
 
             // Retrieves the Authorization URL
-            // IMPORTANT 
-            // IMPORTANT 
+            // IMPORTANT
+            // IMPORTANT
 
             string authorizationUrl = OAuthUtil.CreateOAuth2AuthorizationUrl(parameters);
             Debug.Log(authorizationUrl);
@@ -91,8 +92,8 @@ namespace GDataDB.Impl
         private static bool IsValidURL(string url)
         {
             Uri uriResult;
-            return (Uri.TryCreate(url, UriKind.Absolute, out uriResult) && 
-                                (uriResult.Scheme == Uri.UriSchemeHttp || 
+            return (Uri.TryCreate(url, UriKind.Absolute, out uriResult) &&
+                                (uriResult.Scheme == Uri.UriSchemeHttp ||
                                  uriResult.Scheme == Uri.UriSchemeHttps));
         }
 
@@ -107,8 +108,8 @@ namespace GDataDB.Impl
                     RedirectUri = REDIRECT_URI,
 
                     Scope = SCOPE,
-                    AccessType = "offline", // IMPORTANT 
-                    TokenType = TOKEN_TYPE, // IMPORTANT 
+                    AccessType = "offline", // IMPORTANT
+                    TokenType = TOKEN_TYPE, // IMPORTANT
 
                     AccessCode = settings._AccessCode
                 };
@@ -121,7 +122,7 @@ namespace GDataDB.Impl
                 settings._RefreshToken = refreshToken;
                 settings._AccessToken = accessToken;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 // To display the error message with EditorGUI.Dialogue, we throw it again.
                 throw new Exception(e.Message);

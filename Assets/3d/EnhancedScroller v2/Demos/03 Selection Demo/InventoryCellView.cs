@@ -1,7 +1,6 @@
-﻿using UnityEngine;
+﻿using ShutEye.UI.Core;
+using UnityEngine;
 using UnityEngine.UI;
-using EnhancedUI.EnhancedScroller;
-using ShutEye.UI.Core;
 
 namespace EnhancedScrollerDemos.SelectionDemo
 {
@@ -12,7 +11,7 @@ namespace EnhancedScrollerDemos.SelectionDemo
     public delegate void SelectedDelegate(SEUIContainerItem cellView);
 
     /// <summary>
-    /// This class handles the presentation of the inventory cell view. Both the 
+    /// This class handles the presentation of the inventory cell view. Both the
     /// horizontal and vertical cell views share the same view class. The difference
     /// between them is layout and sprite for this example.
     /// </summary>
@@ -27,6 +26,7 @@ namespace EnhancedScrollerDemos.SelectionDemo
         /// These are the UI elements that will be updated when the data changes
         /// </summary>
         public Image selectionPanel;
+
         public Text itemNameText;
         public Text itemCostText;
         public Text itemDamageText;
@@ -39,6 +39,7 @@ namespace EnhancedScrollerDemos.SelectionDemo
         /// These are the colors for the selection of the cells
         /// </summary>
         public Color selectedColor;
+
         public Color unSelectedColor;
 
         /// <summary>
@@ -56,13 +57,12 @@ namespace EnhancedScrollerDemos.SelectionDemo
             base.OnDestroy();
             if (_data != null)
             {
-                // remove the handler from the data so 
+                // remove the handler from the data so
                 // that any changes to the data won't try
                 // to call this destroyed view's function
                 _data.selectedChanged -= SelectedChanged;
             }
         }
-
 
         /// <summary>
         /// This function sets up the data for the cell view
@@ -101,7 +101,7 @@ namespace EnhancedScrollerDemos.SelectionDemo
 
             // set up a handler so that when the data changes
             // the cell view will update accordingly. We only
-            // want a single handler for this cell view, so 
+            // want a single handler for this cell view, so
             // first we remove any previous handlers before
             // adding the new one
             _data.selectedChanged -= SelectedChanged;
@@ -112,7 +112,7 @@ namespace EnhancedScrollerDemos.SelectionDemo
         }
 
         /// <summary>
-        /// This function changes the UI state when the item is 
+        /// This function changes the UI state when the item is
         /// selected or unselected.
         /// </summary>
         /// <param name="selected">The selection state of the cell</param>

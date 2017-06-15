@@ -1,6 +1,4 @@
 ﻿using System;
-using UnityEngine;
-using System.Collections;
 
 [Serializable]
 public class SaveSelectData : BaseSaveTableData
@@ -14,16 +12,11 @@ public class SaveProfileData : BaseSaveTableData
     public BaseDataForProfileWindow[] Data;
 }
 
-
-
 [Serializable]
 public abstract class BaseSaveTableData
 {
     public MenuItemType Type;
 }
-
-
-
 
 /// <summary>
 /// Данный по услугам
@@ -32,13 +25,8 @@ public class BaseDataForSelectWindow : DataObject
 {
     public string AvatarSprite;
     public string Price;
-
-    public void Clear()
-    {
-        AvatarSprite = "";
-        Price = "";
-    }
 }
+
 /// <summary>
 /// данные профиля
 /// </summary>
@@ -49,4 +37,5 @@ public class BaseDataForProfileWindow : DataObject
     public string FullInfo;
     public string Foto;
     public string Contatcts;
+    public string Vk;
 }

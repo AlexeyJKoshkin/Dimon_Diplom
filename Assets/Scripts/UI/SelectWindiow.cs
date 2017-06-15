@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using EnhancedUI.EnhancedScroller;
+﻿using EnhancedUI.EnhancedScroller;
 using GameKit.UI;
 using ShutEye.Core;
-using ShutEye.Extensions;
 using ShutEye.UI.Core;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-
 
 /// <summary>
 /// Контроллер отобраения списка услуг в выбранной категории
@@ -15,16 +13,19 @@ using UnityEngine.EventSystems;
 public class SelectWindiow : BaseWindow, IEnhancedScrollerDelegate
 {
     #region логические элементы интерфейса
+
     public override Enum TypeWindow
     {
-        get { return  WindowType.SelectWindiow; }
+        get { return WindowType.SelectWindiow; }
     }
+
     public override WindowState State { get; set; }
 
     [SerializeField]
     private UnityEngine.UI.Button _mainMenuBtn;
+
     /// <summary>
-    /// скролл 
+    /// скролл
     /// </summary>
     public EnhancedScroller scroller;
 
@@ -32,9 +33,11 @@ public class SelectWindiow : BaseWindow, IEnhancedScrollerDelegate
     /// префаб для отображения списка услуг
     /// </summary>
     public SelectWindowContainer cellViewPrefab;
-    #endregion
+
+    #endregion логические элементы интерфейса
 
     #region Методы для заполнения скрола данными
+
     public int GetNumberOfCells(EnhancedScroller scroller)
     {
         return _data == null ? 0 : _data.Count;
@@ -54,7 +57,7 @@ public class SelectWindiow : BaseWindow, IEnhancedScrollerDelegate
 
         cellView.ClickOnViewEvent += CellViewOnClickOnViewEvent;
         // set the name of the game object to the cell's data index.
-        // this is optional, but it helps up debug the objects in 
+        // this is optional, but it helps up debug the objects in
         // the scene hierarchy.
         cellView.NameCell = "Cell " + dataIndex.ToString();
 
@@ -71,8 +74,8 @@ public class SelectWindiow : BaseWindow, IEnhancedScrollerDelegate
         // cast the cell view to our custom view
         SelectWindowContainer view = cellview as SelectWindowContainer;
 
-        // if the cell is active, we set its data, 
-        // otherwise we will clear the image back to 
+        // if the cell is active, we set its data,
+        // otherwise we will clear the image back to
         // its default state
 
         if (cellview.active)
@@ -80,7 +83,8 @@ public class SelectWindiow : BaseWindow, IEnhancedScrollerDelegate
         else
             view.ClearView();
     }
-    #endregion
+
+    #endregion Методы для заполнения скрола данными
 
     /// <summary>
     /// текущая категория
@@ -92,19 +96,21 @@ public class SelectWindiow : BaseWindow, IEnhancedScrollerDelegate
     /// </summary>
     private IList<BaseDataForSelectWindow> _data = new List<BaseDataForSelectWindow>();
 
-    
     public override void RefreshView()
     {
     }
 
     /// <summary>
-    /// спрятать окно, очищаем все списки 
+    /// спрятать окно, очищаем все списки
     /// </summary>
     /// <param name="callback"></param>
     public override void HideWindow(Action callback)
     {
         base.HideWindow(callback);
-        _data.ForEach(e => e.Clear());
+        foreach (var selectWindowContainer in scroller.GetComponentsInChildren<SelectWindowContainer>())
+        {
+            selectWindowContainer.ClearView();
+        }
         scroller.RefreshActiveCellViews();
     }
 
@@ -122,14 +128,12 @@ public class SelectWindiow : BaseWindow, IEnhancedScrollerDelegate
         scroller.cellViewVisibilityChanged = CellViewVisibilityChanged;
 
         // tell the scroller to reload now that we have the data
-       
-      //  _itemsContloller.OnChange += ItemsContlollerOnOnChange;
+
+        //  _itemsContloller.OnChange += ItemsContlollerOnOnChange;
         _mainMenuBtn = _mainMenuBtn ?? GetComponentInChildren<UnityEngine.UI.Button>();
         _mainMenuBtn.onClick.AddListener(this.BackMainMenu);
         base.PrepareUI(_onComplete);
     }
-
-    
 
     public void ShowType(MenuItemType type)
     {
@@ -144,7 +148,6 @@ public class SelectWindiow : BaseWindow, IEnhancedScrollerDelegate
         this.ShowWindow(null);
     }
 
-    
     /// <summary>
     /// Метод по обработке клика пользователя на ячейку с услугой
     /// </summary>
@@ -152,7 +155,7 @@ public class SelectWindiow : BaseWindow, IEnhancedScrollerDelegate
     /// <param name="inputButton"></param>
     private void CellViewOnClickOnViewEvent(IContainerUI containerUi, PointerEventData.InputButton inputButton)
     {
-        var data = ((IContainerUI<BaseDataForSelectWindow>) containerUi).CurrentData; 
+        var data = ((IContainerUI<BaseDataForSelectWindow>)containerUi).CurrentData;
         BaseDataForProfileWindow fullInfo = DiplomCore.Instance.MainBD.GetFullInfo(_currentViewType, data.Id); // запрос в БД
         UIInstance.Instance.GetWindow<ProfileWindow>().UpdateDataView(fullInfo); // показать окно
         this.HideWindow(null);

@@ -1,10 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using EnhancedUI.EnhancedScroller;
+﻿using EnhancedUI.EnhancedScroller;
 using GameKit;
 using ShutEye.UI.Core;
-using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class scrolportfolioContrpller : SEContainerWithViews<PortfolioContainerUI>, IEnhancedScrollerDelegate, IDataBinding<string[]>
 {
@@ -31,7 +27,7 @@ public class scrolportfolioContrpller : SEContainerWithViews<PortfolioContainerU
         var cellView = scroller.GetCellView(PrefabSlot, this.InstantiatePrefabCell);
 
         // set the name of the game object to the cell's data index.
-        // this is optional, but it helps up debug the objects in 
+        // this is optional, but it helps up debug the objects in
         // the scene hierarchy.
         cellView.NameCell = "Cell " + dataIndex.ToString();
 
@@ -42,5 +38,6 @@ public class scrolportfolioContrpller : SEContainerWithViews<PortfolioContainerU
         // return the cell to the scroller
         return cellView;
     }
+
     public string[] CurrentData { get; private set; }
 }

@@ -1,7 +1,4 @@
-﻿using UnityEngine;
-using System.Collections;
-using EnhancedUI.EnhancedScroller;
-using ShutEye.UI.Core;
+﻿using ShutEye.UI.Core;
 
 namespace EnhancedScrollerDemos.MultipleCellTypesDemo
 {

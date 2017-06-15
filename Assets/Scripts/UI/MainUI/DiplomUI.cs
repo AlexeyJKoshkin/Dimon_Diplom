@@ -11,6 +11,7 @@ namespace GameKit.UI
     public class DiplomUI : SEComponentUI
     {
         #region параметры и переменные
+
         /// <summary>
         /// Указатель на готовность UI к запуску
         /// </summary>
@@ -32,9 +33,11 @@ namespace GameKit.UI
         private List<BaseWindow> _allWindow;
 
         private BaseWindow _currentWindow;
-        #endregion
+
+        #endregion параметры и переменные
 
         #region Инициализация UI приложения
+
         /// <summary>
         /// Метод вызывается один раз для инициализации всего интерфейса
         /// </summary>
@@ -88,9 +91,11 @@ namespace GameKit.UI
             //Debug.Log(window.CashedTransform.sizeDelta);
             return window.GetComponent<T>();
         }
-        #endregion
+
+        #endregion Инициализация UI приложения
 
         #region Вывод окна на экран
+
         /// <summary>
         /// Вывести окно на экран
         /// </summary>
@@ -141,11 +146,13 @@ namespace GameKit.UI
                 _showwindow(window, callback);
             }
         }
+
         private void _showwindow(BaseWindow window, Action callback)
         {
             window.ShowWindow(callback);
             _currentWindow = window;
         }
-#endregion
+
+        #endregion Вывод окна на экран
     }
 }

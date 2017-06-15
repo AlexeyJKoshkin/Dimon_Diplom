@@ -1,8 +1,7 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
-using EnhancedUI;
-using EnhancedUI.EnhancedScroller;
+﻿using EnhancedUI.EnhancedScroller;
 using ShutEye.UI.Core;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace EnhancedScrollerDemos.CellEvents
 {
@@ -17,7 +16,7 @@ namespace EnhancedScrollerDemos.CellEvents
         public SEUIContainerItem cellViewPrefab;
         public float cellSize;
 
-        void Start()
+        private void Start()
         {
             scroller.Delegate = this;
             LoadData();
@@ -55,11 +54,10 @@ namespace EnhancedScrollerDemos.CellEvents
 
             cellView.SetData(_data[dataIndex]);
 
-
             return cellView;
         }
 
-        #endregion
+        #endregion EnhancedScroller Handlers
 
         /// <summary>
         /// Handler for when the cell view fires a fixed text button click event

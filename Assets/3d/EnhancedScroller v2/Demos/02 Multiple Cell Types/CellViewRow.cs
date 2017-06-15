@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
-using EnhancedUI.EnhancedScroller;
 
 namespace EnhancedScrollerDemos.MultipleCellTypesDemo
 {
@@ -23,6 +21,7 @@ namespace EnhancedScrollerDemos.MultipleCellTypesDemo
         /// Links to the UI fields
         /// </summary>
         public Text userNameText;
+
         public Image userAvatarImage;
         public Text userHighScoreText;
 

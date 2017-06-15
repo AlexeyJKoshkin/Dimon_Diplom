@@ -1,8 +1,8 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
-using System.Collections;
+﻿using ShutEye.UI.Core;
 using System;
-using ShutEye.UI.Core;
+using System.Collections;
+using UnityEngine;
+using UnityEngine.UI;
 
 namespace EnhancedUI.EnhancedScroller
 {
@@ -125,11 +125,11 @@ namespace EnhancedUI.EnhancedScroller
 
         /// <summary>
         /// The snap offset to watch for. When the snap occurs, this
-        /// location in the scroller will be how which cell to snap to 
+        /// location in the scroller will be how which cell to snap to
         /// is determined.
         /// Typically, the offset is in the range 0..1, with 0 being
         /// the top / left of the scroller and 1 being the bottom / right.
-        /// In most situations the watch offset and the jump offset 
+        /// In most situations the watch offset and the jump offset
         /// will be the same, they are just separated in case you need
         /// that added functionality.
         /// </summary>
@@ -141,7 +141,7 @@ namespace EnhancedUI.EnhancedScroller
         /// is moved to.
         /// Typically, the offset is in the range 0..1, with 0 being
         /// the top / left of the scroller and 1 being the bottom / right.
-        /// In most situations the watch offset and the jump offset 
+        /// In most situations the watch offset and the jump offset
         /// will be the same, they are just separated in case you need
         /// that added functionality.
         /// </summary>
@@ -150,7 +150,7 @@ namespace EnhancedUI.EnhancedScroller
         /// <summary>
         /// Once the cell has been snapped to the scroller location, this
         /// value will determine how the cell is centered on that scroller
-        /// location. 
+        /// location.
         /// Typically, the offset is in the range 0..1, with 0 being
         /// the top / left of the cell and 1 being the bottom / right.
         /// </summary>
@@ -163,17 +163,17 @@ namespace EnhancedUI.EnhancedScroller
         public bool snapUseCellSpacing;
 
         /// <summary>
-        /// What function to use when interpolating between the current 
-        /// scroll position and the snap location. This is also known as easing. 
-        /// If you want to go immediately to the snap location you can either 
+        /// What function to use when interpolating between the current
+        /// scroll position and the snap location. This is also known as easing.
+        /// If you want to go immediately to the snap location you can either
         /// set the snapTweenType to immediate or set the snapTweenTime to zero.
         /// </summary>
         public TweenType snapTweenType;
 
         /// <summary>
-        /// The time it takes to interpolate between the current scroll 
+        /// The time it takes to interpolate between the current scroll
         /// position and the snap location.
-        /// If you want to go immediately to the snap location you can either 
+        /// If you want to go immediately to the snap location you can either
         /// set the snapTweenType to immediate or set the snapTweenTime to zero.
         /// </summary>
         public float snapTweenTime;
@@ -415,7 +415,7 @@ namespace EnhancedUI.EnhancedScroller
                 return _activeCellViewsStartIndex % NumberOfCells;
             }
         }
-        
+
         /// <summary>
         /// This is the last data index showing in the scroller's visible area
         /// </summary>
@@ -468,7 +468,7 @@ namespace EnhancedUI.EnhancedScroller
         /// </summary>
         /// <param name="cellPrefab">The prefab to use to create the cell view</param>
         /// <returns></returns>
-        public SEUIContainerItem GetCellView(SEUIContainerItem cellPrefab, Func<SEUIContainerItem>  builder = null)
+        public SEUIContainerItem GetCellView(SEUIContainerItem cellPrefab, Func<SEUIContainerItem> builder = null)
         {
             // see if there is a view to recycle
             var cellView = _GetRecycledCellView(cellPrefab);
@@ -476,7 +476,7 @@ namespace EnhancedUI.EnhancedScroller
             {
                 // no recyleable cell found, so we create a new view
                 // and attach it to our container
-                
+
                 if (builder == null)
                 {
                     GameObject go = null;
@@ -527,7 +527,7 @@ namespace EnhancedUI.EnhancedScroller
 
         /// <summary>
         /// Removes all the recycled cell views. This should only be used after you
-        /// load in a completely different set of cell views that will not use the 
+        /// load in a completely different set of cell views that will not use the
         /// recycled views. This will call garbage collection.
         /// </summary>
         public void ClearRecycled()
@@ -540,7 +540,7 @@ namespace EnhancedUI.EnhancedScroller
         }
 
         /// <summary>
-        /// Turn looping on or off. This is just a helper function so 
+        /// Turn looping on or off. This is just a helper function so
         /// you don't have to keep track of the state of the looping
         /// in your own scripts.
         /// </summary>
@@ -656,8 +656,6 @@ namespace EnhancedUI.EnhancedScroller
             StartCoroutine(TweenPosition(tweenType, tweenTime, ScrollPosition, newScrollPosition, jumpComplete));
         }
 
-      
-
         /// <summary>
         /// Snaps the scroller on command. This is called internally when snapping is set to true and the velocity
         /// has dropped below the threshold. You can use this to manually snap whenever you like.
@@ -748,7 +746,7 @@ namespace EnhancedUI.EnhancedScroller
             return _GetCellIndexAtPosition(position, 0, _cellViewOffsetArray.Count - 1);
         }
 
-        #endregion
+        #endregion Public
 
         #region Private
 
@@ -814,13 +812,13 @@ namespace EnhancedUI.EnhancedScroller
         private RectTransform _recycledCellViewContainer;
 
         /// <summary>
-        /// Internal list of cell view sizes. This is created when the data is reloaded 
+        /// Internal list of cell view sizes. This is created when the data is reloaded
         /// to speed up processing.
         /// </summary>
         private SmallList<float> _cellViewSizeArray = new SmallList<float>();
 
         /// <summary>
-        /// Internal list of cell view offsets. Each cell view offset is an accumulation 
+        /// Internal list of cell view offsets. Each cell view offset is an accumulation
         /// of the offsets previous to it.
         /// This is created when the data is reloaded to speed up processing.
         /// </summary>
@@ -963,7 +961,7 @@ namespace EnhancedUI.EnhancedScroller
             // if looping, we need to create three sets of size data
             if (loop)
             {
-                // if the cells don't entirely fill up the scroll area, 
+                // if the cells don't entirely fill up the scroll area,
                 // make some more size entries to fill it up
                 if (offset < ScrollRectSize)
                 {
@@ -1122,8 +1120,8 @@ namespace EnhancedUI.EnhancedScroller
 
             if (remainingCellIndices.Count == 0)
             {
-                // there were no previous active cells remaining, 
-                // this list is either brand new, or we jumped to 
+                // there were no previous active cells remaining,
+                // this list is either brand new, or we jumped to
                 // an entirely different part of the list.
                 // just add all the new cell views
 
@@ -1137,7 +1135,7 @@ namespace EnhancedUI.EnhancedScroller
                 // we are able to reuse some of the previous
                 // cell views
 
-                // first add the views that come before the 
+                // first add the views that come before the
                 // previous list, going backward so that the
                 // new views get added to the front
                 for (i = endIndex; i >= startIndex; i--)
@@ -1368,7 +1366,7 @@ namespace EnhancedUI.EnhancedScroller
         /// <summary>
         /// Caches and initializes the scroller
         /// </summary>
-        void Awake()
+        private void Awake()
         {
             GameObject go;
 
@@ -1455,7 +1453,7 @@ namespace EnhancedUI.EnhancedScroller
             _lastScrollbarVisibility = scrollbarVisibility;
         }
 
-        void Update()
+        private void Update()
         {
             if (_reloadData)
             {
@@ -1498,7 +1496,7 @@ namespace EnhancedUI.EnhancedScroller
             }
         }
 
-        void LateUpdate()
+        private void LateUpdate()
         {
             if (_refreshActive)
             {
@@ -1508,13 +1506,13 @@ namespace EnhancedUI.EnhancedScroller
             }
         }
 
-        void OnEnable()
+        private void OnEnable()
         {
             // when the scroller is enabled, add a listener to the onValueChanged handler
             _scrollRect.onValueChanged.AddListener(_ScrollRect_OnValueChanged);
         }
 
-        void OnDisable()
+        private void OnDisable()
         {
             // when the scroller is disabled, remove the listener
             _scrollRect.onValueChanged.RemoveListener(_ScrollRect_OnValueChanged);
@@ -1548,9 +1546,8 @@ namespace EnhancedUI.EnhancedScroller
             }
 
             _RefreshActive();
-
         }
-        
+
         /// <summary>
         /// This is fired by the tweener when the snap tween is completed
         /// </summary>
@@ -1564,7 +1561,7 @@ namespace EnhancedUI.EnhancedScroller
             if (scrollerSnapped != null) scrollerSnapped(this, _snapCellViewIndex, _snapDataIndex);
         }
 
-        #endregion
+        #endregion Private
 
         #region Tweening
 
@@ -1620,7 +1617,7 @@ namespace EnhancedUI.EnhancedScroller
         /// <param name="end">The ending scroll position</param>
         /// <param name="jumpComplete">The action to fire when the tween is complete</param>
         /// <returns></returns>
-        IEnumerator TweenPosition(TweenType tweenType, float time, float start, float end, Action tweenComplete)
+        private IEnumerator TweenPosition(TweenType tweenType, float time, float start, float end, Action tweenComplete)
         {
             if (tweenType == TweenType.immediate || time == 0)
             {
@@ -2034,6 +2031,6 @@ namespace EnhancedUI.EnhancedScroller
             return a * Mathf.Pow(2, -10 * val) * Mathf.Sin((val * d - s) * (2 * Mathf.PI) / p) * 0.5f + end + start;
         }
 
-        #endregion
+        #endregion Tweening
     }
 }

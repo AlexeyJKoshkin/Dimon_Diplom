@@ -1,32 +1,28 @@
 ///////////////////////////////////////////////////////////////////////////////
 ///
 /// ScriptPrescription.cs
-/// 
+///
 /// (c)2013 Kim, Hyoun Woo
 ///
 ///////////////////////////////////////////////////////////////////////////////
 using System;
-using UnityEngine;
-using System.Linq;
-using System.IO;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using Object = UnityEngine.Object;
 
 namespace UnityQuickSheet
 {
     [Serializable]
     public class ScriptPrescription
     {
-        public string className               = string.Empty;
-        public string spreadsheetName         = string.Empty;
-        public string worksheetClassName      = string.Empty; // used for ScriptableObject class name.
-        public string dataClassName           = string.Empty;
+        public string className = string.Empty;
+        public string spreadsheetName = string.Empty;
+        public string worksheetClassName = string.Empty; // used for ScriptableObject class name.
+        public string dataClassName = string.Empty;
         public string assetFileCreateFuncName = string.Empty;
-        public string template                = string.Empty;
+        public string template = string.Empty;
 
-        public string importedFilePath        = string.Empty; // should start with "Assets" not full path
-        public string assetFilepath           = string.Empty; // should start with "Assets" not full path
+        public string importedFilePath = string.Empty; // should start with "Assets" not full path
+        public string assetFilepath = string.Empty; // should start with "Assets" not full path
         public string assetPostprocessorClass = string.Empty;
 
         public MemberFieldData[] memberFields;
@@ -34,9 +30,9 @@ namespace UnityQuickSheet
         /// <summary>
         /// Reserved for future usage to make it easy for explicitly converting.
         /// </summary>
-        public Dictionary<string, string> mStringReplacements = new Dictionary<string, string> ();
+        public Dictionary<string, string> mStringReplacements = new Dictionary<string, string>();
     }
-    
+
     /// <summary>
     /// Represent type of an each cell.
     /// </summary>
@@ -57,42 +53,50 @@ namespace UnityQuickSheet
     {
         public CellType type = CellType.Undefined;
         private string name;
-        
+
         public static bool Valid(string title)
         {
-            return Regex.IsMatch(title, @"\s*(:string:integer)", RegexOptions.IgnoreCase);	
+            return Regex.IsMatch(title, @"\s*(:string:integer)", RegexOptions.IgnoreCase);
         }
-        
+
         public string Name
         {
             get { return name; }
             set { name = value; }
         }
-        
+
         public string Type
         {
-            get 
+            get
             {
-                switch(type)
+                switch (type)
                 {
-                case CellType.String:
-                    return "string";
-                case CellType.Short:
-                    return "short";
-                case CellType.Int:
-                    return "int";
-                case CellType.Long:
-                    return "long";
-                case CellType.Float:
-                    return "float";
-                case CellType.Double:
-                    return "double";
-                case CellType.Enum:
-                    return "enum";
-                case CellType.Bool:
-                    return "bool";
-                default:
-                    return "string";
+                    case CellType.String:
+                        return "string";
+
+                    case CellType.Short:
+                        return "short";
+
+                    case CellType.Int:
+                        return "int";
+
+                    case CellType.Long:
+                        return "long";
+
+                    case CellType.Float:
+                        return "float";
+
+                    case CellType.Double:
+                        return "double";
+
+                    case CellType.Enum:
+                        return "enum";
+
+                    case CellType.Bool:
+                        return "bool";
+
+                    default:
+                        return "string";
                 }
             }
         }
@@ -105,5 +109,4 @@ namespace UnityQuickSheet
             type = CellType.Undefined;
         }
     }
-
 }

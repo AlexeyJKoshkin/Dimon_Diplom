@@ -1,10 +1,9 @@
-﻿using System;
-using EnhancedUI.EnhancedScroller;
+﻿using EnhancedUI.EnhancedScroller;
 using GameKit;
 using GameKit.UI;
 using ShutEye.Core;
-using ShutEye.Extensions;
 using ShutEye.UI.Core;
+using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -15,6 +14,7 @@ using UnityEngine.UI;
 public class ProfileWindow : BaseWindow, IDataBinding<BaseDataForProfileWindow>
 {
     #region Элементы интерфейса
+
     public override Enum TypeWindow
     {
         get { return WindowType.WindowInfo; }
@@ -36,9 +36,14 @@ public class ProfileWindow : BaseWindow, IDataBinding<BaseDataForProfileWindow>
 
     [SerializeField]
     private Text _contacts;
-    #endregion
+
+    [SerializeField]
+    private VkButton _vk;
+
+    #endregion Элементы интерфейса
 
     #region Скролл с превью портфолию
+
     /// <summary>
     /// The scroller to control
     /// </summary>
@@ -52,8 +57,8 @@ public class ProfileWindow : BaseWindow, IDataBinding<BaseDataForProfileWindow>
         // cast the cell view to our custom view
         PortfolioContainerUI view = cellview as PortfolioContainerUI;
 
-        // if the cell is active, we set its data, 
-        // otherwise we will clear the image back to 
+        // if the cell is active, we set its data,
+        // otherwise we will clear the image back to
         // its default state
 
         if (cellview.active)
@@ -61,7 +66,9 @@ public class ProfileWindow : BaseWindow, IDataBinding<BaseDataForProfileWindow>
         else
             view.ClearView();
     }
-    #endregion
+
+    #endregion Скролл с превью портфолию
+
     /// <summary>
     /// метод инициализации вызывается из DiplomU.
     /// подписка на события, и клики пользователя
@@ -93,7 +100,7 @@ public class ProfileWindow : BaseWindow, IDataBinding<BaseDataForProfileWindow>
     {
         DiplomCore.Instance.LoadSprite(portfolioContainerUi.CurrentData, OnLoadPhoto);
     }
-    
+
     /// <summary>
     /// спрятать окно, очистить всю информацию о профайле
     /// </summary>
@@ -110,7 +117,7 @@ public class ProfileWindow : BaseWindow, IDataBinding<BaseDataForProfileWindow>
 
     /// <summary>
     /// обновить информацию в UI
-    /// 
+    ///
     /// выставляем фотки, контакты и тому подобное
     /// </summary>
     public override void RefreshView()
@@ -120,6 +127,7 @@ public class ProfileWindow : BaseWindow, IDataBinding<BaseDataForProfileWindow>
         _fio.text = CurrentData.Name;
         _fullInfo.text = CurrentData.FullInfo;
         _contacts.text = CurrentData.Contatcts;
+        _vk.UpdateDataView(CurrentData.Vk);
         _controller.UpdateDataView(CurrentData.Porfolio);
         scroller.ReloadData();
         ShowWindow(null);
@@ -140,5 +148,4 @@ public class ProfileWindow : BaseWindow, IDataBinding<BaseDataForProfileWindow>
     }
 
     public BaseDataForProfileWindow CurrentData { get; private set; }
-
 }

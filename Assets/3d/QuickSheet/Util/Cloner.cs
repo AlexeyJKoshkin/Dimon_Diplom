@@ -1,19 +1,17 @@
 using System;
-using System.Collections;
 using System.Reflection;
 
 namespace UnityQuickSheet
 {
-
-    /// 
+    ///
     /// Cloner which do deep copy of an array or class instance.
-    /// 
+    ///
     /// See Also:
     /// 	http://www.codeproject.com/Articles/38270/Deep-copy-of-objects-in-C
-    /// 
+    ///
     /// CAUTION:
     /// 	For an inheritance case, deep copying all member fields of the ancestor are not tested.
-    /// 
+    ///
     public class Cloner
     {
         public static T DeepCopy<T>(T obj)
@@ -23,7 +21,7 @@ namespace UnityQuickSheet
             return (T)Process(obj);
         }
 
-        static object Process(object obj)
+        private static object Process(object obj)
         {
             if (obj == null)
                 return null;
@@ -64,6 +62,5 @@ namespace UnityQuickSheet
             else
                 throw new ArgumentException("Unknown type");
         }
-
     }
 }

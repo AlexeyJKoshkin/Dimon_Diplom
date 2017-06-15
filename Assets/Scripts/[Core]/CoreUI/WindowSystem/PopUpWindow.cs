@@ -43,7 +43,6 @@ namespace GameKit.UI.Core
 
         public abstract void ShowPopUp();
 
-
         public virtual void Hide()
         {
             var temp = _onHide;

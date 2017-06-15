@@ -1,9 +1,8 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
-using System.Collections;
+﻿using EnhancedUI;
 using EnhancedUI.EnhancedScroller;
-using EnhancedUI;
 using ShutEye.UI.Core;
+using UnityEngine;
+using UnityEngine.UI;
 
 namespace EnhancedScrollerDemos.SelectionDemo
 {
@@ -32,7 +31,7 @@ namespace EnhancedScrollerDemos.SelectionDemo
         /// The cell view prefab for the vertical scroller
         /// </summary>
         public SEUIContainerItem vCellViewPrefab;
-        
+
         /// <summary>
         /// The cell view prefab for the horizontal scroller
         /// </summary>
@@ -42,6 +41,7 @@ namespace EnhancedScrollerDemos.SelectionDemo
         /// The image that shows which item is selected
         /// </summary>
         public Image selectedImage;
+
         public Text selectedImageText;
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace EnhancedScrollerDemos.SelectionDemo
         /// </summary>
         public string resourcePath;
 
-        void Awake()
+        private void Awake()
         {
             // turn on the mask and loop functionality for each scroller based
             // on the UI settings of this controller
@@ -64,7 +64,7 @@ namespace EnhancedScrollerDemos.SelectionDemo
             CellViewSelected(null);
         }
 
-        void Start()
+        private void Start()
         {
             // set up the delegates for each scroller
 
@@ -167,7 +167,7 @@ namespace EnhancedScrollerDemos.SelectionDemo
             hScroller.Loop = val;
         }
 
-        #endregion
+        #endregion Controller UI Handlers
 
         #region EnhancedScroller Callbacks
 
@@ -219,7 +219,7 @@ namespace EnhancedScrollerDemos.SelectionDemo
             // hierarchy what the cell is
             cellView.name = (scroller == vScroller ? "Vertical" : "Horizontal") + " " + _data[dataIndex].itemName;
 
-            // set the selected callback to the CellViewSelected function of this controller. 
+            // set the selected callback to the CellViewSelected function of this controller.
             // this will be fired when the cell's button is clicked
             cellView.selected = CellViewSelected;
 
@@ -230,6 +230,6 @@ namespace EnhancedScrollerDemos.SelectionDemo
             return cellView;
         }
 
-        #endregion
+        #endregion EnhancedScroller Callbacks
     }
 }

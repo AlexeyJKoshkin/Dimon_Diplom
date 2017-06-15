@@ -1,11 +1,12 @@
 using Google.GData.Client;
 
-namespace GDataDB {
+namespace GDataDB
+{
     /// <summary>
     /// Google spreadsheet service entry point
     /// </summary>
-    public interface IDatabaseClient {
-
+    public interface IDatabaseClient
+    {
         IService DocumentService { get; }
         IService SpreadsheetService { get; }
 

@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: e5eb440189dfd5843bd3a4c09f7f2036
-timeCreated: 1494712958
+timeCreated: 1497560552
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -11,10 +11,11 @@ TextureImporter:
     21300008: w512h5121380476942music
     21300010: load-icon-png-16
     21300012: mike
+    21300014: Info_Simple_bw_svg
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
-    enableMipMap: 1
+    enableMipMap: 0
     sRGBTexture: 1
     linearTexture: 0
     fadeOut: 0
@@ -35,7 +36,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     filterMode: -1
-    aniso: -1
+    aniso: 16
     mipBias: -1
     wrapMode: -1
   nPOTScale: 0
@@ -58,9 +59,25 @@ TextureImporter:
   textureFormatSet: 0
   platformSettings:
   - buildTarget: DefaultTexturePlatform
-    maxTextureSize: 4096
+    maxTextureSize: 1024
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Standalone
+    maxTextureSize: 1024
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Android
+    maxTextureSize: 1024
+    textureFormat: -1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -69,11 +86,37 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: old-video-camera-outline-symbol_icon-icons.com_74109
+      name: Info_Simple_bw_svg
       rect:
         serializedVersion: 2
         x: 1
         y: 1
+        width: 2008
+        height: 2008
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: mike
+      rect:
+        serializedVersion: 2
+        x: 2011
+        y: 1
+        width: 1308
+        height: 1552
+      alignment: 9
+      pivot: {x: 0.4969419, y: 0.5154639}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: old-video-camera-outline-symbol_icon-icons.com_74109
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 2011
         width: 512
         height: 512
       alignment: 9
@@ -85,7 +128,7 @@ TextureImporter:
       name: Cinema-Theatre-Mask-icon
       rect:
         serializedVersion: 2
-        x: 515
+        x: 3321
         y: 1
         width: 512
         height: 512
@@ -98,34 +141,8 @@ TextureImporter:
       name: Cinema-Bunch-Flowers-icon
       rect:
         serializedVersion: 2
-        x: 1
-        y: 515
-        width: 512
-        height: 512
-      alignment: 9
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: photo-camera-outlined-tool-symbol_icon-icons.com_74106
-      rect:
-        serializedVersion: 2
-        x: 1029
-        y: 1
-        width: 512
-        height: 396
-      alignment: 9
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: w512h5121380476942music
-      rect:
-        serializedVersion: 2
-        x: 515
-        y: 515
+        x: 2011
+        y: 1555
         width: 512
         height: 512
       alignment: 9
@@ -138,24 +155,37 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1
-        y: 1029
+        y: 2525
         width: 512
-        height: 511
+        height: 512
       alignment: 9
-      pivot: {x: 0.5, y: 0.50097847}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: mike
+      name: photo-camera-outlined-tool-symbol_icon-icons.com_74106
       rect:
         serializedVersion: 2
-        x: 1543
-        y: 1
-        width: 120
-        height: 121
+        x: 3321
+        y: 515
+        width: 512
+        height: 396
       alignment: 9
-      pivot: {x: 0.48333332, y: 0.5206612}
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: w512h5121380476942music
+      rect:
+        serializedVersion: 2
+        x: 2525
+        y: 1555
+        width: 511
+        height: 511
+      alignment: 9
+      pivot: {x: 0.49902153, y: 0.50097847}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: -1

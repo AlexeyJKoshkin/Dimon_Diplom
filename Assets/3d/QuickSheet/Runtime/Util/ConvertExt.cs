@@ -5,26 +5,25 @@
 /// (c)2017 Kim, Hyoun Woo
 ///
 ///////////////////////////////////////////////////////////////////////////////
-using UnityEngine;
 using System;
 using System.Linq;
 
 namespace UnityQuickSheet
 {
     /// <summary>
-    /// QuickSheet specific a helper class for various type converting. 
-    /// 
+    /// QuickSheet specific a helper class for various type converting.
+    ///
     /// </summary>
     public class ConvertExt
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         static public object[] Split(string value)
         {
             const char DELIMITER = ',';
 
-            string str = value as string; 
+            string str = value as string;
 
             // remove whitespace between each of element
             str = new string(str.ToCharArray()
@@ -41,7 +40,7 @@ namespace UnityQuickSheet
         }
 
         /// <summary>
-        /// Convert the given string to array of float. 
+        /// Convert the given string to array of float.
         /// Note the string should contain ',' to separate each of array element.
         /// </summary>
         public static float[] ToSingleArray(string value)
@@ -55,7 +54,7 @@ namespace UnityQuickSheet
         }
 
         /// <summary>
-        /// Convert the given string to array of double. 
+        /// Convert the given string to array of double.
         /// </summary>
         public static double[] ToDoubleArray(string value)
         {
@@ -66,7 +65,7 @@ namespace UnityQuickSheet
         }
 
         /// <summary>
-        /// Convert the given string to array of short. 
+        /// Convert the given string to array of short.
         /// </summary>
         public static short[] ToInt16Array(string value)
         {
@@ -77,7 +76,7 @@ namespace UnityQuickSheet
         }
 
         /// <summary>
-        /// Convert the given string to array of int. 
+        /// Convert the given string to array of int.
         /// </summary>
         public static int[] ToInt32Array(string value)
         {
@@ -88,18 +87,18 @@ namespace UnityQuickSheet
         }
 
         /// <summary>
-        /// Convert the given string to array of long. 
+        /// Convert the given string to array of long.
         /// </summary>
         public static long[] ToInt64Array(string value)
         {
             object[] temp = Split(value);
             long[] result = temp.Select(e => Convert.ChangeType(e, typeof(long)))
-                                .Select(e => (long)e).ToArray();          
+                                .Select(e => (long)e).ToArray();
             return result;
         }
 
         /// <summary>
-        /// Convert the given string to array of long. 
+        /// Convert the given string to array of long.
         /// </summary>
         public static string[] ToStringArray(string value)
         {
@@ -108,6 +107,5 @@ namespace UnityQuickSheet
                                 .Select(e => (string)e).ToArray();
             return result;
         }
-
     }
 }

@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-using System.Collections;
-using ShutEye.UI.Core;
+﻿using ShutEye.UI.Core;
 
 namespace EnhancedUI.EnhancedScroller
 {

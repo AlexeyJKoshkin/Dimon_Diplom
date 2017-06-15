@@ -1,9 +1,11 @@
-namespace GDataDB {
+namespace GDataDB
+{
     /// <summary>
     /// Row in the spreadsheet
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public interface IRow<T> {
+    public interface IRow<T>
+    {
         /// <summary>
         /// Element stored in the row
         /// </summary>

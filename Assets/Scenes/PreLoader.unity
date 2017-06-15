@@ -150,9 +150,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 220d4ffb281b7874b9ed387db3700d37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _allProviders: []
   _googleSettings: {fileID: 11400000, guid: fe5b4ba143358444c932c44eedc4a76f, type: 2}
   _wrapper: {fileID: 72084899}
+  DefaultSprite: {fileID: 21300012, guid: e5eb440189dfd5843bd3a4c09f7f2036, type: 3}
 --- !u!4 &72084896
 Transform:
   m_ObjectHideFlags: 0
@@ -308,7 +308,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc7cfa826799e02438c3a6f7616c55d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _defauiltIcon: {fileID: 21300010, guid: e5eb440189dfd5843bd3a4c09f7f2036, type: 3}
 --- !u!4 &375537665
 Transform:
   m_ObjectHideFlags: 0
@@ -416,7 +415,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 585378211}
   m_LocalRotation: {x: -0.10659682, y: 0.016310554, z: -0.001748854, w: -0.99416703}
-  m_LocalPosition: {x: 0, y: 0, z: -21}
+  m_LocalPosition: {x: 0, y: 0, z: 134}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -424,7 +423,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 336, y: 674}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1144081387

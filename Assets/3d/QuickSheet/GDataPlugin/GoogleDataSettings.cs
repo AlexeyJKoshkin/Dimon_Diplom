@@ -1,12 +1,10 @@
 ///////////////////////////////////////////////////////////////////////////////
+using System.Collections.Generic;
+
 /// GoogleDataSettings.cs
 /// (c)2013 Kim, Hyoun Woo
 ///////////////////////////////////////////////////////////////////////////////
 using UnityEngine;
-
-using System.Collections.Generic;
-using System.IO;
-using ShutEye.Core;
 
 namespace UnityQuickSheet
 {
@@ -63,7 +61,6 @@ namespace UnityQuickSheet
 
         //    return res;
         //}
-
 
         // A flag which indicates use local installed oauth2 json file for authentication or not.
         static public bool useOAuth2JsonFile = false;

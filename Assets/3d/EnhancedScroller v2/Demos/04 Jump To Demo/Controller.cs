@@ -1,9 +1,8 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
-using System.Collections;
-using System.Collections.Generic;
-using EnhancedUI.EnhancedScroller;
+﻿using EnhancedUI.EnhancedScroller;
 using ShutEye.UI.Core;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
 
 namespace EnhancedScrollerDemos.JumpToDemo
 {
@@ -24,12 +23,14 @@ namespace EnhancedScrollerDemos.JumpToDemo
         /// Reference to the scrollers
         /// </summary>
         public EnhancedScroller vScroller;
+
         public EnhancedScroller hScroller;
 
         /// <summary>
         /// References to the UI elements
         /// </summary>
         public InputField jumpIndexInput;
+
         public Toggle useSpacingToggle;
         public Slider scrollerOffsetSlider;
         public Slider cellOffsetSlider;
@@ -45,7 +46,7 @@ namespace EnhancedScrollerDemos.JumpToDemo
         public EnhancedScroller.TweenType hScrollerTweenType = EnhancedScroller.TweenType.immediate;
         public float hScrollerTweenTime = 0f;
 
-        void Start()
+        private void Start()
         {
             // set up the scroller delegates
             vScroller.Delegate = this;
@@ -80,7 +81,7 @@ namespace EnhancedScrollerDemos.JumpToDemo
             }
         }
 
-        #endregion
+        #endregion UI Handlers
 
         #region EnhancedScroller Handlers
 
@@ -130,7 +131,7 @@ namespace EnhancedScrollerDemos.JumpToDemo
             CellView cellView = scroller.GetCellView(cellViewPrefab) as CellView;
 
             // set the name of the game object to the cell's data index.
-            // this is optional, but it helps up debug the objects in 
+            // this is optional, but it helps up debug the objects in
             // the scene hierarchy.
             cellView.name = "Cell " + dataIndex.ToString();
 
@@ -141,6 +142,6 @@ namespace EnhancedScrollerDemos.JumpToDemo
             return cellView;
         }
 
-        #endregion
+        #endregion EnhancedScroller Handlers
     }
 }

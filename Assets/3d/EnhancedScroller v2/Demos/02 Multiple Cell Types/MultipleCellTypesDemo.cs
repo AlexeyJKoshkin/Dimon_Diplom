@@ -1,8 +1,7 @@
-﻿using UnityEngine;
-using System.Collections;
-using EnhancedUI;
+﻿using EnhancedUI;
 using EnhancedUI.EnhancedScroller;
 using ShutEye.UI.Core;
+using UnityEngine;
 
 namespace EnhancedScrollerDemos.MultipleCellTypesDemo
 {
@@ -28,7 +27,7 @@ namespace EnhancedScrollerDemos.MultipleCellTypesDemo
         /// </summary>
         public string resourcePath;
 
-        void Start()
+        private void Start()
         {
             // tell the scroller that this script will be its delegate
             scroller.Delegate = this;
@@ -162,6 +161,6 @@ namespace EnhancedScrollerDemos.MultipleCellTypesDemo
             return cellView;
         }
 
-        #endregion
+        #endregion EnhancedScroller Handlers
     }
 }

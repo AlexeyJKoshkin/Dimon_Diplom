@@ -1,18 +1,18 @@
-﻿using System;
-using UnityEngine;
-using ShutEye.Core;
+﻿using ShutEye.Core;
 using ShutEye.UI.Core;
+using System;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class PortfolioContainerUI : SEButtonUI<string>
 {
-    public Sprite LoadPhoto {
+    public Sprite LoadPhoto
+    {
         get { return _foto.sprite; }
     }
 
     [SerializeField]
     private Image _foto;
-
 
     protected override void PrepareUI(Action _onComplete)
     {
@@ -22,7 +22,7 @@ public class PortfolioContainerUI : SEButtonUI<string>
             var delta = _foto.GetComponent<RectTransform>().sizeDelta;
             _foto.GetComponent<RectTransform>().sizeDelta = new Vector2(la.minWidth, delta.y);
         }
-         
+
         base.PrepareUI(_onComplete);
     }
 

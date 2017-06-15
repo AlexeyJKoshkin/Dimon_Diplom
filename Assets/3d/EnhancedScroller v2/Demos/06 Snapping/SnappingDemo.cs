@@ -1,14 +1,12 @@
-﻿using UnityEngine;
+﻿using EnhancedUI.EnhancedScroller;
+using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
-using EnhancedUI.EnhancedScroller;
-using EnhancedUI;
 
 namespace EnhancedScrollerDemos.SnappingDemo
 {
     /// <summary>
     /// This demo shows how you can use snapping to lock a slot cell to a particular
-    /// spot in the scroller when the scroller's velocity dips below a certain 
+    /// spot in the scroller when the scroller's velocity dips below a certain
     /// threshhold. The demo script controls three separate slot controller scripts,
     /// though we could have just as easily done each of their logic in this one script.
     /// </summary>
@@ -58,6 +56,7 @@ namespace EnhancedScrollerDemos.SnappingDemo
         /// maximum and also randomly pick the direction of movement.
         /// </summary>
         public float minVelocity;
+
         public float maxVelocity;
 
         /// <summary>
@@ -65,6 +64,7 @@ namespace EnhancedScrollerDemos.SnappingDemo
         /// used in tallying the score
         /// </summary>
         public int cherryIndex;
+
         public int sevenIndex;
         public int tripleBarIndex;
         public int bigWinIndex;
@@ -96,6 +96,7 @@ namespace EnhancedScrollerDemos.SnappingDemo
         /// Panels and gameobjects used in the game states
         /// </summary>
         public GameObject playingPanel;
+
         public GameObject gameOverPanel;
         public PlayWin playWin;
 
@@ -167,7 +168,7 @@ namespace EnhancedScrollerDemos.SnappingDemo
             }
         }
 
-        void Awake()
+        private void Awake()
         {
             // set our game to initializing
             GameState = GameStateEnum.Initializing;
@@ -179,7 +180,7 @@ namespace EnhancedScrollerDemos.SnappingDemo
             _snappedDataIndices = new int[_slotControllers.Length];
 
             // set each slot controller's scroll snapping handler
-            // (we could have done this in the slot controller script, 
+            // (we could have done this in the slot controller script,
             // but handling it here gives us information about the
             // game's state and overall values for each slot controller)
             foreach (var slotController in _slotControllers)
@@ -188,7 +189,7 @@ namespace EnhancedScrollerDemos.SnappingDemo
             }
         }
 
-        void Start()
+        private void Start()
         {
             // reload each scroll controller with sprites for the data
             foreach (var slotController in _slotControllers)
@@ -197,11 +198,11 @@ namespace EnhancedScrollerDemos.SnappingDemo
             }
         }
 
-        void LateUpdate()
+        private void LateUpdate()
         {
             // We set the playing state here so that the game
             // doesn't show a winner when it starts up (because
-            // there will always be three of a kind at startup). 
+            // there will always be three of a kind at startup).
             if (GameState == GameStateEnum.Initializing)
                 GameState = GameStateEnum.Playing;
         }
@@ -238,7 +239,7 @@ namespace EnhancedScrollerDemos.SnappingDemo
         }
 
         /// <summary>
-        /// This is the handler of each snapping in the scroller. The 
+        /// This is the handler of each snapping in the scroller. The
         /// cell index will only be different from the data index if looping is on.
         /// </summary>
         /// <param name="scroller">The EnhancedScroller that fired the event</param>
@@ -257,7 +258,7 @@ namespace EnhancedScrollerDemos.SnappingDemo
 
             if (_snapCount == _slotControllers.Length)
             {
-                // if we've reached the final snap count, then tally the score 
+                // if we've reached the final snap count, then tally the score
                 TallyScore();
 
                 // reenable the lever
@@ -304,7 +305,7 @@ namespace EnhancedScrollerDemos.SnappingDemo
                     }
                     else if (s1 == bigWinIndex)
                     {
-                        // three big win 
+                        // three big win
                         score = 150;
                     }
                     else if (s1 == tripleBarIndex)

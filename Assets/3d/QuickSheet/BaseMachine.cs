@@ -1,12 +1,13 @@
 ﻿///////////////////////////////////////////////////////////////////////////////
+using System.Collections.Generic;
+
 ///
 /// BaseMachine.cs
-/// 
+///
 /// (c)2014 Kim, Hyoun Woo
 ///
 ///////////////////////////////////////////////////////////////////////////////
 using UnityEngine;
-using System.Collections.Generic;
 
 namespace UnityQuickSheet
 {
@@ -35,6 +36,7 @@ namespace UnityQuickSheet
 
         [SerializeField]
         private string templatePath = "QuickSheet/Templates";
+
         public string TemplatePath
         {
             get { return templatePath; }
@@ -46,6 +48,7 @@ namespace UnityQuickSheet
         /// </summary>
         [SerializeField]
         private string scriptFilePath;
+
         public string RuntimeClassPath
         {
             get { return scriptFilePath; }
@@ -57,6 +60,7 @@ namespace UnityQuickSheet
         /// </summary>
         [SerializeField]
         private string editorScriptFilePath;
+
         public string EditorClassPath
         {
             get { return editorScriptFilePath; }
@@ -65,6 +69,7 @@ namespace UnityQuickSheet
 
         [SerializeField]
         private string sheetName;
+
         public string SpreadSheetName
         {
             get { return sheetName; }
@@ -73,6 +78,7 @@ namespace UnityQuickSheet
 
         [SerializeField]
         private string workSheetName;
+
         public string WorkSheetName
         {
             get { return workSheetName; }

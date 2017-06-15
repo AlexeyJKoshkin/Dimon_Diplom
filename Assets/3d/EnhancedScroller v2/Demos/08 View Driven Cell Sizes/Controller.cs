@@ -1,8 +1,7 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
-using EnhancedUI;
-using EnhancedUI.EnhancedScroller;
+﻿using EnhancedUI.EnhancedScroller;
 using ShutEye.UI.Core;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace EnhancedScrollerDemos.ViewDrivenCellSizes
 {
@@ -17,7 +16,7 @@ namespace EnhancedScrollerDemos.ViewDrivenCellSizes
 
         /// <summary>
         /// This value is a countdown of how many frames have passed since the scroller
-        /// refresh has been requested. Since calculation of the cell sizes has to happen 
+        /// refresh has been requested. Since calculation of the cell sizes has to happen
         /// over multiple frames, this will let us know what to do each frame in the LateUpdate
         /// </summary>
         private int _reloadScrollerFrameCountLeft = -1;
@@ -25,7 +24,7 @@ namespace EnhancedScrollerDemos.ViewDrivenCellSizes
         public EnhancedScroller scroller;
         public SEUIContainerItem cellViewPrefab;
 
-        void Start()
+        private void Start()
         {
             scroller.Delegate = this;
             LoadData();
@@ -49,7 +48,6 @@ namespace EnhancedScrollerDemos.ViewDrivenCellSizes
             _data.Add(new Data() { cellSize = 0, someText = "Proin bibendum ligula a pulvinar convallis. Mauris tincidunt tempor ipsum id viverra. Vivamus congue ipsum venenatis tellus semper, vel venenatis mauris finibus. Vivamus a nisl in lacus fermentum varius. Mauris bibendum magna placerat risus interdum, vitae facilisis nulla pellentesque. Curabitur vehicula odio quis magna pulvinar, et lacinia ante bibendum. Morbi laoreet eleifend ante, quis luctus augue luctus sit amet. Sed consectetur enim et orci posuere euismod. Curabitur sollicitudin metus eu nisl dictum suscipit. " });
             _data.Add(new Data() { cellSize = 0, someText = "Sed gravida augue ligula, tempus auctor ante rutrum sit amet. Vestibulum finibus magna ut viverra rhoncus. Vestibulum rutrum eu nibh interdum imperdiet. Curabitur ac nunc a turpis ultricies dictum. Phasellus in molestie eros. Morbi porta imperdiet odio sed pharetra. Cras blandit tincidunt ultricies. " });
             _data.Add(new Data() { cellSize = 0, someText = "Integer pellentesque viverra orci, sollicitudin luctus dui rhoncus sed. Duis placerat at felis vel placerat. Mauris massa urna, scelerisque vitae posuere vitae, ultrices in nibh. Mauris posuere hendrerit viverra. In lacinia urna nibh, ut lobortis lectus finibus et. Aliquam arcu dolor, suscipit eget massa id, eleifend dapibus est. Quisque eget bibendum urna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed condimentum pulvinar ornare. Aliquam venenatis eget nunc et euismod. " });
-
 
             // capture the scroller dimensions so that we can reset them when we are done
             var rectTransform = scroller.GetComponent<RectTransform>();
@@ -75,7 +73,7 @@ namespace EnhancedScrollerDemos.ViewDrivenCellSizes
         /// the sizes until a frame after the text is set. Since we need the size of the
         /// fitter, we have to keep reloading until the data is available.
         /// </summary>
-        void LateUpdate()
+        private void LateUpdate()
         {
             // only process if we have a countdown left
             if (_reloadScrollerFrameCountLeft != -1)
@@ -83,7 +81,6 @@ namespace EnhancedScrollerDemos.ViewDrivenCellSizes
                 // skip the first frame (frame countdown 1) since it is the one where we set up the scroller text.
                 if (_reloadScrollerFrameCountLeft < 1)
                 {
-
                     // reload two times, the first to put the newly set content size fitter values into the model,
                     // the second to set the scroller's cell sizes based on the model.
                     scroller.ReloadData();
@@ -118,7 +115,6 @@ namespace EnhancedScrollerDemos.ViewDrivenCellSizes
             return cellView;
         }
 
-
-        #endregion
+        #endregion EnhancedScroller Handlers
     }
 }

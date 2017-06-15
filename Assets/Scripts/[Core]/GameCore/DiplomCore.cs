@@ -1,7 +1,7 @@
+using ShutEye.Extensions;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using ShutEye.Extensions;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityQuickSheet;
@@ -25,14 +25,16 @@ namespace ShutEye.Core
         private GoogleDataSettings _googleSettings;
 
         /// <summary>
-        /// модель данных 
+        /// модель данных
         /// </summary>
-        public SheetDataRuntimeWrapper MainBD {
+        public SheetDataRuntimeWrapper MainBD
+        {
             get { return _wrapper; }
         }
+
         [SerializeField]
         private SheetDataRuntimeWrapper _wrapper;
-        
+
         /// <summary>
         /// «агрузка €дра и инициализаци€ компонентов
         /// </summary>
@@ -50,14 +52,13 @@ namespace ShutEye.Core
         {
             _wrapper.Init(_googleSettings);
 
-           // yield return CheckInternet();
+            // yield return CheckInternet();
 
             yield return _wrapper.GetSelectDb(); //проверка и обновление таблицы категорий
             yield return _wrapper.GetPfofileDb();//профайлы
             SceneManager.LoadScene(STRH.DefaultNames.MainMenuScene); // грузим главное меню
         }
 
-        
         /// <summary>
         /// «агрузить фоточки из интернета
         /// </summary>
@@ -77,6 +78,7 @@ namespace ShutEye.Core
                     StartCoroutine(LoadSpriteCoroutine(avatarSprite, onLoadSprite));
             }
         }
+
         /// <summary>
         /// «агрузка фотки из интернета
         /// </summary>
@@ -90,10 +92,14 @@ namespace ShutEye.Core
             yield return www;
             if (string.IsNullOrEmpty(www.error))
             {
-                var sprite = Sprite.Create(www.texture, new Rect(0, 0, www.texture.width, www.texture.height),
-                    new Vector2(0, 0));
-                _cashadSprites.Add(url, sprite);
-                Onfinish.Invoke(sprite);
+                if (!_cashadSprites.ContainsKey(url))
+                {
+                    var sprite = Sprite.Create(www.texture, new Rect(0, 0, www.texture.width, www.texture.height),
+                        new Vector2(0, 0));
+                    _cashadSprites.Add(url, sprite);
+                    
+                }
+                Onfinish.Invoke(_cashadSprites[url]);
             }
             else
             {
@@ -102,6 +108,7 @@ namespace ShutEye.Core
             }
             www.Dispose();
         }
+
         /// <summary>
         /// ѕроверка интернета
         /// </summary>
@@ -143,6 +150,6 @@ namespace ShutEye.Core
                 _onReady -= onCoreReady;
         }
 
-        #endregion Init
+        #endregion Init как только все пройдет проверку - запускаетс€ основна€ логика приложени€
     }
 }

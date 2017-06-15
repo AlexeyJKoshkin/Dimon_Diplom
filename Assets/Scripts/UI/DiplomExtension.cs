@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-using System.Collections;
-using GameKit.UI;
+﻿using GameKit.UI;
 
 public static class DiplomExtension
 {

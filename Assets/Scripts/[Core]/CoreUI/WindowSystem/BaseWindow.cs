@@ -12,7 +12,7 @@ namespace GameKit.UI
 
         public virtual void HideWindow(Action callback)
         {
-            this.transform.localPosition = new Vector3(-1000, -1000,0);
+            this.transform.localPosition = new Vector3(-1000, -1000, 0);
         }
 
         public virtual void ShowWindow(Action callback)
@@ -27,7 +27,6 @@ namespace GameKit.UI
 
         [Range(0, 10)]
         public float Hidenimation = 2;
-
     }
 
     /// <summary>

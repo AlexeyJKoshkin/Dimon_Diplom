@@ -25,7 +25,7 @@ namespace UnityQuickSheet
                     {
                         GameObject obj = new GameObject(typeof(T).ToString());
                         instance = obj.AddComponent<T>();
-                        //Debug.LogError("An instance of " + typeof(T) + 
+                        //Debug.LogError("An instance of " + typeof(T) +
                         //   " is needed in the scene, but there is none.");
                     }
                 }

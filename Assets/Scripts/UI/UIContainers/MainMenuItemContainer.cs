@@ -1,6 +1,6 @@
-﻿using System;
+﻿using ShutEye.UI.Core;
+using System;
 using UnityEngine;
-using ShutEye.UI.Core;
 
 //контейнер для главного меню
 public class MainMenuItemContainer : SEUIContainerItem, IContainerUI<MenuItemType>

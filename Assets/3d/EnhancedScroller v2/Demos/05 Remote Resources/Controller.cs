@@ -1,7 +1,7 @@
-﻿using UnityEngine;
+﻿using EnhancedUI;
 using EnhancedUI.EnhancedScroller;
-using EnhancedUI;
 using ShutEye.UI.Core;
+using UnityEngine;
 
 namespace EnhancedScrollerDemos.RemoteResourcesDemo
 {
@@ -27,7 +27,7 @@ namespace EnhancedScrollerDemos.RemoteResourcesDemo
         /// </summary>
         public SEUIContainerItem cellViewPrefab;
 
-        void Start()
+        private void Start()
         {
             // set the scroller's delegate to this controller
             scroller.Delegate = this;
@@ -91,7 +91,7 @@ namespace EnhancedScrollerDemos.RemoteResourcesDemo
             CellView cellView = scroller.GetCellView(cellViewPrefab) as CellView;
 
             // set the name of the game object to the cell's data index.
-            // this is optional, but it helps up debug the objects in 
+            // this is optional, but it helps up debug the objects in
             // the scene hierarchy.
             cellView.name = "Cell " + dataIndex.ToString();
 
@@ -112,8 +112,8 @@ namespace EnhancedScrollerDemos.RemoteResourcesDemo
             // cast the cell view to our custom view
             CellView view = cellView as CellView;
 
-            // if the cell is active, we set its data, 
-            // otherwise we will clear the image back to 
+            // if the cell is active, we set its data,
+            // otherwise we will clear the image back to
             // its default state
 
             if (cellView.active)
@@ -122,6 +122,6 @@ namespace EnhancedScrollerDemos.RemoteResourcesDemo
                 view.ClearImage();
         }
 
-        #endregion
+        #endregion EnhancedScroller Handlers
     }
 }

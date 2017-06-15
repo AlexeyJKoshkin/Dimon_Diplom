@@ -1,15 +1,13 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
-using System.Collections;
+﻿using EnhancedUI;
 using EnhancedUI.EnhancedScroller;
-using EnhancedUI;
 using ShutEye.UI.Core;
+using UnityEngine;
 
 namespace EnhancedScrollerDemos.SnappingDemo
 {
     /// <summary>
-    /// This class controls one slot scroller. We could have shared the slot data between the 
-    /// three slot controllers, but for demonstration purposes we gave each slot controller their 
+    /// This class controls one slot scroller. We could have shared the slot data between the
+    /// three slot controllers, but for demonstration purposes we gave each slot controller their
     /// own set of data.
     /// </summary>
     public class SlotController : MonoBehaviour, IEnhancedScrollerDelegate
@@ -29,13 +27,13 @@ namespace EnhancedScrollerDemos.SnappingDemo
         /// </summary>
         public SEUIContainerItem slotCellViewPrefab;
 
-        void Awake()
+        private void Awake()
         {
             // create a new data list for the slots
             _data = new SmallList<SlotData>();
         }
 
-        void Start()
+        private void Start()
         {
             // set this controller as the scroller's delegate
             scroller.Delegate = this;
@@ -109,6 +107,6 @@ namespace EnhancedScrollerDemos.SnappingDemo
             return cellView;
         }
 
-        #endregion
+        #endregion EnhancedScroller Callbacks
     }
 }

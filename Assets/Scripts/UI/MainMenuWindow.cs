@@ -1,8 +1,9 @@
-﻿using System;
-using GameKit.UI;
+﻿using GameKit.UI;
+using System;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
-
+using UnityEngine.UI;
 
 /// <summary>
 /// Контролер главного меню
@@ -22,6 +23,8 @@ public class MainMenuWindow : BaseWindow
     [SerializeField]
     private MenuItemController _itemsContainer;
 
+    [SerializeField] private Button _info;
+
     /// <summary>
     /// метод инициализации вызывается из DiplomU.
     /// подписка на события, и клики пользователя
@@ -29,9 +32,11 @@ public class MainMenuWindow : BaseWindow
     /// <param name="_onComplete"></param>
     protected override void PrepareUI(Action _onComplete)
     {
-         if(_itemsContainer.Containers.Length == 0) Application.Quit();
 
-        _itemsContainer.OnChange  += ItemsContainerOnOnChange;
+        if (_itemsContainer.Containers.Length == 0) Application.Quit();
+
+        _info.onClick.AddListener(()=> UIInstance.Instance.GetWindow<AboutCompanyWindow>().ShowWindow(null));
+        _itemsContainer.OnChange += ItemsContainerOnOnChange;
         base.PrepareUI(_onComplete);
     }
 
@@ -46,7 +51,6 @@ public class MainMenuWindow : BaseWindow
         UIInstance.Instance.GetWindow<SelectWindiow>().ShowType(mainMenuItemContainer.CurrentData);
         this.HideWindow(null);
     }
-  
 
     public override void RefreshView()
     {

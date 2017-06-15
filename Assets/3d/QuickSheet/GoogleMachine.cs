@@ -1,14 +1,11 @@
 ﻿///////////////////////////////////////////////////////////////////////////////
 ///
 /// GoogleMachine.cs
-/// 
+///
 /// (c)2013 Kim, Hyoun Woo
 ///
 ///////////////////////////////////////////////////////////////////////////////
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
 
 namespace UnityQuickSheet
 {
@@ -19,10 +16,11 @@ namespace UnityQuickSheet
     {
         [SerializeField]
         public static string generatorAssetPath = "Assets/QuickSheet/GDataPlugin/Tool/";
+
         [SerializeField]
         public static string assetFileName = "GoogleMachine.asset";
 
-        // excel and google plugin have its own template files, 
+        // excel and google plugin have its own template files,
         // so we need to set the different path when the asset file is created.
         private readonly string gDataTemplatePath = "QuickSheet/GDataPlugin/Templates";
 
@@ -37,7 +35,5 @@ namespace UnityQuickSheet
 
             TemplatePath = gDataTemplatePath;
         }
-
-
     }
 }

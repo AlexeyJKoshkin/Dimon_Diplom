@@ -1,22 +1,19 @@
-﻿using System.Collections;
-using GameKit.UI;
-using ShutEye.Core;
-using UnityEngine;
+﻿using ShutEye.Core;
 using ShutEye.UI.Core;
+using UnityEngine;
 using UnityEngine.UI;
-
 
 /// <summary>
 /// Контейнер для окна выбора
 /// </summary>
 public class SelectWindowContainer : SEUIContainerItem, IContainerUI<BaseDataForSelectWindow>
 {
- /// <summary>
+    /// <summary>
     /// Аватарка
     /// </summary>
     [SerializeField]
     private Image _AvatarImage;
-    
+
     [SerializeField]
     private Text _nameText;
 
@@ -29,6 +26,13 @@ public class SelectWindowContainer : SEUIContainerItem, IContainerUI<BaseDataFor
         DiplomCore.Instance.LoadSprite(CurrentData.AvatarSprite, OnLoadSprite);
         _nameText.text = CurrentData.Name;
         _priceText.text = CurrentData.Price;
+    }
+
+    public override void ClearView()
+    {
+        _AvatarImage.sprite = DiplomCore.Instance.DefaultSprite;
+        _nameText.text = "";
+        _priceText.text = "";
     }
 
     public void OnLoadSprite(Sprite sprite)

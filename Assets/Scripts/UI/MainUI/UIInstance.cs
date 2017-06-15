@@ -1,13 +1,12 @@
-﻿using UnityEngine;
+﻿using GameKit.UI;
 using System.Collections;
-using GameKit.UI;
+using UnityEngine;
 
 public class UIInstance : Singleton<DiplomUI>
 {
-    IEnumerator Start()
+    private IEnumerator Start()
     {
-        yield return  new WaitWhile(()=> !Instance.IsReady);
+        yield return new WaitWhile(() => !Instance.IsReady);
         Instance.ShowWindow(WindowType.Menu);
     }
-
 }

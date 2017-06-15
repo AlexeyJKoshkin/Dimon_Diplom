@@ -1,14 +1,15 @@
-using System;
-using System.IO;
 using GDataDB.Impl;
 using Google.GData.Client;
 using Google.GData.Documents;
 using Google.GData.Spreadsheets;
+using System;
+using System.IO;
 using UnityQuickSheet;
-using SpreadsheetQuery=Google.GData.Documents.SpreadsheetQuery;
 
-namespace GDataDB {
-    public class DatabaseClient : IDatabaseClient {
+namespace GDataDB
+{
+    public class DatabaseClient : IDatabaseClient
+    {
         private readonly IService documentService;
         private readonly IService spreadsheetService;
 
@@ -22,22 +23,25 @@ namespace GDataDB {
             get { return spreadsheetService; }
         }
 
-        public DatabaseClient(GoogleDataSettings settings) {
-
+        public DatabaseClient(GoogleDataSettings settings)
+        {
             GOAuth2RequestFactory requestFactory = GDataDBRequestFactory.RefreshAuthenticate(settings);
 
-            var docService = new DocumentsService("database") {RequestFactory = requestFactory};
+            var docService = new DocumentsService("database") { RequestFactory = requestFactory };
 
             documentService = docService;
 
-            var ssService = new SpreadsheetsService("database") {RequestFactory = requestFactory};
+            var ssService = new SpreadsheetsService("database") { RequestFactory = requestFactory };
 
             spreadsheetService = ssService;
         }
 
-        public IDatabase CreateDatabase(string name) {
-            using (var ms = new MemoryStream()) {
-                using (var sw = new StreamWriter(ms)) {
+        public IDatabase CreateDatabase(string name)
+        {
+            using (var ms = new MemoryStream())
+            {
+                using (var sw = new StreamWriter(ms))
+                {
                     sw.WriteLine(",,,");
                     var spreadSheet = DocumentService.Insert(new Uri(DocumentsListQuery.documentsBaseUri), ms, "text/csv", name);
                     return new Database(this, spreadSheet);
@@ -47,12 +51,12 @@ namespace GDataDB {
 
         /// <summary>
         /// @kims 2017.02.09. Added exception handling to smoothly handle abnormal error.
-        ///                   If oauth2 setting does not correctly done in the GoogleDataSetting.asset file or missing, 
-        ///                   you will get the 'Null reference object' error. 
+        ///                   If oauth2 setting does not correctly done in the GoogleDataSetting.asset file or missing,
+        ///                   you will get the 'Null reference object' error.
         /// @kims 2016.08.09. Added second parameter to pass error message by reference.
         /// </summary>
         /// <returns>Null, if any error has been occured.</returns>
-        public IDatabase GetDatabase(string name, ref string error) 
+        public IDatabase GetDatabase(string name, ref string error)
         {
             try
             {
@@ -61,7 +65,7 @@ namespace GDataDB {
                 // Make a request to the API and get all spreadsheets.
                 SpreadsheetsService service = spreadsheetService as SpreadsheetsService;
 
-                SpreadsheetFeed feed = service. Query(query);
+                SpreadsheetFeed feed = service.Query(query);
 
                 if (feed.Entries.Count == 0)
                 {
@@ -84,7 +88,7 @@ namespace GDataDB {
 
                 return new Database(this, spreadsheet);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 error = e.Message;
                 return null;

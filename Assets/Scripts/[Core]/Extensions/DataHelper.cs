@@ -90,11 +90,7 @@ public static partial class AssemblyReflectionHelper
         return (from assembly in scriptAssemblies from type in assembly.GetTypes().Where(t => t.IsClass && typeof(T).IsAssignableFrom(t)) where IncludingAbstract || !type.IsAbstract select type).ToList();
     }
 
-
-
 #if UNITY_EDITOR
-
-  
 
     public static IDataEditorStorage LoadAllPrividers(IDataEditorStorage storage = null)
     {
@@ -115,8 +111,6 @@ public static partial class AssemblyReflectionHelper
                return (DataBox)UnityEditor.AssetDatabase.LoadAssetAtPath(path, typeof(DataBox));
            });
     }
-
-  
 
     public static T CreateAsset<T>() where T : ScriptableObject
     {

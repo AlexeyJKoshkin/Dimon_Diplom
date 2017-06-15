@@ -6,10 +6,11 @@ namespace EnhancedScrollerDemos.RemoteResourcesDemo
 {
     public class CloseDelta : MonoBehaviour, IDragHandler
     {
-        void Awake()
+        private void Awake()
         {
             CellView.OnStart += OnStart;
         }
+
         private float _startY;
 
         private void OnStart(CellView cellView)
@@ -17,13 +18,13 @@ namespace EnhancedScrollerDemos.RemoteResourcesDemo
             _startY = cellView.transform.position.y;
         }
 
-        void OnGUI()
+        private void OnGUI()
         {
             string info = "Count " + Input.touchCount;
-            GUI.Box(new Rect(10,10,200,100), info);
+            GUI.Box(new Rect(10, 10, 200, 100), info);
         }
 
-        void LateUpdate()
+        private void LateUpdate()
         {
             if (CellView.Current == null) return;
             if (Input.touchCount > 0)
@@ -54,7 +55,7 @@ namespace EnhancedScrollerDemos.RemoteResourcesDemo
 
         public void OnDrag(PointerEventData eventData)
         {
-            if(CellView.Current == null) return;
+            if (CellView.Current == null) return;
             if (Math.Abs(eventData.delta.y) > 0.1f)
             {
                 var endPos = CellView.Current.transform.position;

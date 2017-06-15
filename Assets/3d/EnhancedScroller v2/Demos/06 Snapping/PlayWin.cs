@@ -1,6 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
 
 namespace EnhancedScrollerDemos.SnappingDemo
 {
@@ -39,7 +39,7 @@ namespace EnhancedScrollerDemos.SnappingDemo
         /// </summary>
         public float unZoomTime;
 
-        void Awake()
+        private void Awake()
         {
             // cache the transform and hide the panel
             _transform = transform;
@@ -67,7 +67,7 @@ namespace EnhancedScrollerDemos.SnappingDemo
         /// This function makes the panel larger over time
         /// </summary>
         /// <returns></returns>
-        IEnumerator PlayZoom()
+        private IEnumerator PlayZoom()
         {
             while (_timeLeft > 0)
             {
@@ -92,7 +92,7 @@ namespace EnhancedScrollerDemos.SnappingDemo
         /// This function waits for a set amount of time
         /// </summary>
         /// <returns></returns>
-        IEnumerator PlayHold()
+        private IEnumerator PlayHold()
         {
             while (_timeLeft > 0)
             {
@@ -110,7 +110,7 @@ namespace EnhancedScrollerDemos.SnappingDemo
         /// This function hides the panel over time
         /// </summary>
         /// <returns></returns>
-        IEnumerator PlayUnZoom()
+        private IEnumerator PlayUnZoom()
         {
             while (_timeLeft > 0)
             {
